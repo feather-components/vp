@@ -8,83 +8,100 @@
         factory(window.Vue);
     }
 })(function(Vue) {
-    var vPager = {},template; 
-    if(typeof __inline=='undefined'){   
-        template = document.getElementById('template').innerHTML;  
-    }
-    else{
-        template=__inline('index.tpl');
+    var vPager = {},
+        template;
+    if (typeof __inline == 'undefined') {
+        template = document.getElementById('template').innerHTML;
+    } else {
+        template = __inline('index.tpl');
     }
     vPager.install = function(Vue) {
         Vue.component('vpager', {
-            props: ['model', 'callback','position'],
+            props: {
+                'model': {
+                    type: Object,
+                    require: true
+                },
+                'callback': {
+                    type: Function
+                },
+                'position': {
+                    type: String
+                },
+                'max': {
+                    type: Number,
+                    default: 10,
+                    validator: function(value) {
+                        return value > 5;
+                    }
+                },
+                'option':{
+                    type:Array
+                }
+            },
             template: template,
             methods: {
-                to: function(page,disable) {
-                    if(disable)
-                        return; 
-                    if(isNaN(Number(page))){
+                to: function(page, disable) {
+                    if (disable)
+                        return;
+                    if (isNaN(Number(page))) {
                         alert('别任性~');
-                        this.shortcut='';
+                        this.shortcut = '';
                         return;
                     }
-                    if(Number(page)>this.pager.page) 
-                        page=this.pager.page; 
-                    if(Number(page)<1)
-                        page=1;
-                    this.pager.cur = page;
+                    if (Number(page) > this.pager.page)
+                        page = this.pager.page;
+                    if (Number(page) < 1)
+                        page = 1;
                     this.calc(this.pager, page);
-                    this.callback && this.callback(page); 
-                    this.shortcut='';
+                    this.callback && this.callback(page);
+                    this.shortcut = '';
                 },
-                calc: function(pager, cur) {
-                    cur=Number(cur);
+                calc: function(pager, cur) { 
+                    cur = Math.floor(cur / 1);
                     start = 2, end = pager.page - 1;
-                    if (pager.page > 10) {
-                        if (cur - 3 > 1) {
-                            start = cur - 3;
-                            if (cur + 4 - pager.page < 0) {
-                                end = cur + 4
+                    if (pager.page > this.m) {
+                        if (cur - this.pre > 1) {
+                            start = cur - this.pre;
+                            if (cur + this.next - pager.page < 0) {
+                                end = cur + this.next
                             } else {
-                                start = end - 7;
+                                start = end - (this.m-3);
                             }
                         } else {
-                            end = start + 7;
+                            end = start + this.m-3;
                         }
-                    }
-                    else if(start>end){
-                        end=1;
+                    } else if (start > end) {
+                        end = 1;
                     }
                     pager.start = start;
                     pager.end = end;
-                    console.log(start,end);
+                    pager.cur = cur;
                 },
-                select:function (size) { 
-                    this.pager.page=Math.ceil(this.model.total / size);
+                select: function(size) {
+                    this.pager.page = Math.ceil(this.model.total / size);
                     this.to(1);
                 }
             },
             data: function() {
-                var option=this.model.option?this.model.option:[10, 20, 50]; 
-                var size=option.indexOf(this.model.size)>=0?this.model.size:option[0];
-                var pager = {
-                    page: Math.ceil(this.model.total / size),
-                    size: size,
-                    total: this.model.total,
-                    cur: this.model.cur,
-                    option: option
-                };
-                this.calc(pager, pager.cur);
+                var option = this.option ? this.option : [10, 20, 50];
+                var size = option.indexOf(this.model.size) >= 0 ? this.model.size : option[0];  
                 return {
-                    pager: pager,
-                    shortcut: ''
+                    pager: {
+                        page: Math.ceil(this.model.total / size),
+                        size: size,
+                        total: this.model.total,
+                        cur: this.model.cur
+                    },
+                    shortcut: '',
+                    m: this.max,
+                    pre:Math.floor((this.max-3)/2),
+                    next:Math.ceil((this.max-3)/2),
+                    opt: option
                 }
             },
-            watch: {
-                // data: function(val, oldVal) {  
-                //     if(this.data[0])
-                //         this.selected = this.defaultVal!=undefined ? this.defaultVal:this.data[0].val;
-                // }
+            created:function(){
+                this.calc(this.pager, this.pager.cur);
             }
         })
     }
