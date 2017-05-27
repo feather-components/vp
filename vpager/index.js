@@ -9,9 +9,9 @@
     }
 })(function(Vue) {
     var vPager = {},
-        template;
-    if (typeof __inline == 'undefined') {
-        template = document.getElementById('template').innerHTML;
+        template; 
+    if (document.getElementById('vpager-template')) {
+        template = document.getElementById('vpager-template').innerHTML;
     } else {
         template = __inline('index.tpl');
     }
@@ -41,7 +41,7 @@
             },
             template: template,
             methods: {
-                to: function(page, disable) {
+                to: function(page,disable) {
                     if (disable)
                         return;
                     if (isNaN(Number(page))) {
@@ -54,7 +54,7 @@
                     if (Number(page) < 1)
                         page = 1;
                     this.calc(this.pager, page);
-                    this.callback && this.callback(page);
+                    this.callback && this.callback(page,this.pager.size);
                     this.shortcut = '';
                 },
                 calc: function(pager, cur) { 
@@ -78,14 +78,24 @@
                     pager.end = end;
                     pager.cur = cur;
                 },
-                select: function(size) {
-                    this.pager.page = Math.ceil(this.model.total / size);
+                select: function(size) { 
+                    this.update();
                     this.to(1);
+                },
+                update:function(size){
+                    if(size){
+                        this.pager.size=size;
+                    }
+                    this.pager.total=this.model.total;                    
+                    this.pager.cur=this.model.cur;
+                    this.pager.page=Math.ceil(this.pager.total / this.pager.size);
+                    this.calc(this.pager, this.pager.cur);
                 }
             },
-            data: function() {
+            data: function() {  
                 var option = this.option ? this.option : [10, 20, 50];
                 var size = option.indexOf(this.model.size) >= 0 ? this.model.size : option[0];  
+                console.log(size);
                 return {
                     pager: {
                         page: Math.ceil(this.model.total / size),
@@ -102,6 +112,14 @@
             },
             created:function(){
                 this.calc(this.pager, this.pager.cur);
+            }, 
+            watch:{
+                model: {
+                    handler(){ 
+                        this.update(this.model.size);
+                    },
+                    deep:true
+                }
             }
         })
     }

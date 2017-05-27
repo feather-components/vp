@@ -1,4 +1,4 @@
-<div class="lg-pager" :class="{'lg-pager-left':position=='left','lg-pager-center':position=='center'}">
+<div class="lg-pager" :class="{'lg-pager-left':position=='left','lg-pager-center':position=='center'}" v-if="pager.total">
     <ul>
         <li class="lg-pager-item" v-if="pager.page>max" :class="{'disable':pager.cur==1}">
             <a href="javascript:" @click="to(1,pager.cur==1)">首页</a>

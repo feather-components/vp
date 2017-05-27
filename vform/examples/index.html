@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>vform example</title>
+    <script src="../../vue/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../legoland.css" />
+</head>
+
+<body>
+    <div id="vdom">
+        <form class="lg-grid-row">
+            <div class="lg-grid-12">
+                <div class="lg-form-line">
+                    <label>text：</label>
+                    <input type="text" v-form:text1.autocheck="{required:true,length:'0,3'}"/>
+                    <span>-</span>
+                    <input type="text" v-form:text2="{required:true,number:'必须是数字'}"/>
+                    <span>￥/㎡</span>
+                </div>
+                <div class="lg-form-line">
+                    <label>select：</label>
+                    <select>
+                        <option>option1</option>
+                        <option selected="selected">option2</option>
+                        <option>option3</option>
+                    </select>
+                    <select>
+                        <option>option4</option>
+                        <option selected="selected">option5</option>
+                        <option>option6</option>
+                    </select>
+                </div>
+                <div class="lg-form-line">
+                    <label class="lg-require">required：</label>
+                    <input type="text" />
+                </div>
+                <div class="lg-form-line">
+                    <label>textarea：</label>
+                    <textarea></textarea>
+                </div>
+            </div>
+            <div class="lg-grid-6">
+                <div class="lg-form-line">
+                    <label class="lg-require">textarea：</label>
+                    <textarea></textarea>
+                </div>
+            </div>
+            <div class="lg-grid-6">
+                <div class="lg-form-line">
+                    <label>checkbox：</label>
+                    <span class="lg-checkbox-plain">
+                        <input type="checkbox" name="checkgroup-f" id="cg1-f"/><label for="cg1-f">High</label>
+                    </span>
+                    <span class="lg-checkbox">
+                        <input type="checkbox" name="checkgroup-f" id="cg2-f"/><label for="cg2-f">Normal</label>
+                    </span>
+                    <span class="lg-checkbox">
+                        <input type="checkbox" name="checkgroup-f" id="cg3-f"/><label for="cg3-f">Low</label>
+                    </span>
+                </div>
+                <div class="lg-form-line">
+                    <label>radio：</label>
+                    <span class="lg-radio-plain">
+                        <input type="radio" name="radiogroup-g" id="rg2-g"/><label for="rg2-g">open</label>
+                    </span>
+                    <span class="lg-radio">
+                        <input type="radio" name="radiogroup-g" id="rg3-g"/><label for="rg3-g">close</label>
+                    </span>
+                </div>
+            </div>
+            <div class="lg-grid-12">
+                <div class="lg-form-line">
+                    <label>tag：</label>
+                    <input type="text" placeholder="请输入标签" />
+                    <span class="lg-tag">system</span>
+                    <span class="lg-tag active">selected</span>
+                    <span class="lg-tag active lg-diy">diy</span>
+                </div>
+                <button type="button" class="lg-btn" @click="check()">保存</button>
+            </div>
+        </form>
+    </div>
+</body>
+<script src="../rule.js"></script>
+<script src="../index.js"></script>
+<script type="text/javascript">
+new Vue({
+    el: '#vdom',
+    data: { 
+    },
+    methods: {
+         check:function(){
+            var error=this.$vform['default'].checkAll();
+            if(error.length){
+                alert(error[0].msg);
+            }
+            else{
+                alert('success');
+            }
+         }
+    },
+    mounted: function() {
+         
+    }
+})
+</script>
+
+</html>

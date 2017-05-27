@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>vdialog example</title>
+    <script type="text/template" id="vdialog-template">
+        <div class="lg-dialog-mask" v-show="show" transition="fade">
+            <div class="lg-dialog-body" :style="{width:dialog.width,height:dialog.height}">
+                <a class="lg-dialog-close" @click="close(false)">×</a>
+                <div class="lg-dialog-title" v-html="dialog.title" v-if="dialog.title.length>0"></div>
+                <div class="lg-dialog-content">
+                    <slot></slot>
+                </div>
+                <div class="lg-dialog-bottom">
+                    <table class="lg-dialog-btns">
+                        <tr>
+                            <td v-for="(btn,index) in dialog.btns" :class="{'lg-dialog-btnfirst':index==0,'lg-dialog-btnlast':index==dialog.btns.length-1}">
+                                <a href="javascript:void(0);" class="lg-btn" :class="btn.klass" v-html="btn.name" @click="sure(index)"></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script src="../../vue/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="../index.css" />
+    <link rel="stylesheet" type="text/css" href="../../legoland.css" />
+</head>
+
+<body>
+    <div id="vdom">
+        <button @click="open(1)">open1</button>
+        <button @click="open(2)">open2</button>
+        <button @click="open(3)">open3</button>
+        <vdialog ref="dialog1" :option="option1">
+            <span>body1<span>
+        </vdialog>
+        <vdialog ref="dialog2" :option="option2">
+            <span>body2<span>
+        </vdialog>
+        <vdialog ref="dialog3" :option="option3">
+            <span>body3<span>
+        </vdialog> 
+    </div> 
+</body>
+<script src="../index.js"></script>
+<script type="text/javascript">
+new Vue({
+    el: '#vdom',
+    data: { 
+        option1:{
+            title:'confirm', 
+            btns:[
+                {
+                    name:'取消',
+                    klass:'lg-btn-o' 
+                },{
+                    name:'确定' 
+                } 
+            ]
+        },
+        option2:{
+            btns:[ {
+                    name:'确定' 
+                } 
+            ]
+        },
+        option3:{ 
+            height:300,
+            width:500,
+            btns:[ {
+                    name:'顶' 
+                } ,{
+                    name:'看看' 
+                } ,{
+                    name:'踩' 
+                } 
+            ]
+        }
+    },
+    methods: {
+        open: function(i) {
+            var _this=this;
+            if(i==1){
+                this.$refs.dialog1.open().then(function(index){ alert('click1 btn'+index); },function(){ alert('close1'); }); 
+            }
+            else if(i==2){
+                this.$refs.dialog2.open().then(function(index){ alert('click2 btn'+index); },function(){ alert('close2'); }); 
+            }
+            else{
+                this.$refs.dialog3.open().then(function(index){},function(){}); 
+            } 
+        }
+    },
+    mounted:function(){
+        this.open(2); 
+    } 
+})
+</script> 
+</html>

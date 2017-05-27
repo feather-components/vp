@@ -38,7 +38,8 @@
     color: #a3a3a3;  
 }
 .lg-pager-item.disable a:after,.lg-pager-item.disable a:before{ 
-    color: #a3a3a3;   
+    color: #a3a3a3;  
+    border-left-color:#a3a3a3;
 }
 .lg-pager-item.disable:hover{  
     border-color:  #dfdfdf;  
@@ -70,17 +71,26 @@
 }
 
 .lg-pager-previous a:before{
-    content: '\e646';
-    font-family: iconfont;
-    margin-right: 2px;
-    font-size: 23px;
+    content: ''; 
+    display: inline-block;
+    border-top:5px solid transparent;
+    border-bottom:5px solid transparent;
+    border-left:7px solid #666;
+    border-right:none; 
+    -webkit-transform: rotateZ(180deg);
+    -moz-transform: rotateZ(180deg);
+    -o-transform: rotateZ(180deg);
+    -ms-transform: rotateZ(180deg);
+    transform: rotateZ(180deg);
 }
 
 .lg-pager-next a:after{
-    content: '\e648';
-    margin-left: 2px;
-    font-family: iconfont;
-    font-size: 12px;
+    content: '';
+    display: inline-block;
+    border-top:5px solid transparent;
+    border-bottom:5px solid transparent;
+    border-left:7px solid #666;
+    border-right:none;
 }
 
 .lg-pager-current a, .lg-pager-point a{
