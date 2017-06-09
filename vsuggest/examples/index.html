@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>vsuggest example</title>
+    <script type="text/template" id="vsuggest-template">
+        <div class="lg-suggest"><i></i>
+            <input @keyup="keyup" @focus="focus" @blur="blur" :style="width?'width:'+width:''" type="text" :placeholder="placeholder" :value="selected" v-model="selected" /><i class="c" @click="clean" v-if="selected"></i>
+            <ul @mouseenter="enter" @mouseleave="leave" v-if="show" :style="width?'width:'+width:''">
+                <li v-for="item in data" :title="item.text"><a @click="check(item)">${item.text}</a></li>
+            </ul>
+        </div>
+    </script>
+    <script src="../../vue/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="../index.css" />
+    <link rel="stylesheet" type="text/css" href="../../legoland.css" />
+</head>
+
+<body>
+    <div id="vdom">
+        <div class="lg-form-line">
+            <label class="lg-require">所属公司：</label>
+            <vsuggest v-model='animal' :placeholder="'请输入公司名称'" :width="'280px'" :data="list" :update="update" :select="select" :clear="clear"></vsuggest>
+            <input v-model='animal' />
+        </div>
+    </div>
+</body>
+<script src="../index.js"></script>
+<script type="text/javascript">
+var list = [{
+    text: '老鼠',
+    key: '1'
+}, {
+    text: '水牛',
+    key: '2'
+}, {
+    text: '老虎',
+    key: '3'
+}, {
+    text: '兔子',
+    key: '4'
+}, {
+    text: '蛟龙',
+    key: '5'
+}, {
+    text: '蟒蛇',
+    key: '6'
+}, {
+    text: '野马',
+    key: '7'
+}];
+new Vue({
+    el: '#vdom',
+    data: {
+        list: [],
+        animal: ''
+    },
+    methods: {
+        update: function(key) {
+            this.list=list.filter(function(item,i){
+                return item.text.indexOf(key)>=0;
+            }) 
+        },
+        select: function(s) {
+            // this.animal = s.key;
+        },
+        clear: function() {
+            this.animal = '';
+        }
+    }
+})
+</script>
+
+</html>

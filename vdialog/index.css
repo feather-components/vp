@@ -1,0 +1,98 @@
+.lg-dialog-mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10000;
+}
+
+.lg-dialog-body {
+    min-height: 190px;
+    min-width: 320px;
+    padding: 40px;
+    padding-bottom: 35px;
+    border: 1px solid white;
+    border-radius: 3px;
+    background-color: white;
+    margin: auto; 
+    position: absolute;
+    transform: translate3D(-50%,-50%,0);
+    -webkit-transform: translate3D(-50%,-50%,0);
+    top: 50%;
+    left: 50%; 
+}
+
+.lg-dialog-close {
+    display: block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 30px;
+    text-decoration: none;
+    color: #ccc;
+    position: absolute;
+    right: 12px;
+    top: 10px;
+    cursor: pointer;
+}
+
+.lg-dialog-title {
+    color: #464E78;
+    font-size: 20px;
+    height: 24px;
+    text-align: center;
+}
+
+.lg-dialog-content {
+    overflow: auto;
+    font-size: 14px;
+    padding-bottom: 60px;
+    height: 100%; 
+}
+
+.lg-dialog-title + .lg-dialog-content {
+    padding-top: 20px;
+}
+
+.lg-dialog-bottom {
+    position: fixed;
+    bottom: 35px;
+    right: 40px;
+    left: 40px;
+}
+
+.lg-dialog-btns {
+    text-align: center;
+    height: 42px;
+    padding: 10px 0px;
+    list-style: none;
+    margin: 0px;
+    border: 0px;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.lg-dialog-btns .lg-btn {
+    min-width: 60px;
+    width: 100%;
+    height: 40px;
+    margin: 0;
+    line-height: 30px;
+    font-size: 18px;
+}
+
+.lg-dialog-btns td {
+    padding: 0 10px;
+}
+
+.lg-dialog-btns .lg-dialog-btnfirst {
+    padding-left: 0;
+}
+
+.lg-dialog-btns .lg-dialog-btnlast {
+    padding-right: 0;
+}

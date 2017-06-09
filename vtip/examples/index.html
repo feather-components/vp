@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>vtip example</title>
+    <script type="text/template" id="vtip-template">
+        <div :class="classname" @mouseleave="hideTip($event)" @mouseenter="showTip($event)">
+            <span v-html="label"></span>
+            <div class="lg-bubble" v-html="body" v-if="show" :style="style" :class="klass"></div>
+        </div>
+    </script>
+    <script src="../../vue/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../legoland.css" />
+    <link rel="stylesheet" type="text/css" href="../index.css" />
+</head>
+
+<body>
+    <div id="vdom" style="padding:100px">
+        <vtip :content="'center'"></vtip>
+        <vtip :content="content" :option="option"></vtip>
+    </div>
+    <div style="display:none" id="con">
+        <table class="lg-table">
+            <tr>
+                <td>dhd djkfj</td>
+                <td>dhd djkfj</td>
+                <td>dhd djkfj</td>
+                <td>dhd djkfj</td>
+            </tr>
+            <tr>
+                <td>dhd djkfj</td>
+                <td>dhd djkfj</td>
+                <td>dhd djkfj</td>
+                <td>dhd djkfj</td>
+            </tr>
+            <tr>
+                <td>dhd djkfj</td>
+                <td>dhd djkfj</td>
+                <td>dhd djkfj</td>
+                <td>dhd djkfj</td>
+            </tr>
+        </table>
+    </div>
+</body>
+<script src="../index.js"></script>
+<script type="text/javascript">
+/**
+ *
+ 使用说明
+ *
+ @props 属性
+ ->  content:必须。tooltip内容，可以是文字，也可以是dom元素
+ ->  option:可选。 
+     {
+        label：触发tooltip的标签内容，默认：？
+        className：触发tooltip的标签类名，用于自定义样式
+        direction：tooltip位置，[tl,t,tr,rt,r,rb,br,b,bl,lb,l,lt],默认:t
+            tl     t     tr
+          lt---------------rt
+            |             |
+          l |             | r
+            |             | 
+          lb---------------rb
+            bl     b      br
+     } 
+ */  
+new Vue({
+    el: '#vdom',
+    data: {
+        option: {
+            direction: 'lt',
+            label: '<div style="padding:20px;border:1px solid red">等哈的</div>',
+            className: 'baba'
+        },
+        content: document.getElementById('con')
+    },
+    methods: {}
+})
+</script>
+
+</html>

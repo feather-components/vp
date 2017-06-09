@@ -1,0 +1,87 @@
+.lg-tiphand{ 
+    border:1px solid orange;
+    border-radius: 10px;
+    margin:0 3px;
+    padding:0 5px;
+    cursor: pointer; 
+    display: inline-block;  
+} 
+
+.lg-tiphand .lg-bubble{
+    position: fixed;
+    margin:0;
+}
+.lg-tiphand .dirTop{
+    transform:translateY(-100%);
+}.lg-tiphand .dirTop-2{
+    transform:translateY(-50%);
+} .lg-tiphand .dirLeft{
+    transform:translateX(-100%);
+}.lg-tiphand .dirLeft-2{
+    transform:translateX(-50%);
+} .lg-tiphand .dirTopLeft{
+    transform:translate3d(-100%,-100%,0);
+}.lg-tiphand .dirTopLeft-2{
+    transform:translate3d(-50%,-100%,0);
+}.lg-tiphand .dirLeftTop-2{
+    transform:translate3d(-100%,-50%,0);
+}.lg-tiphand .lg-bubble-tl:after{
+    right:inherit !important;
+}.lg-tiphand .lg-bubble-tr:after{
+    right:26px !important;
+}.lg-tiphand .lg-bubble-rt:after{
+    transform: rotate(90deg);
+    left: -16px;
+    top: 12px;
+    bottom: inherit !important; 
+    right: inherit !important; 
+}.lg-tiphand .lg-bubble-r:after{
+    transform: rotate(90deg);
+    left: -16px;
+    top: 50%; 
+    bottom: inherit !important; 
+    right: inherit !important; 
+    -webkit-transform-origin-x:12px;
+    -webkit-transform-origin-y:4px;
+}.lg-tiphand .lg-bubble-rb:after{
+    transform: rotate(90deg);
+    left: -16px;
+    bottom: 12px !important; 
+    right: inherit !important;
+}.lg-tiphand .lg-bubble-br:after{
+    transform: rotate(180deg);
+    top:-16px; 
+    bottom: inherit !important; 
+    right: 26px !important;
+}.lg-tiphand .lg-bubble-b:after{
+    transform: rotate(180deg);
+    top:-16px; 
+    bottom: inherit !important;  
+}.lg-tiphand .lg-bubble-bl:after{
+    transform: rotate(180deg);
+    top:-16px; 
+    right: inherit !important; 
+    bottom: inherit !important;  
+}.lg-tiphand .lg-bubble-lb:after{
+    transform: rotate(-90deg); 
+    right: -8px !important; 
+    bottom: 12px !important;  
+}.lg-tiphand .lg-bubble-l:after{
+    transform: rotate(-90deg); 
+    right: -8px !important; 
+    bottom: inherit !important; 
+    top:50%; 
+    -webkit-transform-origin-x:4px;
+    -webkit-transform-origin-y:4px;
+}.lg-tiphand .lg-bubble-lt:after{
+    transform: rotate(-90deg); 
+    right: -8px !important; 
+    bottom: inherit !important;
+    top: 12px;
+}
+.lg-tiphand .lg-bubble-rt , .lg-tiphand .lg-bubble-r , .lg-tiphand .lg-bubble-rb{
+    box-shadow:-4px 4px 14px 1px #e1e1e1 !important;
+}
+.lg-tiphand .lg-bubble-br,.lg-tiphand .lg-bubble-b,.lg-tiphand .lg-bubble-bl {
+    box-shadow:-4px -4px 14px 1px #e1e1e1 !important;
+}

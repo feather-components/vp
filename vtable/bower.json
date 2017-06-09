@@ -1,0 +1,8 @@
+{
+  "name": "vtable",
+  "desc": "vpui-table",
+  "main": "index.js",
+  "version": "1.0.0",
+  "dependencies": { 
+  }
+}
