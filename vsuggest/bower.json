@@ -1,8 +1,0 @@
-{
-  "name": "vsuggest",
-  "desc": "vpui-suggest",
-  "main": "index.js",
-  "version": "1.0.0",
-  "dependencies": { 
-  }
-}

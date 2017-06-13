@@ -4,21 +4,19 @@
     overflow:hidden;
     height: 50px;
     text-align: right;
+    ul{
+        display: inline-block;
+    }
+    li{
+        float: left;
+        list-style: none;
+    }
 }
 .lg-pager-left{
     text-align: left;
 }
 .lg-pager-center{
     text-align: center;
-}
-
-.lg-pager ul{
-    display: inline-block;
-}
-
-.lg-pager li{
-    float: left;
-    list-style: none;
 }
 
 .lg-pager-item{
@@ -60,12 +58,12 @@
 .lg-pager-current{
     background: #5986E1;
     border-color:  #5986E1;
+    a{
+        color: #fff;
+    }
 }
 
-.lg-pager-current a{
-    color: #fff;
-}
-
+ 
 .lg-pager-item-large a{
     padding: 0px 4px;
 }
