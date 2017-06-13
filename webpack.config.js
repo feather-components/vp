@@ -4,14 +4,14 @@ module.exports = {
         pager:'./src/pager/examples/main.js',
     },
     output: {
-        path: path.join(__dirname, './dest'), 
+        path: path.join(__dirname, './dist'), 
         filename: '[name]/examples/main.js' 
     },  
     module: { 
         rules: [  
-            { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ }, 
+            { test: /\.(?!\/tpl\.)js$/, loader: 'babel-loader', exclude: /node_modules/ }, 
             { test: /\.css$/, loader: 'style-loader!css-loader!less-loader'}, 
-            { test: /\.tpl$/, loader: 'html-loader' },
+            { test: /tpl\.js$/, loader: 'html-loader' },
         ]
     }, 
     resolve: { 

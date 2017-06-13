@@ -71,6 +71,32 @@ module.exports = function(grunt) {
                 }]
             }
         },
+        cptpl: {
+            debug: {
+                options: {
+                    engine:'myEngine',
+                    customEngines:{
+                        myEngine:function(t){
+                            return 'return '+t+';';
+                        }
+                    },
+                    context: '{CMD}',
+                    reName: function (name) {
+                        return 'tpl';
+                    }
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'src/', 
+                    src: '*/tpl.js', 
+                    dest: 'dist',
+                    rename: function(dest, fileName) {
+                        return dest + '/'+fileName.split('/tpl.js')[0];
+                    }
+                }]
+
+            },
+        },
 
         watch: {
             start: {
@@ -94,5 +120,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.registerTask('default', ['babel','less:debug','cssmin:debug', 'copy:debug']);    
+    grunt.loadNpmTasks('grunt-cptpl');
+    grunt.registerTask('default', ['cptpl','babel','less:debug','cssmin:debug', 'copy:debug']);    
 };
