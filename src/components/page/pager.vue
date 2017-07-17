@@ -1,10 +1,10 @@
 <template>
-    <ul :class="['vp-pager', className]">
+    <ul :class="['vp-pager', className]" v-show="isShow">
         <li :class="['vp-pager-item', previousClass]">
-            <a href="javascript:;" @click="to(index)">{{previous}}</a>
+            <a href="javascript:;" @click="to(index-1)">{{previous}}</a>
         </li>
         <li class="vp-pager-item">
-            <a href="javascript:">1</a>
+            <a href="javascript:" @click="to(1)">1</a>
         </li>
         <li class="vp-pager-point vp-pager-item">
             <a href="javascript:">···</a>
@@ -16,13 +16,14 @@
             <a href="javascript:">···</a>
         </li>
         <li class="vp-pager-item">
-            <a href="javascript:">{{ total }}</a>
+            <a href="javascript:" @click="to(total)">{{ total }}</a>
         </li>
-        <li :class="['vp-pager-item', nextClass]"><a href="javascript:;" @click="_to(index)">{{next}}</a></li>
+        <li :class="['vp-pager-item', nextClass]"><a href="javascript:;" @click="to(index+1)">{{next}}</a></li>
         <li class="vp-pager-shortcut" v-if="showShortCut">
-            共&nbsp;{{ this.total }}&nbsp;页，到第
-            <input type="text" /> 页
-            <a href="javascript:" class="vp-pager-shortcut-confirm">确定</a>
+            <div class="vp-pager-shortcut-item">共&nbsp;{{ this.total }}&nbsp;页，到第&nbsp;</div>
+            <input type="text" :value="index" ref="jumpToInput"/>
+            <div class="vp-pager-shortcut-item">&nbsp;页</div>
+            <a href="javascript:" class="vp-pager-shortcut-confirm" @click="jumpTo()">确定</a>
         </li>
     </ul>
 </template>
@@ -33,60 +34,62 @@ module.exports = {
     data() {
         return {
             index: 1,
+            total: 0,
             pageNumbers: [],
+            isShow: false
         };
     },
 
     props: {
         current: {
             type: Number,
-            default: 1,
+            default: 1
         },
 
-        total: {
+        /*total: {
             type: Number,
-            required: true,
-        },
+            required: true
+        },*/
 
         visibleCount: {
             type: Number,
-            default: 10,
+            default: 10
         },
 
         url: String,
 
         showFirstBtn: {
             type: Boolean,
-            default: true,
+            default: true
         },
 
         showLastBtn: {
             type: Boolean,
-            default: true,
+            default: true
         },
 
         currentClassName: String,
 
         showShortCut: {
             type: Boolean,
-            default: false,
+            default: false
         },
 
         previous: {
             type: String,
-            default: '上一页',
+            default: '上一页'
         },
 
         next: {
             type: String,
-            default: '下一页',
+            default: '下一页'
         }
 
     },
 
     mounted() {
         var self = this;
-        self.calculate();
+        self.createItems();
     },
 
     computed: {
@@ -99,36 +102,58 @@ module.exports = {
         },
 
         className() {
-            return this.class;
-        },
-
-
+            return this['class'];
+        }
     },
 
     methods: {
+        
+        //外部接口
+        setPage(total, index) {
+            if (total > 0) {
+                this.isShow = true;
+            }
+            let i = index ? index : 1;
+            this.index = i;
+            this.total = total;
+            this.createItems();
+        },
+
+        jumpTo() {
+            var index = parseInt(this.$refs.jumpToInput.value, 10);
+            this.to(index);
+        },
+
         to(index) {
+            if (index > this.total || index < 1) {
+                return;
+            }
             this.index = index;
+            this.$emit('to', index);
         },
 
         numClass(num) {
             var self = this;
             if (self.index === num) {
-                return 'vp-pager-current'
+                return 'vp-pager-current';
             }
+            return '';
         },
 
-        calculate() {
+        createItems() {
             let self = this;
             let start = 0;
             let end = 0;
+            self.pageNumbers = [];
             const total = self.total;
             const visible = self.visibleCount;
-            const middle = Math.ceil(self.visible / 2);
+            const middle = Math.ceil(visible / 2);
             const index = self.index;
+            const m = parseInt(visible / 2,10);
 
             if (total < visible) {
                 start = 1;
-                end = visible;
+                end = total;
             } else {
                 if (index <= middle) {
                     start = 1;
@@ -239,13 +264,12 @@ module.exports = {
 }
 
 .vp-pager-shortcut {
-    height: 24px;
     color: #a3a3a3;
-    padding: 3px;
 }
 
 .vp-pager-shortcut input {
-    height: 23px;
+    height: 28px;
+    line-height: 28px;
     width: 38px;
     padding: 0px;
     outline: none;
@@ -253,9 +277,10 @@ module.exports = {
     margin: 0px;
     border-radius: 3px;
     border: 1px solid #a3a3a3;
+    float: left;
 }
 
-.vp-pager-shortcut-confirm {
+.vp-pager-shortcut .vp-pager-shortcut-confirm {
     border-radius: 3px;
     background: #5986E1;
     text-decoration: none;
@@ -266,5 +291,11 @@ module.exports = {
     height: 24px;
     line-height: 24px;
     margin-left: 5px;
+}
+
+.vp-pager-shortcut .vp-pager-shortcut-item {
+    float: left;
+    height: 28px;
+    line-height: 28px;
 }
 </style>
