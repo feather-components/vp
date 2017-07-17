@@ -1,24 +1,26 @@
 <template>
     <ul :class="['vp-pager', className]" v-show="isShow">
-        <li :class="['vp-pager-item', previousClass]">
+        <li :class="['vp-pager-item', previousClass]" v-if="showPrevious">
             <a href="javascript:;" @click="to(index-1)">{{previous}}</a>
         </li>
-        <li class="vp-pager-item">
+        <li class="vp-pager-item" v-if="showFirstBtnCmp">
             <a href="javascript:" @click="to(1)">1</a>
         </li>
-        <li class="vp-pager-point vp-pager-item">
+        <li class="vp-pager-point vp-pager-item" v-if="showPreviousPoint">
             <a href="javascript:">···</a>
         </li>
         <li :class="['vp-pager-item', numClass(num)]" v-for="num,index in pageNumbers">
             <a href="javascript:" @click="to(num)">{{ num }}</a>
         </li>
-        <li class="vp-pager-point vp-pager-item">
+        <li class="vp-pager-point vp-pager-item" v-if="showNextPoint">
             <a href="javascript:">···</a>
         </li>
-        <li class="vp-pager-item">
+        <li class="vp-pager-item" v-if="showLastBtnCmp">
             <a href="javascript:" @click="to(total)">{{ total }}</a>
         </li>
-        <li :class="['vp-pager-item', nextClass]"><a href="javascript:;" @click="to(index+1)">{{next}}</a></li>
+        <li :class="['vp-pager-item', nextClass]" v-if="showNext">
+            <a href="javascript:;" @click="to(index+1)">{{next}}</a>
+        </li>
         <li class="vp-pager-shortcut" v-if="showShortCut">
             <div class="vp-pager-shortcut-item">共&nbsp;{{ this.total }}&nbsp;页，到第&nbsp;</div>
             <input type="text" :value="index" ref="jumpToInput"/>
@@ -36,7 +38,13 @@ module.exports = {
             index: 1,
             total: 0,
             pageNumbers: [],
-            isShow: false
+            isShow: false,
+            showPrevious: true,
+            showNext: true,
+            showPreviousPoint: false,
+            showNextPoint: false,
+            showFirstBtnCmp: false,
+            showLastBtnCmp: false
         };
     },
 
@@ -94,11 +102,17 @@ module.exports = {
 
     computed: {
         previousClass() {
-            return 'vp-pager-previous';
+            if (this.previous) {
+                return 'vp-pager-previous';
+            }
+            return 'vp-pager-previous vp-pager-w28';
         },
 
         nextClass() {
-            return 'vp-pager-next';
+            if (this.next) {
+                return 'vp-pager-next';
+            }
+            return 'vp-pager-next vp-pager-w28';
         },
 
         className() {
@@ -107,16 +121,18 @@ module.exports = {
     },
 
     methods: {
-        
-        //外部接口
+
         setPage(total, index) {
-            if (total > 0) {
+            if (total && total > 0) {
                 this.isShow = true;
+            } else {
+                this.isShow = false;
+                return;
             }
-            let i = index ? index : 1;
-            this.index = i;
+            this.index = index ? index : 1;
             this.total = total;
             this.createItems();
+            this.setControl();
         },
 
         jumpTo() {
@@ -125,10 +141,8 @@ module.exports = {
         },
 
         to(index) {
-            if (index > this.total || index < 1) {
-                return;
-            }
             this.index = index;
+
             this.$emit('to', index);
         },
 
@@ -138,6 +152,44 @@ module.exports = {
                 return 'vp-pager-current';
             }
             return '';
+        },
+
+        setControl() {
+            if (this.index > this.total || this.index < 1) {
+                return;
+            }
+            if (this.index === 1) {
+                //this.showPrevious = false;
+                this.showPreviousPoint = false;
+                this.showFirstBtnCmp = false;
+            }
+
+            if (this.index > 1) {
+                //this.showPrevious = true;
+            }
+            
+            if (this.index === this.total) {
+                //this.showNext = false;
+            } else {
+                //this.showNext = true;
+            }
+            
+            if (this.index > Math.ceil(this.visibleCount / 2)) {
+                this.showPreviousPoint = true;
+                if (this.showFirstBtn) {
+                    this.showFirstBtnCmp = true;
+                }
+            }
+
+            if ((this.total - this.index) >= Math.ceil(this.visibleCount / 2)) {
+                this.showNextPoint = true;
+                if (this.showLastBtn) {
+                    this.showLastBtnCmp = true;
+                }
+            } else {
+                this.showNextPoint = false;
+                this.showLastBtnCmp = false;
+            }
         },
 
         createItems() {
@@ -183,6 +235,9 @@ module.exports = {
     margin: 5px auto;
     font: 12px Tahoma, Helvetica Neue, Hiragino Sans GB, Microsoft Yahei, sans-serif;
     overflow: auto;
+    .vp-pager-w28 a{
+        width: 28px;
+    }
 }
 
 .vp-pager li {
@@ -288,8 +343,8 @@ module.exports = {
     display: inline-block;
     color: #fff;
     width: 50px;
-    height: 24px;
-    line-height: 24px;
+    height: 28px;
+    line-height: 28px;
     margin-left: 5px;
 }
 
