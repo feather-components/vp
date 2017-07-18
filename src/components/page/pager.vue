@@ -49,22 +49,11 @@ module.exports = {
     },
 
     props: {
-        current: {
-            type: Number,
-            default: 1
-        },
-
-        /*total: {
-            type: Number,
-            required: true
-        },*/
 
         visibleCount: {
             type: Number,
             default: 10
         },
-
-        url: String,
 
         showFirstBtn: {
             type: Boolean,
@@ -75,8 +64,6 @@ module.exports = {
             type: Boolean,
             default: true
         },
-
-        currentClassName: String,
 
         showShortCut: {
             type: Boolean,
@@ -178,16 +165,6 @@ module.exports = {
                 this.showFirstBtnCmp = false;
             }
 
-            if (this.index > 1) {
-                //this.showPrevious = true;
-            }
-            
-            if (this.index === this.total) {
-                //this.showNext = false;
-            } else {
-                //this.showNext = true;
-            }
-            
             if (this.index > Math.ceil(this.visibleCount / 2)) {
                 this.showPreviousPoint = true;
                 if (this.showFirstBtn) {
