@@ -141,8 +141,10 @@ module.exports = {
         },
 
         to(index) {
+            if(index === 0 || index > this.total){
+                return;
+            }
             this.index = index;
-
             this.$emit('to', index);
         },
 
@@ -155,9 +157,21 @@ module.exports = {
         },
 
         setControl() {
+
+            if(this.total === 1){
+                this.showPrevious = false;
+                this.showNext = false;
+                this.showPreviousPoint = false;
+                this.showNextPoint = false;
+                this.showFirstBtn = false;
+                this.showLastBtn = false;
+                return;
+            }
+
             if (this.index > this.total || this.index < 1) {
                 return;
             }
+            
             if (this.index === 1) {
                 //this.showPrevious = false;
                 this.showPreviousPoint = false;
