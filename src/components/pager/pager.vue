@@ -21,7 +21,7 @@
         <li :class="['vp-pager-item', nextClass]" v-if="showNext">
             <a href="javascript:;" @click="to(index+1)">{{next}}</a>
         </li>
-        <li class="vp-pager-shortcut" v-if="showShortCut">
+        <li class="vp-pager-shortcut" v-if="showShortCutCmp" >
             <div class="vp-pager-shortcut-item">共&nbsp;{{ this.total }}&nbsp;页，到第&nbsp;</div>
             <input type="text" :value="index" ref="jumpToInput"/>
             <div class="vp-pager-shortcut-item">&nbsp;页</div>
@@ -44,7 +44,8 @@ module.exports = {
             showPreviousPoint: false,
             showNextPoint: false,
             showFirstBtnCmp: false,
-            showLastBtnCmp: false
+            showLastBtnCmp: false,
+            showShortCutCmp: false
         };
     },
 
@@ -157,11 +158,16 @@ module.exports = {
         },
 
         setControl () {
+            this.showShortCutCmp = this.showShortCut;
+
+            this.showNext = true;
+            this.showPrevious = true;
             if (this.total <= this.visibleCount) {
                 this.showPreviousPoint = false;
                 this.showNextPoint = false;
-                this.showFirstBtn = false;
-                this.showLastBtn = false;
+                this.showFirstBtnCmp = false;
+                this.showLastBtnCmp = false;
+                this.showShortCutCmp = false;
                 if (this.total === 1) {
                     this.showNext = false;
                     this.showPrevious = false;
