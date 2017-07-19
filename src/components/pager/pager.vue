@@ -33,7 +33,7 @@
 
 <script>
 module.exports = {
-    data() {
+    data () {
         return {
             index: 1,
             total: 0,
@@ -49,11 +49,22 @@ module.exports = {
     },
 
     props: {
+        current: {
+            type: Number,
+            default: 1
+        },
+
+        /* total: {
+            type: Number,
+            required: true
+        }, */
 
         visibleCount: {
             type: Number,
             default: 10
         },
+
+        url: String,
 
         showFirstBtn: {
             type: Boolean,
@@ -64,6 +75,8 @@ module.exports = {
             type: Boolean,
             default: true
         },
+
+        currentClassName: String,
 
         showShortCut: {
             type: Boolean,
@@ -82,60 +95,60 @@ module.exports = {
 
     },
 
-    mounted() {
+    mounted () {
         var self = this;
         self.createItems();
     },
 
     computed: {
-        previousClass() {
+        previousClass () {
             if (this.previous) {
                 return 'vp-pager-previous';
             }
             return 'vp-pager-previous vp-pager-w28';
         },
 
-        nextClass() {
+        nextClass () {
             if (this.next) {
                 return 'vp-pager-next';
             }
             return 'vp-pager-next vp-pager-w28';
         },
 
-        className() {
+        className () {
             return this['class'];
         }
     },
 
     methods: {
 
-        setPage(total, index) {
+        setPage (total, index) {
             if (total && total > 0) {
                 this.isShow = true;
             } else {
                 this.isShow = false;
                 return;
             }
-            this.index = index ? index : 1;
+            this.index = index || 1;
             this.total = total;
             this.createItems();
             this.setControl();
         },
 
-        jumpTo() {
+        jumpTo () {
             var index = parseInt(this.$refs.jumpToInput.value, 10);
             this.to(index);
         },
 
-        to(index) {
-            if(index === 0 || index > this.total){
+        to (index) {
+            if (index === 0 || index > this.total) {
                 return;
             }
             this.index = index;
             this.$emit('to', index);
         },
 
-        numClass(num) {
+        numClass (num) {
             var self = this;
             if (self.index === num) {
                 return 'vp-pager-current';
@@ -143,24 +156,25 @@ module.exports = {
             return '';
         },
 
-        setControl() {
-
-            if(this.total === 1){
-                this.showPrevious = false;
-                this.showNext = false;
+        setControl () {
+            if (this.total <= this.visibleCount) {
                 this.showPreviousPoint = false;
                 this.showNextPoint = false;
                 this.showFirstBtn = false;
                 this.showLastBtn = false;
+                if (this.total === 1) {
+                    this.showNext = false;
+                    this.showPrevious = false;
+                }
                 return;
             }
 
             if (this.index > this.total || this.index < 1) {
                 return;
             }
-            
+
             if (this.index === 1) {
-                //this.showPrevious = false;
+                // this.showPrevious = false;
                 this.showPreviousPoint = false;
                 this.showFirstBtnCmp = false;
             }
@@ -183,7 +197,7 @@ module.exports = {
             }
         },
 
-        createItems() {
+        createItems () {
             let self = this;
             let start = 0;
             let end = 0;
@@ -192,7 +206,7 @@ module.exports = {
             const visible = self.visibleCount;
             const middle = Math.ceil(visible / 2);
             const index = self.index;
-            const m = parseInt(visible / 2,10);
+            const m = parseInt(visible / 2, 10);
 
             if (total < visible) {
                 start = 1;
