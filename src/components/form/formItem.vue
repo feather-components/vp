@@ -54,16 +54,12 @@
 
             setField (value) {
                 let _list = this.$refs.valueBlock.children;
-                let field = {};
-
+    
                 if (_list.length === 1) {
-                    value = this.setSingleValue(_list[0], value);
+                    this.setSingleValue(_list[0], value);
                 } else if (_list.length > 1) {
-                    value = this.setComplexValue(_list, value);
+                    this.setComplexValue(_list, value);
                 }
-                field.name = this.name;
-                field.value = value;
-                return field;
             },
 
             getField () {
@@ -75,7 +71,7 @@
                 } else if (_list.length > 1) {
                     value = this.getComplexValue(_list);
                 }
-                return {name: name, value: value};
+                return {name: this.name, value: value};
             },
 
             setSingleValue (el, value) {
@@ -95,6 +91,7 @@
                 }
     
                 if (tagName === 'SELECT') {
+                    el.value = value;
                     return;
                 }
             },
@@ -111,6 +108,10 @@
                     if (_t === 'text') {
                         return el.value;
                     }
+                }
+
+                if (tagName === 'SELECT') {
+                    return el.value;
                 }
             },
             getComplexValue (elList) {

@@ -14,6 +14,16 @@
                     <vp-form-item label="radio" name="max" labelWidth="60px" initValue="1">
                         <input type="radio" value="1"></input>
                     </vp-form-item>
+                    <vp-form-item label="select" name="city" labelWidth="60px" initValue="1">
+                        <select>
+                            <option value='1'>北京</option>
+                            <option value='2'>上海</option>
+                            <option value='3'>广州</option>
+                            <option value='4'>南京</option>
+                            <option value='5'>土水之山</option>
+                        </select>
+                    </vp-form-item>
+                    
                 </vp-form>
             </div>
             <br/>
