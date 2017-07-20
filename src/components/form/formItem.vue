@@ -53,13 +53,13 @@
             },
 
             setField (value) {
-                let elList = this.$refs.valueBlock.children;
+                let _list = this.$refs.valueBlock.children;
                 let field = {};
 
-                if (elList.length === 1) {
-                    value = this.setSingleValue(elList[0], value);
-                } else if (elList.length > 1) {
-                    value = this.setComplexValue(elList, value);
+                if (_list.length === 1) {
+                    value = this.setSingleValue(_list[0], value);
+                } else if (_list.length > 1) {
+                    value = this.setComplexValue(_list, value);
                 }
                 field.name = this.name;
                 field.value = value;
@@ -67,83 +67,51 @@
             },
 
             getField () {
-                let elList = this.$refs.valueBlock.children;
-                let field = {};
+                let _list = this.$refs.valueBlock.children;
                 let value = '';
 
-                if (elList.length === 1) {
-                    value = this.getSingleValue(elList[0]);
-                } else if (elList.length > 1) {
-                    value = this.getComplexValue(elList);
+                if (_list.length === 1) {
+                    value = this.getSingleValue(_list[0]);
+                } else if (_list.length > 1) {
+                    value = this.getComplexValue(_list);
                 }
-                field.name = this.name;
-                field.value = value;
-                return field;
+                return {name: name, value: value};
             },
 
             setSingleValue (el, value) {
-                switch (el.tagName) {
-                case 'INPUT':
-                    let elType = el.getAttribute('type');
-                    if (!elType) {
-                        el.value = value;
+                let tagName = el.tagName;
+                if (tagName === 'INPUT') {
+                    let _t = el.getAttribute('type') || 'text';
+    
+                    if (_t === 'checkbox' || _t === 'radio') {
+                        el.checked = (el.value === value);
+                        return;
                     }
-                    switch (elType) {
-                    case 'radio':
-                        if (el.value === value) {
-                            el.checked = true;
-                            return;
-                        }
-                        el.checked = false;
-                        break;
-                    case 'checkbox':
-                        if (el.value === value) {
-                            el.checked = true;
-                            return;
-                        }
-                        el.checked = false;
-                        break;
-                    case 'input':
+                    if (_t === 'text') {
                         el.value = value;
-                        break;
+                        return;
                     }
-                    break;
-                default:
-                    console.log(el.tagName);
-                    break;
+                    return;
                 }
-                return value;
+    
+                if (tagName === 'SELECT') {
+                    return;
+                }
             },
 
             getSingleValue (el) {
-                let value = '';
-                switch (el.tagName) {
-                case 'INPUT':
-                    let elType = el.getAttribute('type');
-                    if (!elType) {
-                        value = el.value;
+                let tagName = el.tagName;
+                if (tagName === 'INPUT') {
+                    let _t = el.getAttribute('type') || 'text';
+    
+                    if (_t === 'checkbox' || _t === 'radio') {
+                        return el.checked ? el.value : '';
                     }
-                    switch (elType) {
-                    case 'radio':
-                        if (el.checked) {
-                            value = el.value;
-                        }
-                        break;
-                    case 'checkbox':
-                        if (el.checked) {
-                            value = el.value;
-                        }
-                        break;
-                    case 'input':
-                        value = el.value;
-                        break;
+
+                    if (_t === 'text') {
+                        return el.value;
                     }
-                    break;
-                default:
-                    console.log(el.tagName);
-                    break;
                 }
-                return value;
             },
             getComplexValue (elList) {
                 console.log(elList);
