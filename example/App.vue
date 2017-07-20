@@ -57,6 +57,8 @@
     }
     .demo-block{
         padding: 10px;
+        padding-left: 0;
+        margin-bottom: 10px;
     }
     .demo-block .demo-input{
         padding: 3px 5px;
@@ -74,5 +76,17 @@
 
     .cmp-name{
         padding: 10px;
+    }
+
+    .clearfix {
+        *zoom: 1;
+    }
+
+    .clearfix:after {
+        clear: both;
+        content: '.';
+        display: block;
+        height: 0;
+        overflow: hidden;
     }
 </style>

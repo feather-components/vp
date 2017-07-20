@@ -1,6 +1,6 @@
 # vp
 
-> A Vue.js project
+> A Vue.js components lib
 
 ## Build Setup
 

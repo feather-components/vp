@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="clearfix">
         <form>
             <slot>form</slot>
         </form>
@@ -10,7 +10,8 @@
         cmpName: 'vp-form',
         data () {
             return {
-                labelSuffix: '：'
+                labelSuffix: '：',
+                fields: []
             };
         },
         props: {
@@ -18,7 +19,20 @@
         },
         methods: {
             getFieldValues () {
-    
+
+            },
+            getFields () {
+                var fields = {};
+                this.fields.forEach((item) => {
+                    let field = item.getField();
+                    fields[field.name] = field.value;
+                });
+                return fields;
+            },
+            reset () {
+                this.fields.forEach((item) => {
+                    item.resetField();
+                });
             }
         },
         mounted () {
