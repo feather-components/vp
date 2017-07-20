@@ -24,7 +24,11 @@
                             <option value='5'>土水之山</option>
                         </select>
                     </vp-form-item>
-                    
+                    <vp-form-item label="checkBoxArray" name="checkBoxArray" labelWidth="130px" style="width:200px;">
+                       <vp-checkbox-array :opCheckBoxArray="[{label:'label1',value:'1'},{label:'label2',value:'2'},{label:'label3',value:'3'}]">
+                           
+                       </vp-checkbox-array>
+                    </vp-form-item>
                 </vp-form>
             </div>
             <br/>

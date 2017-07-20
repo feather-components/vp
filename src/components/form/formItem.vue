@@ -11,6 +11,7 @@
 </template>
 <script>
     export default {
+        cmpName: 'vp-form-item',
         data () {
             return {
             };
@@ -33,17 +34,7 @@
                 return '';
             },
             form () {
-                let self = this;
-                let parent = self.$parent;
-                let count = 0;
-                while (parent.$options.cmpName !== 'vp-form' && count < 5) {
-                    parent = parent.$parent;
-                    count++;
-                };
-                if (parent.$options.cmpName !== 'vp-form') {
-                    return false;
-                }
-                return parent;
+                return this.$parent;
             }
         },
     
