@@ -1,11 +1,12 @@
 <template>
     <div class="demo-wrap">
+        <div class="cmp-name">vp-pager</div>
         <div class="demo-block">
             <div class="demo-title">示例1:</div>
             <div class="demo-code">
                 <code>&lt;vp-pager ref="pagination1"&gt;&lt;/vp-pager&gt;</code>
             </div>
-            <div>请输入 total1：<input class="demo-input" v-model="total1"></input></div>
+            <div>total：<input class="demo-input" v-model="total1"></input></div>
             <div class="demo-instance">
                 <vp-pager ref="pagination1" v-on:to="pageTo1"></vp-pager>
             </div>
@@ -15,7 +16,7 @@
             <div class="demo-code">
                 <code>&lt;vp-pager ref="pagination2"  :visibleCount="5"&gt;&lt;/vp-pager&gt;</code>
             </div>
-            <div>请输入 total2：<input class="demo-input" v-model="total2"></input></div>
+            <div>total：<input class="demo-input" v-model="total2"></input></div>
             <div class="demo-instance">
                 <vp-pager ref="pagination2" v-on:to="pageTo2" :visibleCount="5"></vp-pager>
             </div>
@@ -34,7 +35,7 @@
             <div class="demo-code">
                 <code>&lt;vp-pager ref="pagination4" :showFirstBtn="false" :showLastBtn="false"  &gt;&lt;/vp-pager&gt;</code>
             </div>
-            <div>请输入 total4：<input class="demo-input" v-model="total4"></input></div>
+            <div>total：<input class="demo-input" v-model="total4"></input></div>
             <div class="demo-instance">
                 <vp-pager ref="pagination4" v-on:to="pageTo4"  :showFirstBtn="false" :showLastBtn="false" ></vp-pager>
             </div>
@@ -107,22 +108,5 @@
 
 
 <style scope>
-    .demo-wrap{
-        padding: 10px;
-    }
-    .demo-block{
-        padding: 10px;
-    }
-    .demo-block .demo-input{
-        padding: 3px 5px;
-    }
-    .demo-title{
-        margin-bottom: 10px;
-    }
-    .demo-code{
-        border: 1px #ccc dashed;
-        padding: 20px;
-        margin-bottom: 5px;
-    }
 
 </style>

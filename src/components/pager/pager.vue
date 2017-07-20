@@ -33,6 +33,7 @@
 
 <script>
 module.exports = {
+    cmpName: 'vp-pager',
     data () {
         return {
             index: 1,
