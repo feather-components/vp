@@ -130,8 +130,8 @@ module.exports = {
                 this.isShow = false;
                 return;
             }
-            this.index = index || 1;
-            this.total = total;
+            this.index = parseInt(index, 10) || 1;
+            this.total = parseInt(total, 10);
             this.createItems();
             this.setControl();
         },
@@ -145,7 +145,6 @@ module.exports = {
             if (index === 0 || index > this.total) {
                 return;
             }
-            this.index = index;
             this.$emit('to', index);
         },
 
@@ -246,9 +245,10 @@ module.exports = {
     margin: 5px auto;
     font: 12px Tahoma, Helvetica Neue, Hiragino Sans GB, Microsoft Yahei, sans-serif;
     overflow: auto;
-    .vp-pager-w28 a{
-        width: 28px;
-    }
+}
+
+.vp-pager .vp-pager-w28 a{
+    width: 28px;
 }
 
 .vp-pager li {
