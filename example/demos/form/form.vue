@@ -30,7 +30,9 @@
                     <vp-form-item label="radios" name="radios" labelWidth="130px" style="width:500px;">
                        <vp-radioboxes valueWidth="300px;" :poItems="this.checkBoxItems"></vp-radioboxes>
                     </vp-form-item>
-                    
+                   <vp-form-item label="cityBox" name="radios" labelWidth="130px" style="width:500px;">
+                       <vp-cityboxes valueWidth="300px;" :cityJson="this.cityJson"></vp-cityboxes>
+                    </vp-form-item>
                 </vp-form>
             </div>
             <br/>
@@ -54,8 +56,8 @@
                 total1: 15,
                 formData: '',
                 checkBoxItems: [{label: 'label1', value: '1'}, {label: 'label2', value: '2'}, {label: 'label3', value: '3'}],
-                radioBoxItems: [{label: 'label1', value: '1'}, {label: 'label2', value: '2'}, {label: 'label3', value: '3'}]
-    
+                radioBoxItems: [{label: 'label1', value: '1'}, {label: 'label2', value: '2'}, {label: 'label3', value: '3'}],
+                cityJson: {}
             };
         },
 
