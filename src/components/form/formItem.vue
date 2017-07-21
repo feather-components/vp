@@ -45,27 +45,15 @@
 
             setField (value) {
                 let _list = this.$refs.valueBlock.children;
-    
-                if (_list.length === 1) {
-                    this.setSingleValue(_list[0], value);
-                } else if (_list.length > 1) {
-                    this.setComplexValue(_list, value);
-                }
+                this.setValue(_list[0], value);
             },
 
             getField () {
-                let _list = this.$refs.valueBlock.children;
-                let value = '';
-
-                if (_list.length === 1) {
-                    value = this.getSingleValue(_list[0]);
-                } else if (_list.length > 1) {
-                    value = this.getComplexValue(_list);
-                }
+                let value = this.getValue(this.$refs.valueBlock.children[0]);
                 return {name: this.name, value: value};
             },
 
-            setSingleValue (el, value) {
+            setValue (el, value) {
                 let tagName = el.tagName;
                 if (tagName === 'INPUT') {
                     let _t = el.getAttribute('type') || 'text';
@@ -80,29 +68,43 @@
                     }
                     return;
                 }
-    
                 if (tagName === 'SELECT') {
                     el.value = value;
                     return;
                 }
+                if (tagName === 'DIV') {
+                    let _t = el.getAttribute('type');
+                    if (!_t) {
+                        return;
+                    }
+                    if (_t === 'VP-CHECKBOXES' || _t === 'VP-RADIOBOXES') {
+                        return this.subItem.setValue(value);
+                    }
+                }
             },
 
-            getSingleValue (el) {
+            getValue (el) {
                 let tagName = el.tagName;
                 if (tagName === 'INPUT') {
                     let _t = el.getAttribute('type') || 'text';
-    
                     if (_t === 'checkbox' || _t === 'radio') {
                         return el.checked ? el.value : '';
                     }
-
                     if (_t === 'text') {
                         return el.value;
                     }
                 }
-
                 if (tagName === 'SELECT') {
                     return el.value;
+                }
+                if (tagName === 'DIV') {
+                    let _t = el.getAttribute('type');
+                    if (!_t) {
+                        return;
+                    }
+                    if (_t === 'VP-CHECKBOXES' || _t === 'VP-RADIOBOXES') {
+                        return this.subItem.getValue();
+                    }
                 }
             },
             getComplexValue (elList) {

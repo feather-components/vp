@@ -24,11 +24,13 @@
                             <option value='5'>土水之山</option>
                         </select>
                     </vp-form-item>
-                    <vp-form-item label="checkBoxArray" name="checkBoxArray" labelWidth="130px" style="width:200px;">
-                       <vp-checkbox-array :opCheckBoxArray="[{label:'label1',value:'1'},{label:'label2',value:'2'},{label:'label3',value:'3'}]">
-                           
-                       </vp-checkbox-array>
+                    <vp-form-item label="checkboxes" name="checkboxes" labelWidth="130px" style="width:500px;">
+                       <vp-checkboxes valueWidth="300px;" :poItems="this.checkBoxItems"></vp-checkboxes>
                     </vp-form-item>
+                    <vp-form-item label="radios" name="radios" labelWidth="130px" style="width:500px;">
+                       <vp-radioboxes valueWidth="300px;" :poItems="this.checkBoxItems"></vp-radioboxes>
+                    </vp-form-item>
+                    
                 </vp-form>
             </div>
             <br/>
@@ -50,7 +52,10 @@
         data () {
             return {
                 total1: 15,
-                formData: ''
+                formData: '',
+                checkBoxItems: [{label: 'label1', value: '1'}, {label: 'label2', value: '2'}, {label: 'label3', value: '3'}],
+                radioBoxItems: [{label: 'label1', value: '1'}, {label: 'label2', value: '2'}, {label: 'label3', value: '3'}]
+    
             };
         },
 
