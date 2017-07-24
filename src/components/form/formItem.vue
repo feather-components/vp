@@ -1,9 +1,9 @@
 <template>
-    <div class="vp-form-item">
+    <div :class="['vp-form-item',className]">
         <label class="vp-form-label" v-if="label" :style="labelStyle">
             <slot name="label">{{ label + form.labelSuffix }}</slot>
         </label>
-        <div ref="valueBlock" class="vp-form-value">
+        <div ref="valueBlock" class="vp-form-value" :style="valueStyle">
             <slot></slot>
         </div>
         <div class="vp-form-item-error"></div>
@@ -12,13 +12,14 @@
 <script>
     export default {
         cmpName: 'vp-form-item',
-        data () {
+        data() {
             return {
             };
         },
         props: {
             label: String,
             labelWidth: String,
+            valueWidth: String,
             name: String,
             initValue: {
                 type: String,
@@ -27,33 +28,43 @@
         },
 
         computed: {
-            labelStyle () {
+            labelStyle() {
                 if (this.labelWidth) {
                     return 'width:' + this.labelWidth;
                 }
                 return '';
             },
-            form () {
+            valueStyle() {
+                if (this.valueWidth) {
+                    return 'width:' + this.valueWidth;
+                }
+                return '';
+            },
+            form() {
                 return this.$parent;
+            },
+            className() {
+                return this['class'];
             }
         },
     
         methods: {
-            resetField () {
-                this.setField(this.initValue);
+            resetField() {
+                this.initValue = this.initValue ? this.initValue : '';
+                this.setValue(this.initValue);
             },
 
-            setField (value) {
+            setValue(value) {
                 let _list = this.$refs.valueBlock.children;
-                this.setValue(_list[0], value);
+                this.setElValue(_list[0], value);
             },
 
-            getField () {
+            getField() {
                 let value = this.getValue(this.$refs.valueBlock.children[0]);
                 return {name: this.name, value: value};
             },
 
-            setValue (el, value) {
+            setElValue(el, value) {
                 let tagName = el.tagName;
                 if (tagName === 'INPUT') {
                     let _t = el.getAttribute('type') || 'text';
@@ -62,16 +73,17 @@
                         el.checked = (el.value === value);
                         return;
                     }
-                    if (_t === 'text') {
+                    if (_t === 'text' || _t === 'hidden') {
                         el.value = value;
                         return;
                     }
-                    return;
                 }
+    
                 if (tagName === 'SELECT') {
                     el.value = value;
                     return;
                 }
+    
                 if (tagName === 'DIV') {
                     let _t = el.getAttribute('type');
                     if (!_t) {
@@ -83,14 +95,14 @@
                 }
             },
 
-            getValue (el) {
+            getValue(el) {
                 let tagName = el.tagName;
                 if (tagName === 'INPUT') {
                     let _t = el.getAttribute('type') || 'text';
                     if (_t === 'checkbox' || _t === 'radio') {
                         return el.checked ? el.value : '';
                     }
-                    if (_t === 'text') {
+                    if (_t === 'text' || _t === 'hidden') {
                         return el.value;
                     }
                 }
@@ -107,14 +119,14 @@
                     }
                 }
             },
-            getComplexValue (elList) {
+            getComplexValue(elList) {
                 console.log(elList);
             },
-            setComplexValue (elList, value) {
+            setComplexValue(elList, value) {
                 console.log(value);
             }
         },
-        mounted () {
+        mounted() {
             if (this.form) {
                 this.form.fields.push(this);
             }
@@ -128,7 +140,7 @@
    
     .vp-form-item{
         float: left;
-        margin-right: 10px;
+        margin: 0 10px 6px 0;
     }
     .vp-form-value{
         float: left;

@@ -8,7 +8,7 @@
 <script>
     export default {
         cmpName: 'vp-form',
-        data () {
+        data() {
             return {
                 labelSuffix: '：',
                 fields: []
@@ -18,10 +18,10 @@
 
         },
         methods: {
-            getFieldValues () {
+            getFieldValues() {
 
             },
-            getFields () {
+            getFields() {
                 var fields = {};
                 this.fields.forEach((item) => {
                     let field = item.getField();
@@ -29,13 +29,28 @@
                 });
                 return fields;
             },
-            reset () {
+            getFormData() {
+                var obj = {};
+                this.fields.forEach((item) => {
+                    let field = item.getField();
+                    obj[field.name] = field.value;
+                });
+                return obj;
+            },
+            reset() {
                 this.fields.forEach((item) => {
                     item.resetField();
                 });
+            },
+            setValue(fieldName, value) {
+                this.fields.forEach((item) => {
+                    if (item.name === fieldName) {
+                        item.setValue(value);
+                    }
+                });
             }
         },
-        mounted () {
+        mounted() {
 
         }
     };
