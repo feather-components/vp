@@ -12,7 +12,7 @@
 <script>
     export default {
         cmpName: 'vp-form-item',
-        data() {
+        data () {
             return {
             };
         },
@@ -28,43 +28,43 @@
         },
 
         computed: {
-            labelStyle() {
+            labelStyle () {
                 if (this.labelWidth) {
                     return 'width:' + this.labelWidth;
                 }
                 return '';
             },
-            valueStyle() {
+            valueStyle () {
                 if (this.valueWidth) {
                     return 'width:' + this.valueWidth;
                 }
                 return '';
             },
-            form() {
+            form () {
                 return this.$parent;
             },
-            className() {
+            className () {
                 return this['class'];
             }
         },
     
         methods: {
-            resetField() {
+            resetField () {
                 this.initValue = this.initValue ? this.initValue : '';
                 this.setValue(this.initValue);
             },
 
-            setValue(value) {
+            setValue (value) {
                 let _list = this.$refs.valueBlock.children;
                 this.setElValue(_list[0], value);
             },
 
-            getField() {
+            getField () {
                 let value = this.getValue(this.$refs.valueBlock.children[0]);
                 return {name: this.name, value: value};
             },
 
-            setElValue(el, value) {
+            setElValue (el, value) {
                 let tagName = el.tagName;
                 if (tagName === 'INPUT') {
                     let _t = el.getAttribute('type') || 'text';
@@ -95,7 +95,7 @@
                 }
             },
 
-            getValue(el) {
+            getValue (el) {
                 let tagName = el.tagName;
                 if (tagName === 'INPUT') {
                     let _t = el.getAttribute('type') || 'text';
@@ -119,19 +119,19 @@
                     }
                 }
             },
-            getComplexValue(elList) {
+            getComplexValue (elList) {
                 console.log(elList);
             },
-            setComplexValue(elList, value) {
+            setComplexValue (elList, value) {
                 console.log(value);
             }
         },
-        mounted() {
+        mounted () {
             if (this.form) {
                 this.form.fields.push(this);
             }
             if (this.initValue) {
-                this.setField(this.initValue);
+                this.setValue(this.initValue);
             }
         }
     };

@@ -1,6 +1,6 @@
 <template>
     <div class="vp-radiobox-wrap clearfix" :style="valueStyle" type="VP-RADIOBOXES" ref="itemWrap">
-        <div class="vp-radiobox-item" v-for="item, index in items">
+        <div class="vp-radiobox-item" v-for="item, index in dataItems">
             <label :for="boxId(index)">{{item.label}}</label><input type="radio" :id="boxId(index)" :value="item.value" :name="name"></input>
         </div>
     </div>
@@ -11,13 +11,13 @@
     
         data () {
             return {
-                items: [],
+                dataItems: [],
                 name: ''
             };
         },
 
         props: {
-            poItems: {
+            items: {
                 type: Array,
                 required: true
             },
@@ -74,7 +74,7 @@
         },
 
         mounted () {
-            this.items = this.poItems;
+            this.dataItems = this.items;
             this.formItem.subItem = this;
             this.name = this.formItem.name;
         }
