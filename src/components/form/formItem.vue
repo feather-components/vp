@@ -1,9 +1,9 @@
 <template>
     <div :class="['vp-form-item',className]">
-        <label class="vp-form-label" v-if="label" :style="labelStyle">
+        <label class="vp-form-label" v-if="label">
             <slot name="label">{{ label + form.labelSuffix }}</slot>
         </label>
-        <div ref="valueBlock" class="vp-form-value" :style="valueStyle">
+        <div ref="valueBlock" class="vp-form-value">
             <slot></slot>
         </div>
         <div class="vp-form-item-error"></div>
@@ -28,18 +28,6 @@
         },
 
         computed: {
-            labelStyle () {
-                if (this.labelWidth) {
-                    return 'width:' + this.labelWidth;
-                }
-                return '';
-            },
-            valueStyle () {
-                if (this.valueWidth) {
-                    return 'width:' + this.valueWidth;
-                }
-                return '';
-            },
             form () {
                 return this.$parent;
             },
