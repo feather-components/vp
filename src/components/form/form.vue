@@ -18,17 +18,6 @@
 
         },
         methods: {
-            getFieldValues () {
-
-            },
-            getFields () {
-                var fields = {};
-                this.fields.forEach((item) => {
-                    let field = item.getField();
-                    fields[field.name] = field.value;
-                });
-                return fields;
-            },
             getFormData () {
                 var obj = {};
                 this.fields.forEach((item) => {
