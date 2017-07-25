@@ -1,5 +1,5 @@
 <template>
-    <div class="vp-checkbox-wrap clearfix" :style="valueStyle" type="VP-CHECKBOXES" ref="itemWrap">
+    <div class="vp-checkbox-wrap clearfix" type="VP-CHECKBOXES" ref="itemWrap">
         <div class="vp-checkbox-item" v-for="item, index in dataItems">
             <label :for="boxId(index)">{{item.label}}</label><input type="checkbox" :id="boxId(index)" :value="item.value"></input>
         </div>
@@ -32,9 +32,6 @@
         computed: {
             formItem () {
                 return this.$parent;
-            },
-            valueStyle () {
-                return `width: ${this.valueWidth}`;
             }
         },
 

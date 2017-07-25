@@ -24,15 +24,15 @@
                             <option value='5'>土水之山</option>
                         </select>
                     </vp-form-item>
-                    <vp-form-item label="checkboxes" name="checkboxes" labelWidth="130px" style="width:500px;">
+                    <vp-form-item label="checkboxes" name="checkboxes" labelWidth="130px">
                        <vp-checkboxes valueWidth="300px;" :items="this.checkBoxItems"></vp-checkboxes>
                     </vp-form-item>
-                    <vp-form-item label="radios" name="radios" labelWidth="130px" style="width:500px;">
+                    <vp-form-item label="radios" name="radios" labelWidth="130px">
                        <vp-radioboxes valueWidth="300px;" :items="this.checkBoxItems"></vp-radioboxes>
                     </vp-form-item>
-                    <!-- <vp-form-item label="cityBox" name="cityBox" labelWidth="130px" style="width:500px;">
+                    <vp-form-item label="cityBox" name="cityBox" labelWidth="130px" style="width:500px;">
                        <vp-cityboxes valueWidth="300px;" :cityJson="this.cityJson"></vp-cityboxes>
-                    </vp-form-item> -->
+                    </vp-form-item>
                 </vp-form>
             </div>
             <br/>

@@ -1,5 +1,5 @@
 <template>
-    <div class="vp-radiobox-wrap clearfix" :style="valueStyle" type="VP-RADIOBOXES" ref="itemWrap">
+    <div class="vp-radiobox-wrap clearfix" type="VP-RADIOBOXES" ref="itemWrap">
         <div class="vp-radiobox-item" v-for="item, index in dataItems">
             <label :for="boxId(index)">{{item.label}}</label><input type="radio" :id="boxId(index)" :value="item.value" :name="name"></input>
         </div>
@@ -30,9 +30,6 @@
         computed: {
             formItem () {
                 return this.$parent;
-            },
-            valueStyle () {
-                return `width: ${this.valueWidth}`;
             }
         },
 

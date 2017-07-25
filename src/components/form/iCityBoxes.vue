@@ -1,5 +1,5 @@
 <template>
-    <div class="vp_citybox_wrap" v-show="showCityBox" type="VPCITYBOXES">
+    <div class="vp_citybox_wrap" v-show="showCityBox" type="VP-CITYBOXES" id="J-d">
         <i class="vp_citybox_arrow"></i>
         <h3 class="J_layer_h3">城市索引：</h3>
         <div class="letter_list">
@@ -16,12 +16,11 @@
                         <li class="item" data-value-str="" data-value-id=""><a href="javascript:;">全国</a></li>
                     </ol>
                 </li>
-                <li class="sub_panel" data-letter-value="{{ city.letter }}" v-for="city, index in cityList">
-                    <h5 class="index_title">{{ city.letter }}</h5>
+                <li class="sub_panel" :data-letter-value="city.letter" v-for="city, index in cityList">
+                    <h5 class="index_title">{{city.letter }}</h5>
                     <ol class="citys_ol clearfix">
                         <li class="item" 
-                            data-value-str="<%=list[iIndex].data[zIndex].zh%><%=list[iIndex].data[zIndex].py%>" 
-                            data-value-id={{cityItem.id}} v-for="cityItem in city.data">
+                            :data-value-id="cityItem.id" v-for="cityItem in city.data">
                             <a href="javascript:;"></a>
                         </li>
                     </ol>
@@ -145,11 +144,11 @@
         padding: 0 6px;
     }
     .vp_citybox_wrap .vp_citybox_arrow {
+        position: absolute;
         width: 0;
         height: 0;
         font-size: 0;
         line-height: 0;
-        position: absolute;
         display: block;
     }
     .vp_citybox_wrap .arrow_left {
