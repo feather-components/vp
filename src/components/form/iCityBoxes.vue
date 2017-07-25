@@ -1,8 +1,8 @@
 <template>
-    <div class="vp_citybox_wrap J_vp_citybox_wrap" v-show="showCityBox" type="VPCITYBOXES">
-        <i class="vp_citybox_arrow J_vp_citybox_arrow"></i>
+    <div class="vp_citybox_wrap" v-show="showCityBox" type="VPCITYBOXES">
+        <i class="vp_citybox_arrow"></i>
         <h3 class="J_layer_h3">城市索引：</h3>
-        <div class="letter_list J_letter_list">
+        <div class="letter_list">
             <a href="javascript:;" class="letter J_letter J_letter_all" style="width:50px;">全部</a>
             <a href="javascript:;" class="letter J_letter" v-for="city, index in cityList">{{city.letter}}</a>
             <input class="J_letter_input"></input>

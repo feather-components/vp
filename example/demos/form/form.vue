@@ -67,7 +67,7 @@
 
         methods: {
             getFormData () {
-                let obj = this.searchForm.getFields();
+                let obj = this.searchForm.getFormData();
                 this.formData = JSON.stringify(obj);
             },
             formReset () {
