@@ -33,7 +33,6 @@
 
 <script>
 module.exports = {
-    cmpName: 'vp-pager',
     data () {
         return {
             index: 1,
@@ -246,10 +245,9 @@ module.exports = {
     margin: 5px auto;
     font: 12px Tahoma, Helvetica Neue, Hiragino Sans GB, Microsoft Yahei, sans-serif;
     overflow: auto;
-}
-
-.vp-pager .vp-pager-w28 a{
-    width: 28px;
+    .vp-pager-w28 a{
+        width: 28px;
+    }
 }
 
 .vp-pager li {
