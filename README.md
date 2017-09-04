@@ -1,21 +1,70 @@
-# vp
+vpui
+================
+vpui
 
-> A Vue.js components lib
+### [例子演示] 
 
-## Build Setup
+## 使用
 
-``` bash
-# install dependencies
-npm install
+###  feather2
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+```sh
+feather2 install feather-components/vpui
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+编译vue的单文件组件
+
+```sh
+npm install feather2-parser-vue fis-parser-es6-babel --save
+```
+
+conf/conf.js
+
+```js
+feather.config.set('project.fileType.js', 'vue');
+
+feather.match('components/vm/**.vue', {
+    parser: ['vue', 'es6-babel']
+});
+
+feather.match('components/vm/**.js', {
+    parser: 'es6-babel'
+});
+
+```
+
+### webpack
+
+具体可见[webpack.config.js](./examples/webpack.config.js)
+
+#### 由于vm为了让适配更多的手机尺寸，故使用了rem进行尺寸的计算，所以在使用前，需要引入vm/rem.js文件
+
+```html
+ 
+```
+
+```js
+//index.js
+import {Pager} from 'vpui';
+```
+
+## 注册全局，所有的组件以 vp- 开头， 指令除外
+
+```js
+import Vpui from 'vpui';
+import Vue from 'vue';
+
+Vue.use(Vpui);
+```
+
+```html
+<vm-scroll></vm-scroll>
+```
+
+## 组件列表
+
+* [Pager](./doc/pager.md) 
+
+## 指令
+
+##方法
