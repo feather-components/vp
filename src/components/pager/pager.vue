@@ -1,7 +1,7 @@
 <template>
     <div class="lg-pager" :class="klass" v-if="showPager">
-        <ul>
-            <slot name="before"></slot>
+        <slot name="before"></slot>
+        <ul>            
             <li class="lg-pager-item lg-pager-previous" :class="{'disable':isHead}">
                 <a href="javascript:" @click="to(pager.current-1)"></a>
             </li>
@@ -26,9 +26,9 @@
             <li class="lg-pager-shortcut">
                 去第<input type="text" v-model="shortcut">页<a href="javascript:" class="lg-pager-shortcut-confirm" @click="to(shortcut)">确定</a>
             </li>
-            <li class="lg-pager-total" v-text="'共'+pager.total+'页'"></li>
-            <slot name="after"></slot>
+            <li class="lg-pager-total" v-text="'共'+pager.total+'页'"></li>            
         </ul>
+        <slot name="after"></slot>
     </div>
 </template>
 <style>
