@@ -75,6 +75,7 @@ export default {
     },
     methods: {
         callback(page) {
+            console.log(123);
             this.msg = 'current page is :' + page;
         }
     }
