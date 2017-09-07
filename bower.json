@@ -1,0 +1,12 @@
+{
+  "name": "vpui",
+  "version": "0.0.1",
+  "description": "基于vue2的管理后台组件库",
+  "main": "src/index.js",
+  "author": "babyclever",
+  "clean": false,
+  "license": "ISC",
+  "dependencies": {
+    "vue": "feather-components/vue#production"
+  }
+}

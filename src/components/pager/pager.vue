@@ -1,39 +1,37 @@
 <template>
-    <div class="lg-pager" :class="{'lg-pager-left':position=='left','lg-pager-center':position=='center'}" v-if="pager.total">
+    <div class="lg-pager" :class="klass" v-if="showPager">
         <ul>
-            <li class="lg-pager-item" v-if="pager.page>max" :class="{'disable':pager.current==1}">
-                <a href="javascript:" @click="to(1,pager.current==1)">首页</a>
+            <template>
+                <slot name="beforePager"></slot>
+            </template>
+            <li class="lg-pager-item lg-pager-previous" :class="{'disable':isHead}">
+                <a href="javascript:" @click="to(pager.current-1,isHead)"></a>
             </li>
-            <li class="lg-pager-previous lg-pager-item" :class="{'disable':pager.current==1}">
-                <a href="javascript:" @click="to(pager.current-1,pager.current==1)"></a>
-            </li>
-            <li class="lg-pager-item" :class="{'lg-pager-current':pager.current==1}">
-                <a href="javascript:" @click="to(1,pager.current==1)" v-html="1"></a>
+            <li class="lg-pager-item" :class="{'lg-pager-current':isHead}">
+                <a href="javascript:" @click="to(1,isHead)" v-html="1"></a>
             </li>
             <li class="lg-pager-item lg-pager-dot" v-if="pager.start!=2">
                 ...
             </li>
-            <li v-for="n in (pager.end-pager.start+1)" class="lg-pager-item" :class="{'lg-pager-current':pager.current==(pager.start+n-1)}" v-if="pager.page>0">
+            <li class="lg-pager-item" v-for="n in (pager.end-pager.start+1)" :class="{'lg-pager-current':pager.current==(pager.start+n-1)}">
                 <a href="javascript:" @click="to(pager.start+n-1,pager.current==(pager.start+n-1))" v-html="pager.start+n-1"></a>
             </li>
-            <li class="lg-pager-item lg-pager-dot" v-if="pager.end<pager.page-1">
+            <li class="lg-pager-item lg-pager-dot" v-if="pager.end<pager.total-1">
                 ...
             </li>
-            <li class="lg-pager-item" :class="{'lg-pager-current':pager.current==pager.page}" v-if="pager.page>1">
-                <a href="javascript:" @click="to(pager.page)" v-html="pager.page"></a>
+            <li class="lg-pager-item" :class="{'lg-pager-current':isTail}" v-if="pager.total>1">
+                <a href="javascript:" @click="to(pager.total)" v-html="pager.total"></a>
             </li>
-            <li class="lg-pager-next lg-pager-item" :class="{'disable':pager.current==pager.page}">
-                <a href="javascript:" @click="to(pager.current+1,pager.current==pager.page)"></a>
-            </li>
-            <li class="lg-pager-item" v-if="pager.page>max" :class="{'disable':pager.current==pager.page}">
-                <a href="javascript:" @click="to(pager.page,pager.current==pager.page)">尾页</a>
-            </li>
-            <li class="lg-pager-shortcut">去第
-                <input type="text" v-model="shortcut"> 页<a href="javascript:" class="lg-pager-shortcut-confirm" @click="to(shortcut)">确定</a>每页
-                <select v-model="pager.size" @change="select(pager.size)">
-                    <option v-for="o in opt" :value="o" v-html="o+'条'"></option>
-                </select>共{{pager.page}}页，{{pager.total}}条
-            </li>
+            <li class="lg-pager-item lg-pager-next" :class="{'disable':isTail}">
+                <a href="javascript:" @click="to(pager.current+1,isTail)"></a>
+            </li> 
+            <template>
+                <slot name="beforeTotal"></slot>
+            </template>
+            <li class="lg-pager-total" v-text="'共'+pager.total+'页'"></li>
+            <template>
+                <slot name="afterTotal"></slot>
+            </template>
         </ul>
     </div>
 </template>
@@ -43,15 +41,15 @@
         font: 12px Tahoma, Helvetica Neue, Hiragino Sans GB, Microsoft Yahei, sans-serif;
         overflow: hidden;
         height: 50px;
-        text-align: right;
+        text-align: center;
     }
 
     .lg-pager-left {
         text-align: left;
     }
 
-    .lg-pager-center {
-        text-align: center;
+    .lg-pager-right {
+        text-align: right;
     }
 
     .lg-pager ul {
@@ -61,16 +59,16 @@
     .lg-pager li {
         float: left;
         list-style: none;
+        margin: 2px 3px;
+        line-height: 28px;      
+        font-size: 12px;       
+        height: 28px; 
     }
 
     .lg-pager-item {
         border: 1px solid #dfdfdf;
         border-radius: 2px;
-        background-color: #fff;
-        margin: 2px 3px;
-        height: 28px;
-        line-height: 28px;
-        font-size: 12px;
+        background-color: #fff;   
     }
 
     .lg-pager-item:hover {
@@ -102,6 +100,9 @@
         text-decoration: none;
     }
 
+    .lg-pager-total{
+        border:1px solid transparent;
+    }
 
     .lg-pager-current {
         background: #5986E1;
@@ -190,105 +191,102 @@
     var Pager = {
         name:'pager',
         props: {
-            'model': {
-                type: Object,
+            'total': {
+                type: Number,
                 require: true
             },
-            'callback': {
-                type: Function
+            'current': {
+                type: Number,
+                require: true,
+                default: 1
             },
             'position': {
                 type: String
             },
-            'max': {
+            'volumn': {
                 type: Number,
                 default: 10,
-                validator: function(value) {
+                validator(value) {
                     return value > 5;
                 }
-            },
-            'option': {
-                type: Array
             }
         },
         methods: {
-            to: function(page, disable) {
+            to(current, disable) {
                 if (disable)
                     return;
-                if (isNaN(Number(page))) {
-                    alert('别任性~');
-                    this.shortcut = '';
+                if (isNaN(Number(current))) {
+                    alert('别任性~'); 
                     return;
                 }
-                if (Number(page) > this.pager.page)
-                    page = this.pager.page;
-                if (Number(page) < 1)
-                    page = 1;
-                this.calc(this.pager, page);
-                this.callback && this.callback(page, this.pager.size);
-                this.shortcut = '';
+                if (Number(current) > this.pager.total)
+                    current = this.pager.total;
+                if (Number(current) < 1)
+                    current = 1;
+                this.calculate(current); 
+                this.$emit('to',current);
             },
-            calc: function(pager, current) {
+            calculate(current) {
                 var current = Math.floor(current / 1);
-                var start = 2, end = pager.page - 1;
-                if (pager.page > this.m) {
+                var start = 2, end = this.pager.total - 1;
+                if (this.pager.total > this.vol) {
                     if (current - this.pre > 1) {
                         start = current - this.pre;
-                        if (current + this.next - pager.page < 0) {
+                        if (current + this.next - this.pager.total < 0) {
                             end = current + this.next
                         } else {
-                            start = end - (this.m - 3);
+                            start = end - (this.vol - 3);
                         }
                     } else {
-                        end = start + this.m - 3;
+                        end = start + this.vol - 3;
                     }
                 } else if (start > end) {
                     end = 1;
                 }
-                pager.start = start;
-                pager.end = end;
-                pager.current = current;
+                this.pager.start = start;
+                this.pager.end = end;
+                this.pager.current = current;
             },
-            select: function(size) {
-                this.update();
-                this.to(1);
-            },
-            update: function(size) {
-                if (size) {
-                    this.pager.size = size;
-                }
-                this.pager.total = this.model.total;
-                this.pager.current = this.model.current;
-                this.pager.page = Math.ceil(this.pager.total / this.pager.size);
-                this.calc(this.pager, this.pager.current);
+            update() { 
+                this.vol=this.volumn;
+                this.pre=Math.floor((this.vol - 3) / 2);
+                this.next=Math.ceil((this.vol - 3) / 2);
+                this.pager.total = this.total;                
+                this.calculate(this.current);
             }
         },
-        data: function() {
-            var option = this.option ? this.option : [10, 20, 50];
-            var size = option.indexOf(this.model.size) >= 0 ? this.model.size : option[0];
+        data() {  
             return {
-                pager: {
-                    page: Math.ceil(this.model.total / size),
-                    size: size,
-                    total: this.model.total,
-                    current: this.model.current
+                pager: { 
+                    total: this.total,
+                    current: this.current
                 },
-                shortcut: '',
-                m: this.max,
-                pre: Math.floor((this.max - 3) / 2),
-                next: Math.ceil((this.max - 3) / 2),
-                opt: option
+                klass:{
+                    'lg-pager-left':this.position=='left',
+                    'lg-pager-right':this.position=='right'
+                }
             }
         },
-        created: function() {
-            this.calc(this.pager, this.pager.current);
+        created() {
+            this.update();
+        },
+        computed:{
+            isHead(){
+                return this.pager.current==1;
+            },
+            isTail(){
+                return this.pager.current==this.pager.total;
+            },
+            showPager(){
+                return !!this.pager.total;
+            },
+            modelUpdate(){
+                return this.total+'&'+this.current+'&'+this.volumn;
+            }
         },
         watch: {
-            model: {
-                handler() {
-                    this.update(this.model.size);
-                },
-                deep: true
+            'modelUpdate':function () {
+                this.update();
             }
         }
     } 
