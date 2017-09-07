@@ -6,19 +6,19 @@
                 <a href="javascript:" @click="to(pager.current-1)"></a>
             </li>
             <li class="lg-pager-item" :class="{'lg-pager-current':isHead}">
-                <a href="javascript:" @click="to(1)" v-html="1"></a>
+                <a href="javascript:" @click="to(1)">1</a>
             </li>
             <li class="lg-pager-item lg-pager-dot" v-if="pager.start!=2">
                 ...
             </li>
             <li class="lg-pager-item" v-for="n in (pager.end-pager.start+1)" :class="{'lg-pager-current':pager.current==(pager.start+n-1)}">
-                <a href="javascript:" @click="to(pager.start+n-1)" v-html="pager.start+n-1"></a>
+                <a href="javascript:" @click="to(pager.start+n-1)">{{pager.start+n-1}}</a>
             </li>
             <li class="lg-pager-item lg-pager-dot" v-if="pager.end<pager.total-1">
                 ...
             </li>
             <li class="lg-pager-item" :class="{'lg-pager-current':isTail}" v-if="pager.total>1">
-                <a href="javascript:" @click="to(pager.total)" v-html="pager.total"></a>
+                <a href="javascript:" @click="to(pager.total)">{{pager.total}}</a>
             </li>
             <li class="lg-pager-item lg-pager-next" :class="{'disable':isTail}">
                 <a href="javascript:" @click="to(pager.current+1)"></a>
@@ -26,7 +26,7 @@
             <li class="lg-pager-shortcut">
                 去第<input type="text" v-model="shortcut">页<a href="javascript:" class="lg-pager-shortcut-confirm" @click="to(shortcut)">确定</a>
             </li>
-            <li class="lg-pager-total" v-text="'共'+pager.total+'页'"></li>            
+            <li class="lg-pager-total">共{{pager.total}}页</li>            
         </ul>
         <slot name="after"></slot>
     </div>
@@ -153,7 +153,7 @@
     padding: 0px;
     outline: none;
     text-align: center;
-    margin: 0px;
+    margin: 0 6px;
     border-radius: 3px;
     border: 1px solid #a3a3a3;
     box-size: border-box;
