@@ -33,30 +33,11 @@
                         </li>
                         <li>
                             <a href="javascript:;" class="lg-fn-active">
-                                <span>PageUnit</span>
+                                <span>Modules</span>
                             </a>
                             <ul>
-                                <li>
-                                    <a class="wp-sidebar-leaf" href="tree.html">Head</a>
-                                </li>
-                                <li>
-                                    <a class="wp-sidebar-leaf" href="condition.html">Condition</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:;" class="lg-fn-active">
-                                <span>Example</span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a class="wp-sidebar-leaf" href="list.html">List</a>
-                                </li>
-                                <li>
-                                    <a class="wp-sidebar-leaf lg-fn-active lg-fn-current" href="edit.html">Edit</a>
-                                </li>
-                                <li>
-                                    <a class="wp-sidebar-leaf" href="detail.html">Detail</a>
+                                <li v-for="item in mod">
+                                    <a :href="item.url" class="wp-sidebar-leaf" :class="{'lg-fn-active':item.id==active}" v-text="item.text"></a> 
                                 </li>
                             </ul>
                         </li>

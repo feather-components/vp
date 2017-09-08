@@ -1,7 +1,6 @@
 <template>
-    <div class="lg-pager" :class="klass" v-if="showPager">
-        <slot name="before"></slot>
-        <ul>            
+    <div class="lg-pager" :class="klass" v-if="showPager">        
+        <ul>                    
             <li class="lg-pager-item lg-pager-previous" :class="{'disable':isHead}">
                 <a href="javascript:" @click="to(pager.current-1)"></a>
             </li>
@@ -26,9 +25,15 @@
             <li class="lg-pager-shortcut">
                 去第<input type="text" v-model="shortcut">页<a href="javascript:" class="lg-pager-shortcut-confirm" @click="to(shortcut)">确定</a>
             </li>
-            <li class="lg-pager-total">共{{pager.total}}页</li>            
+            <li slot="before" v-if="$slots.before">
+                <slot name="before"></slot> 
+            </li>
+            <li class="lg-pager-total">共{{pager.total}}页</li>
+            <li slot="after" v-if="$slots.after">
+                <slot name="after"></slot> 
+            </li>             
         </ul>
-        <slot name="after"></slot>
+         
     </div>
 </template>
 <style>
@@ -144,10 +149,10 @@
 .lg-pager-shortcut {
     height: 24px;
     color: #a3a3a3;
+    border: 1px solid transparent;
 }
 
-.lg-pager-shortcut input,
-.lg-pager-shortcut select {
+.lg-pager-shortcut input {
     height: 24px;
     width: 38px;
     padding: 0px;
@@ -157,12 +162,6 @@
     border-radius: 3px;
     border: 1px solid #a3a3a3;
     box-size: border-box;
-}
-
-.lg-pager-shortcut select {
-    padding: 0 3px;
-    width: auto;
-    margin: 0 5px;
 }
 
 .lg-pager-shortcut-confirm {
@@ -208,7 +207,7 @@ var Pager = {
     },
     methods: {
         to(current) {
-            var cur = Number(current);
+            var cur = Math.floor(Number(current));
             if (isNaN(cur)) {
                 alert('别任性~');
                 return;
@@ -244,7 +243,7 @@ var Pager = {
             this.vol = this.volumn;
             this.pre = Math.floor((this.vol - 3) / 2);
             this.next = Math.ceil((this.vol - 3) / 2);
-            this.pager.total = this.total;
+            this.pager.total = this.total; 
             this.calculate(this.current);
         }
     },

@@ -6,6 +6,8 @@ Vue.use(VueRouter);
 import Pager from './components/pager.vue';
 import Table from './components/table.vue';
 
+import Tablepager from './modules/tablepager.vue';
+
 const router = new VueRouter({
     routes: [{
         path: '/components/pager',
@@ -13,6 +15,9 @@ const router = new VueRouter({
     },{
         path: '/components/table',
         component: Table
+    },{
+        path: '/modules/tablepager', 
+        component: Tablepager
     }]
 });
 
@@ -24,16 +29,18 @@ new Vue({
             com: [{
                 text: '分页Pager',
                 url: '#/components/pager',
-                id: 1
+                id: 'com_1'
             }, {
                 text: '表格Table',
                 url: '#/components/table',
-                id: 2
+                id: 'com_2'
             }],
-            unit:[{
-
+            mod:[{
+                text: '列表分页Tablepager',
+                url: '#/modules/tablepager',
+                id: 'mod_1'
             }],
-            active: 1
+            active: 'com_1'
         }
     },
     method: {

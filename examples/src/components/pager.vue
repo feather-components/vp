@@ -1,11 +1,12 @@
 <template>
     <div>
+        <span>分页外面</span>
         <vp-pager :total="total" :current="current" @to="callback">
         </vp-pager>
         <vp-pager :total="total" :current="current" @to="callback" :position="'left'" :volumn="volumn">
         </vp-pager>
         <table class='lg-table'>
-            <thead>
+            <thead>  
                 <tr>
                     <th>Event</th>
                     <th>Example</th>
