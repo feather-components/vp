@@ -4,7 +4,7 @@ import Vue from 'vue';
 Vue.use(VueRouter);
 
 import Pager from './components/pager.vue';
-import Table from './components/table.vue';
+import Grid from './components/grid.vue';
 
 import Tablepager from './modules/tablepager.vue';
 
@@ -16,8 +16,8 @@ const router = new VueRouter({
         path: '/components/pager',
         component: Pager
     },{
-        path: '/components/table',
-        component: Table
+        path: '/components/grid',
+        component: Grid
     },{
     //MODULES
         path: '/modules/tablepager', 
@@ -35,21 +35,21 @@ new Vue({
     data() {
         return {
             com: [{
-                text: '分页Pager',
+                text: 'Pager',
                 url: '#/components/pager',
                 id: 'com_1'
             }, {
-                text: '表格Table',
-                url: '#/components/table',
+                text: 'Grid',
+                url: '#/components/grid',
                 id: 'com_2'
             }],
             mod:[{
-                text: '列表分页Tablepager',
+                text: 'Tablepager',
                 url: '#/modules/tablepager',
                 id: 'mod_1'
             }],
             dir:[{
-                text: '表单验证Valid',
+                text: 'Valid',
                 url: '#/directives/valid',
                 id: 'dir_1'
             }],

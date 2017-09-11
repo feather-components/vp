@@ -41,6 +41,16 @@
                                 </li>
                             </ul>
                         </li>
+                        <li>
+                            <a href="javascript:;" class="lg-fn-active">
+                                <span>Directives</span>
+                            </a>
+                            <ul>
+                                <li v-for="item in dir">
+                                    <a :href="item.url" class="wp-sidebar-leaf" :class="{'lg-fn-active':item.id==active}" v-text="item.text"></a> 
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>

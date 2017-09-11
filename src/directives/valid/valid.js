@@ -1,6 +1,9 @@
 import Rule from './rule';
 import { Event, Dom, Util } from '../../helper';
 
+var _ERRORCLASS = 'lg-error-border';
+var _ERRORMSGCLASS = 'lg-error-msg';
+
 function Result(ruleName, fieldName, tag, errorMsg) {
     return {
         rule: ruleName,
@@ -34,8 +37,8 @@ function check(el, vm, target, rules, fieldName, tag, autocheck) {
     }
 
     for (var ruleName in rules) {
-        if (BaseRule[ruleName]) { //default rule
-            var rule = BaseRule[ruleName];
+        if (Rule[ruleName]) { //default rule
+            var rule = Rule[ruleName];
             var arg = typeof rules[ruleName] == 'object' ? rules[ruleName][0] : rules[ruleName];
             var msg = typeof rules[ruleName] == 'object' && rules[ruleName][1] != undefined ? rules[ruleName][1] : rule.msg;
             if (!autocheck || ruleName != 'required') { //never check required at real-time
@@ -159,7 +162,7 @@ class Validator {
             field: field,
             rules: rules,
             tag: tag,
-            check: checkOne
+            check: this.checkOne
         })
     }
 
