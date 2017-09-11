@@ -8,7 +8,10 @@ import Table from './components/table.vue';
 
 import Tablepager from './modules/tablepager.vue';
 
+import Valid from './directives/valid.vue';
+
 const router = new VueRouter({
+    //COMPONENTS
     routes: [{
         path: '/components/pager',
         component: Pager
@@ -16,8 +19,13 @@ const router = new VueRouter({
         path: '/components/table',
         component: Table
     },{
+    //MODULES
         path: '/modules/tablepager', 
         component: Tablepager
+    },{
+    //DIRECTIVES
+        path:'/directives/valid',
+        component: Valid
     }]
 });
 
@@ -39,6 +47,11 @@ new Vue({
                 text: '列表分页Tablepager',
                 url: '#/modules/tablepager',
                 id: 'mod_1'
+            }],
+            dir:[{
+                text: '表单验证Valid',
+                url: '#/directives/valid',
+                id: 'dir_1'
             }],
             active: 'com_1'
         }
