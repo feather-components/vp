@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWepackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     watch: process.env.NODE_ENV != 'ci',
@@ -29,15 +30,14 @@ module.exports = {
     },
 
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
                     postcss: [require('autoprefixer')()]
                 }
             },
-            
+
             {
                 test: /\.(png|jpg|gif)$/,
                 loader: 'url-loader'
@@ -56,6 +56,11 @@ module.exports = {
     },
 
     plugins: [
+        new CopyWebpackPlugin([{
+            from: './src/iconfont.*',
+            to: '../_build_/',
+            flatten:true
+        }]),
         new webpack.optimize.CommonsChunkPlugin({
             name: ['vpui', 'lib'],
         }),

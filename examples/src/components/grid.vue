@@ -16,7 +16,8 @@
             return {
                 table:{
                     head:{
-                        sName: '姓名',
+                        sName: {label:'姓名',type:'checkbox'},
+                        sMoblie: {label:'姓名',type:'checkbox'},
                         sMoblie: '手机号码',
                         sCityName: '城市',
                         sCreateTime: '抽奖时间',
