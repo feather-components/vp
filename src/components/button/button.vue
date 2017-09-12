@@ -1,5 +1,5 @@
 <template>
-    <button href="javascript:" :class="className" :disable="disable" @click="$emit('click')"><slot></slot></button>
+    <button :class="className" :disable="disable" @click="$emit('click')"><slot></slot></button>
 </template>
 
 <script>
@@ -100,7 +100,6 @@
         font-family: Arial, "Microsoft Yahei", "Helvetica Neue", "Hiragino Sans GB", sans-serif;
         height: 30px;
         min-width: 100px;
-        line-height: 14px;
         cursor: pointer;
         outline: none;
         border: 1px solid #5986e1;
@@ -166,7 +165,6 @@
     .vp-btn-large-highlight,
     .vp-btn-large-o-highlight {
         font-size: 20px;
-        line-height: 24px;
         height: 40px;
         min-width: 176px;
     }
@@ -194,7 +192,6 @@
     .vp-btn-small-highlight,
     .vp-btn-small-o-highlight {
         height: 24px;
-        line-height: 14px;
         font-size: 12px;
         padding-top: 4px;
         padding-bottom: 4px;

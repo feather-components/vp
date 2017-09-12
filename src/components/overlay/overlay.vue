@@ -94,7 +94,7 @@
                 }
             },
 
-             _destroy(){
+            _destroy(){
                 var self = this;
                 self.$el.parentNode && self.$el.parentNode.removeChild(self.$el);
                 self.$emit('destroy');
@@ -119,6 +119,4 @@
         transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%);
     }
-
-
 </style>
