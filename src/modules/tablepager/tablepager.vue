@@ -6,7 +6,7 @@
                 <option v-for="num in sizeList" :value="num">{{num}}条</option>
             </select> 
         </div>
-        <div class="lg-tablepager-option" slot="after"> 
+        <div class="lg-tablepager-option" slot="after">  
             <span class="lg-tablepager-total">,&nbsp;{{total}}条</span>
         </div>
     </pager>

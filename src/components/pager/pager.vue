@@ -1,26 +1,26 @@
 <template>
     <div class="lg-pager" :class="klass" v-if="showPager">        
         <ul>                    
-            <li class="lg-pager-item lg-pager-previous" :class="{'disable':isHead}">
+            <li class="lg-pager-item lg-pager-previous" :class="{'disable': isHead}">
                 <a href="javascript:" @click="to(pager.current-1)"></a>
             </li>
-            <li class="lg-pager-item" :class="{'lg-pager-current':isHead}">
+            <li class="lg-pager-item" :class="{'lg-pager-current': isHead}">
                 <a href="javascript:" @click="to(1)">1</a>
             </li>
-            <li class="lg-pager-item lg-pager-dot" v-if="pager.start!=2">
+            <li class="lg-pager-item lg-pager-dot" v-if="pager.start != 2">
                 ...
             </li>
-            <li class="lg-pager-item" v-for="n in (pager.end-pager.start+1)" :class="{'lg-pager-current':pager.current==(pager.start+n-1)}">
-                <a href="javascript:" @click="to(pager.start+n-1)">{{pager.start+n-1}}</a>
+            <li class="lg-pager-item" v-for="n in (pager.end-pager.start + 1)" :class="{'lg-pager-current': pager.current == (pager.start + n - 1)}">
+                <a href="javascript:" @click="to(pager.start + n - 1)">{{pager.start + n - 1}}</a>
             </li>
-            <li class="lg-pager-item lg-pager-dot" v-if="pager.end<pager.total-1">
+            <li class="lg-pager-item lg-pager-dot" v-if="pager.end < pager.total - 1">
                 ...
             </li>
-            <li class="lg-pager-item" :class="{'lg-pager-current':isTail}" v-if="pager.total>1">
+            <li class="lg-pager-item" :class="{'lg-pager-current': isTail}" v-if="pager.total > 1">
                 <a href="javascript:" @click="to(pager.total)">{{pager.total}}</a>
             </li>
-            <li class="lg-pager-item lg-pager-next" :class="{'disable':isTail}">
-                <a href="javascript:" @click="to(pager.current+1)"></a>
+            <li class="lg-pager-item lg-pager-next" :class="{'disable': isTail}">
+                <a href="javascript:" @click="to(pager.current + 1)"></a>
             </li>
             <li class="lg-pager-shortcut">
                 去第<input type="text" v-model="shortcut">页<a href="javascript:" class="lg-pager-shortcut-confirm" @click="to(shortcut)">确定</a>
@@ -32,8 +32,7 @@
             <li slot="after" v-if="$slots.after">
                 <slot name="after"></slot> 
             </li>             
-        </ul>
-         
+        </ul>         
     </div>
 </template>
 <style>
