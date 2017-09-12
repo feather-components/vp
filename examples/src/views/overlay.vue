@@ -1,6 +1,6 @@
 <template>
     <div>
-        overlay
+        <btn >show mask</btn>
     </div>
 </template>
 <script>
