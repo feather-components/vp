@@ -5,6 +5,7 @@ Vue.use(VueRouter);
 
 import Pager from './components/pager.vue';
 import Grid from './components/grid.vue';
+import OverlayView from './views/overlay.vue';
 
 import Tablepager from './modules/tablepager.vue';
 
@@ -18,6 +19,9 @@ const router = new VueRouter({
     },{
         path: '/components/grid',
         component: Grid
+    },{
+        path: '/components/overlay',
+        component: OverlayView
     },{
     //MODULES
         path: '/modules/tablepager', 
@@ -42,6 +46,9 @@ new Vue({
                 text: 'Grid',
                 url: '#/components/grid',
                 id: 'com_2'
+            }, {
+                text: 'Overlay',
+                url: '#/components/overlay'
             }],
             mod:[{
                 text: 'Tablepager',
