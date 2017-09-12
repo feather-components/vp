@@ -1,0 +1,22 @@
+// http://eslint.org/docs/user-guide/configuring
+{
+  "root": true,
+  "extends": "eslint:recommended",
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  
+  "plugins": [
+    "vue" 
+  ],
+
+  "globals": {
+    "BMap": true,
+    "$": true
+  }
+}

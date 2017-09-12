@@ -1,0 +1,111 @@
+<template>
+    <button href="javascript:" :class="className" :disable="type == 'disable'" @click="$emit('click')"><slot></slot></button>
+</template>
+
+<style>
+    .vp-button{
+        min-width: 1rem;
+        text-align: center;
+        font-size: .16rem;
+        line-height: .48rem;
+        height: .48rem;
+        border-radius: 1rem;
+        box-sizing: border-box;
+        color: #fff;
+        background: rgb(249, 104, 84);
+        display: inline-block;
+        border: 0px;
+        text-decoration: none;
+        -webkit-tap-highlight-color: transparent;
+        outline: none;
+        margin: auto;
+    }
+    .vp-button-main:active{
+        background: rgb(199, 83, 67);
+    }
+    .vp-button-main.vp-button-border{
+        background: #fff;
+        color: rgb(249, 104, 84);
+        border: 1px solid rgb(249, 104, 84);
+        &:active{
+            background: #FFA07A;
+        }
+    }
+    .vp-button-success{
+        background: rgb(98, 129, 194);
+        &:active{
+            background: rgb(78, 103, 155);
+        }
+    }
+    .vp-button-success.vp-button-border{
+        color: rgb(98, 129, 194);
+        background: #fff;
+        border: 1px solid rgb(98, 129, 194);
+        &:active{
+            background: rgb(170, 186, 218);
+        }
+    }
+    .vp-button-drak{
+        background: #3B4263;
+        &:active{
+            background: rgb(47, 52, 79);
+        }
+    }
+    .vp-button-drak.vp-button-border{
+        background: #fff;
+        border: 1px solid rgb(180, 180, 180);  
+        color: rgb(85, 85, 85);
+        &:active{
+            background: rgb(225, 225, 225);
+        }
+    }
+    .vp-button-disable{
+        border: 0 !important;
+        color: #fff !important;
+        background: #e1e1e1 !important;
+    }
+    .vp-button-small{
+        font-size: 0.14rem;
+        height: 0.32rem;
+        line-height: 0.32rem;
+    }
+    .vp-button-square{
+        border-radius: 0px;
+    }
+</style>
+
+<script>
+    export default{
+        name: 'button',
+        props: {
+            type: {
+                type: String,
+                default: 'main'
+            },
+            small: {
+                type: Boolean,
+                default: false
+            },
+            square: {
+                type: Boolean,
+                default: false
+            },
+            border: {
+                type: Boolean,
+                default: false
+            }
+        },
+        computed: {
+            className(){
+                var self = this;
+                if(self.class) return self.class;
+                var {border, square, small} = self;
+                var className = ['vp-button', 'vp-button-' + self.type];
+                small && className.push('vp-button-small');
+                border && className.push('vp-button-border');
+                square && className.push('vp-button-square');
+                return className;
+            }
+        }
+    }
+</script>
