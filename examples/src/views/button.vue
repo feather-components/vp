@@ -2,13 +2,17 @@
     <div>
         <div>
             <btn :types="['small']">small</btn>
-            <btn :types="['o-small','small']">o-small</btn>
-            
+            <btn :types="['small-o','small']">small-o</btn>
             <btn :types="['success','small']">success</btn>
+            <btn :types="['success','small','small-o']">success</btn>
             <btn :types="['danger','small']">danger</btn>
+            <btn :types="['danger','small','small-o']">danger</btn>
             <btn :types="['sys', 'small']">sys</btn>
+            <btn :types="['sys','small','small-o']">sys</btn>
             <btn :types="['plain', 'small']">plain</btn>
+            <btn :types="['plain', 'small', 'small-o']">plain</btn>
             <btn :types="['highlight', 'small']">highlight</btn>
+            <btn :types="['highlight', 'small', 'small-o']">highlight</btn>
         </div>
         <div>
             <btn>main</btn>
