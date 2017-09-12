@@ -1,6 +1,6 @@
 <template>
     <div>
-        <btn >show mask</btn>
+        <btn :types="['small']" @click="showMask">mask</btn>
     </div>
 </template>
 <script>
@@ -8,6 +8,11 @@
     export default {
         components: {
             btn: Button
+        },
+        methods: {
+            showMask(){
+                alert('mask');
+            }
         }
     }
 </script>
