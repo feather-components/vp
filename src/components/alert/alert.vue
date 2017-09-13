@@ -58,7 +58,6 @@
     .vp-alert-btn{
         display: inline-block;
         margin-right: 16px;
-        width: 72px;
     }
 
     .vp-alert-btn:last-child{
@@ -119,15 +118,10 @@
         },
 
         methods: {
-            callButton(key){
+            buttonClick(key){
                 var self = this;
-                var props = self.buttons[key];
-
-                if(props.callback){
-                    props.callback.call(self);
-                }else{
-                    props.call(self);
-                }
+                let button = self.buttons[key];
+                button.click.call(self);
             }
         }
     }
@@ -145,11 +139,10 @@
                 <section class="vp-alert-footer">
                     <btn v-for="(button, key) of buttons" class="vp-alert-btn"
                         :class="button.className || ''" 
-                        @click="callButton(key)" 
+                        @click="buttonClick(key)" 
                         v-text="key" 
                         :size="button.size || 'normal'" 
-                        :border="button.props ? button.props.border : null"
-                        :type="button.props ? button.props.type : null"
+                        :type="button.type || 'main'"
                     ></btn>
                 </section>
             </div>

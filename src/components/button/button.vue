@@ -97,7 +97,7 @@
         font-size: 12px;
         font-family: Arial, "Microsoft Yahei", "Helvetica Neue", "Hiragino Sans GB", sans-serif;
         height: 28px;
-        min-width: 96px;
+        min-width: 72px;
         cursor: pointer;
         outline: none;
         border: 1px solid #5986e1;
@@ -105,6 +105,7 @@
         color: white;
         background-color: #5986e1;
         -webkit-text-stroke-width: 0;
+        box-sizing: border-box;
     }
 
     .vp-btn:last-child,

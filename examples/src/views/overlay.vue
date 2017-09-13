@@ -8,7 +8,8 @@
                 <vp-mask ref="innerMask" @click="closeMask($refs.innerMask)" style="position:absolute"></vp-mask>
             </div>
 
-            <btn size="small" type="danger" @click="showAlert()" style="float: left">show alert</btn>
+            <btn size="small" type="danger" @click="showAlert()" style="float: left; ">show alert</btn>
+            <btn size="small" type="danger" @click="showAlertConfirm()" style="float: left">show alert confirm</btn>
         </div>
     </div>
 </template>
@@ -37,30 +38,42 @@
                 mask.close();
             },
             showAlert(){
-                Alert("dfafsdfsdfsfsdfsdadfafsdfsdfdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdf",{
-                    buttons: {
-                        '确定':{
-                            callback(){
-                                alert('你点击了确定');
-                            }
-                        },
-                        '取消':{
-                            callback(){
-                                this.close();
+                Alert("dfafsdfsdfsfsdfsdadfafsdfsdfdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdf");
+            },
+            showAlertConfirm(){
+                Alert("dfafsdfsdfsfsdfsdadfafsdfsdfdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdf",
+                    {
+                        buttons: {
+                            'ok': {
+                                type: 'main',
+                                click() {
+                                    alert('main');
+                                }
+                            },
+                            'cancel' : {
+                                type: 'plain',
+                                click() {
+                                    this.destroy();
+                                }
                             }
                         }
                     }
-                }, );
+                );
+                
             }
         }
     }
 </script>
-<style>
+<style scoped>
     .buttons{
         overflow: hidden;
         _zoom: 1; 
         padding: 10px 0 10px 0px;
         float: left;
+    }
+
+    .buttons button{
+        margin-right: 5px;
     }
 
     .mask-demo{

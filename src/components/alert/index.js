@@ -13,14 +13,16 @@ var override = (callback) => {
     }
 };
 
-var Alert = override((content, options, callback, manualClose) => {
+var Alert = override((content, options) => {
     return Util.appendInstance(Component, {
         content: content,
         extras: options.extras,
         buttons: options.buttons || {
-            '确定'(){
-                callback && callback();
-                !manualClose && this.destroy(false);
+            '确定' : {
+                type: 'main',
+                click(){
+                    this.destroy();
+                }
             }
         }
     });
