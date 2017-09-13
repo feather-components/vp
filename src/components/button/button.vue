@@ -162,17 +162,8 @@
     .vp-btn-large-o-plain,
     .vp-btn-large-highlight,
     .vp-btn-large-o-highlight {
-        font-size: 20px;
-        height: 40px;
-        min-width: 176px;
-    }
-
-    .vp-btn-large:before {
-        font-size: 20px;
-    }
-
-    .vp-btn-large .iconfont {
-        font-size: 20px;
+        height: 32px;
+        min-width: 128px;
     }
 
     .vp-btn-small,
