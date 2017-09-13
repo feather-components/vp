@@ -1,12 +1,13 @@
 import Pager from './components/pager';
 import Grid from './components/grid';
 import Button from './components/button';
+import Overlay from './components/overlay';
+import Mask from './components/mask';
+import Alert from './components/alert';
 //--------------------------------------------------------
 import Tablepager from './modules/tablepager';
 //--------------------------------------------------------
 import Valid from './directives/valid';
-//--------------------------------------------------------
-import Vue from 'vue';
 
 var Components = [
     Pager,Grid ,
@@ -27,17 +28,19 @@ function install(Vue){
     for(let Module of Modules){
         Vue.use(Module);
     }
-     for(let Directive of Directives){
+    for(let Directive of Directives){
         Vue.use(Directive);
     }
 }
 
 export {
-    Pager,Grid,
-
+    Pager,
+    Grid,
     Tablepager,
-
-    Button
+    Button,
+    Overlay,
+    Mask,
+    Alert
 };
 
 export default {install};

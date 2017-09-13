@@ -1,26 +1,81 @@
-<template>
-     <vp-mask :visible="visibility">
-        <overlay :visible="true" class="vm-alert" position="center">
-            <div class="vm-alert-content" v-html="content"></div>
-            <div class="vm-alert-extras" v-if="!!extras" v-text="extras"></div>
-           
-            <section class="vm-alert-footer">
-
-                <btn v-for="(button, key) of buttons" :key="key" class="vm-alert-btncon"
-                    :class="button.className || ''" 
-                    @click="callButton(key)" 
-                    v-text="key" 
-                    :small="true"
-                    :border="button.props ? button.props.border : null"
-                    :type="button.props ? button.props.type : null"
-                ></btn>
-            </section>
-        </overlay>
-    </vp-mask>
-</template>
 <style>
+    .vp-alert.vp-overlay{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-sizing: border-box;
+        margin: auto;
+        background: #fff;
+        border-radius: 4px;
+        width: 420px;
+        min-height: 180px;
+        padding: 24px;
+        color: #333;
+    }
 
+    .vp-alert-title{
+        margin-bottom: 12px;
+    }
+
+    .vp-alert-title-text{
+        font-size: 16px;
+    }
+
+    .vp-alert-content{
+        color: #3B4263;
+        font-size: 14px;
+        letter-spacing: 0;
+        line-height: 28px;
+        text-align: center;
+        word-wrap: break-word;
+        text-align: left;
+    }
+
+    .vp-alert-content-wrap{
+        position: relative;
+        padding-bottom: 42px;
+    }
+
+    .vp-alert-extras{
+        margin-top: 8px;
+        margin-bottom: 16px;
+        color: #555;
+        font-size: 12px;
+        line-height: 20px;
+        text-align: center;
+    }
+
+    .vp-alert-footer{
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        width: 100%;
+        text-align: right;
+        box-sizing: border-box;
+    }
+
+    .vp-alert-btn{
+        display: inline-block;
+        margin-right: 16px;
+        width: 72px;
+    }
+
+    .vp-alert-btn:last-child{
+        margin-right: 0px;
+    }
+
+    .vp-alert .vp-button{
+        
+        width: 90%;
+        margin: 0px 4px 4px 4px;
+    }
+
+    .vp-alert .vp-alert-cbtn{
+        width: 45%;
+    }
 </style>
+
 <script>
     import vpMask from '../mask';
     import Overlay from '../overlay';
@@ -30,12 +85,6 @@
         name: 'alert',
 
         mixins: [Overlay],
-
-        components: {
-            vpMask,
-            Overlay,
-            Btn: Button
-        },
 
         props: {
             content: {
@@ -56,9 +105,16 @@
             }
         },
 
+        components: {
+            vpMask,
+            Overlay,
+            Btn: Button
+        },
+
         data(){
             return {
-                visibility: true
+                visibility: true,
+                title: '系统提示！'
             };
         },
 
@@ -66,6 +122,7 @@
             callButton(key){
                 var self = this;
                 var props = self.buttons[key];
+
                 if(props.callback){
                     props.callback.call(self);
                 }else{
@@ -75,3 +132,27 @@
         }
     }
 </script>
+
+<template>
+    <vp-mask :visible="visibility">
+        <overlay :visible="true" class="vp-alert" position="center">
+            <div class="vp-alert-title">
+                <div class=""></div>
+                <div class="vp-alert-title-text">{{ title || "系统提示！" }}</div>
+            </div>
+            <div class="vp-alert-content-wrap">
+                <div class="vp-alert-content" v-html="content"></div>
+                <section class="vp-alert-footer">
+                    <btn v-for="(button, key) of buttons" class="vp-alert-btn"
+                        :class="button.className || ''" 
+                        @click="callButton(key)" 
+                        v-text="key" 
+                        :size="button.size || 'normal'" 
+                        :border="button.props ? button.props.border : null"
+                        :type="button.props ? button.props.type : null"
+                    ></btn>
+                </section>
+            </div>
+        </overlay>
+    </vp-mask>
+</template>

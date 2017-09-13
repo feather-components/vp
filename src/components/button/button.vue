@@ -94,12 +94,10 @@
         display: inline-block;
         text-align: center;
         vertical-align: middle;
-        margin: 5px;
-        padding: 6px 12px;
         font-size: 12px;
         font-family: Arial, "Microsoft Yahei", "Helvetica Neue", "Hiragino Sans GB", sans-serif;
-        height: 30px;
-        min-width: 100px;
+        height: 28px;
+        min-width: 96px;
         cursor: pointer;
         outline: none;
         border: 1px solid #5986e1;
@@ -193,8 +191,6 @@
     .vp-btn-small-o-highlight {
         height: 24px;
         font-size: 12px;
-        padding-top: 4px;
-        padding-bottom: 4px;
         min-width: 66px;
     }
 

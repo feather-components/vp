@@ -102,7 +102,16 @@ export default{
     },
 
     factory(options, data = {}){
+        console.log(options);
         var instance = new Vue(options);
+        Object.assign(instance, data);
+        instance.$mount();
+        document.body.appendChild(instance.$el);
+        return instance;
+    },
+
+    appendInstance(vueComponent, data = {}){
+        var instance = new Vue(vueComponent);
         Object.assign(instance, data);
         instance.$mount();
         document.body.appendChild(instance.$el);
