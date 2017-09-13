@@ -53,4 +53,5 @@ Alert.confirm = override((content, options, callback, manualClose) => {
 });
 
 Alert.Component = Component;
+console.log(typeof Alert);
 export default Util.register(Alert);
