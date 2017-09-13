@@ -70,6 +70,7 @@
     .buttons-wrap-title{
         margin-bottom: 16px;
         font-size: 14px;
+        color: #666;
     }
 
     .buttons-list button{

@@ -33,21 +33,17 @@ Alert.confirm = override((content, options, callback, manualClose) => {
         content: content,
         extras: options.extras,
         buttons: options.buttons || {
-            '取消': {
-                className: 'vm-alert-cbtn',
-                props: {
-                    border: true
-                },
-                callback(){
-                    this.destroy(false);
-                }
-            },
-
             '确定': {
-                className: 'vm-alert-cbtn',
-                callback(){
+                type: 'main',
+                click(){
                     callback && callback();
                     !manualClose && this.destroy(false);
+                }
+            },
+            '取消': {
+                type: 'pain',
+                click(){
+                    this.destroy(false);
                 }
             }
         }
@@ -55,5 +51,4 @@ Alert.confirm = override((content, options, callback, manualClose) => {
 });
 
 Alert.Component = Component;
-console.log(typeof Alert);
 export default Util.register(Alert);

@@ -30,6 +30,7 @@
         text-align: center;
         word-wrap: break-word;
         text-align: left;
+        min-height: 57px;
     }
 
     .vp-alert-content-wrap{
