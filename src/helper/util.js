@@ -95,6 +95,7 @@ export default{
         if(window.Vue){
             install(window.Vue);
         }else{
+
             obj.install = Component.install = install;
         }
 
@@ -103,6 +104,14 @@ export default{
 
     factory(options, data = {}){
         var instance = new Vue(options);
+        Object.assign(instance, data);
+        instance.$mount();
+        document.body.appendChild(instance.$el);
+        return instance;
+    },
+
+    appendInstance(vueComponent, data = {}){
+        var instance = new Vue(vueComponent);
         Object.assign(instance, data);
         instance.$mount();
         document.body.appendChild(instance.$el);

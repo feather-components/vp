@@ -1,5 +1,6 @@
+
 <style>
-    .vp-alert.vp-overlay{
+    .vp-picked.vp-overlay{
         position: absolute;
         top: 50%;
         left: 50%;
@@ -14,15 +15,15 @@
         color: #333;
     }
 
-    .vp-alert-title{
+    .vp-picked-title{
         margin-bottom: 12px;
     }
 
-    .vp-alert-title-text{
+    .vp-picked-title-text{
         font-size: 16px;
     }
 
-    .vp-alert-content{
+    .vp-picked-content{
         color: #3B4263;
         font-size: 14px;
         letter-spacing: 0;
@@ -33,12 +34,12 @@
         min-height: 57px;
     }
 
-    .vp-alert-content-wrap{
+    .vp-picked-content-wrap{
         position: relative;
         padding-bottom: 42px;
     }
 
-    .vp-alert-extras{
+    .vp-picked-extras{
         margin-top: 8px;
         margin-bottom: 16px;
         color: #555;
@@ -47,7 +48,7 @@
         text-align: center;
     }
 
-    .vp-alert-footer{
+    .vp-picked-footer{
         position: absolute;
         bottom: 0px;
         right: 0px;
@@ -56,22 +57,22 @@
         box-sizing: border-box;
     }
 
-    .vp-alert-btn{
+    .vp-picked-btn{
         display: inline-block;
         margin-right: 16px;
     }
 
-    .vp-alert-btn:last-child{
+    .vp-picked-btn:last-child{
         margin-right: 0px;
     }
 
-    .vp-alert .vp-button{
+    .vp-picked .vp-button{
         
         width: 90%;
         margin: 0px 4px 4px 4px;
     }
 
-    .vp-alert .vp-alert-cbtn{
+    .vp-picked .vp-picked-cbtn{
         width: 45%;
     }
 </style>
@@ -129,24 +130,13 @@
 </script>
 
 <template>
-    <vp-mask :visible="visibility">
-        <overlay :visible="true" class="vp-alert" position="center">
-            <div class="vp-alert-title">
-                <div class=""></div>
-                <div class="vp-alert-title-text">{{ title || "系统提示！" }}</div>
-            </div>
-            <div class="vp-alert-content-wrap">
-                <div class="vp-alert-content" v-html="content"></div>
-                <section class="vp-alert-footer">
-                    <btn v-for="(button, key) of buttons" class="vp-alert-btn"
-                        :class="button.className || ''" 
-                        @click="buttonClick(key)" 
-                        v-text="key" 
-                        :size="button.size || 'normal'" 
-                        :type="button.type || 'main'"
-                    ></btn>
-                </section>
-            </div>
-        </overlay>
-    </vp-mask>
+    <overlay :visible="true" class="vp-picked" position="center">
+        <div class="vp-picked-title">
+            <div class=""></div>
+            <div class="vp-picked-title-text">{{ title || "系统提示！" }}</div>
+        </div>
+        <div class="vp-picked-content-wrap">
+            <div class="vp-picked-content" v-html="content"></div>
+        </div>
+    </overlay>
 </template>

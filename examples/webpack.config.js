@@ -31,33 +31,43 @@ module.exports = {
 
     module: {
         rules: [{
-                test: /\.vue$/,
-                loader: 'vue-loader',
-                options: {
-                    postcss: [require('autoprefixer')()]
-                }
-            },
-
-            {
-                test: /\.(png|jpg|gif)$/,
-                loader: 'url-loader'
-            },
-
-            {
-                test: /\.css$/,
-                loader: 'style-loader!css-loader'
-            },
-
-            {
-                test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
-                loader: 'url-loader'
+            test: /\.vue$/,
+            loader: 'vue-loader',
+            options: {
+                postcss: [require('autoprefixer')()]
             }
+        },
+
+        {
+            test: /\.(png|jpg|gif)$/,
+            loader: 'url-loader'
+        },
+
+        {
+            test: /\.css$/,
+            loader: 'style-loader!css-loader'
+        },
+
+        {
+            test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
+            loader: 'url-loader'
+        }
         ]
     },
 
     plugins: [
         new CopyWebpackPlugin([{
             from: './src/iconfont.*',
+            to: '../_build_/',
+            flatten:true
+        }]),
+        new CopyWebpackPlugin([{
+            from: './src/style.css',
+            to: '../_build_/',
+            flatten:true
+        }]),
+        new CopyWebpackPlugin([{
+            from: './src/legoland.css',
             to: '../_build_/',
             flatten:true
         }]),
