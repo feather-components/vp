@@ -4,7 +4,7 @@ import Vue from 'vue';
 Vue.use(VueRouter);
 
 import Pager from './components/pager.vue';
-import Grid from './components/grid.vue';
+import Datagrid from './components/datagrid.vue';
 import OverlayView from './views/overlay.vue';
 
 import Tablepager from './modules/tablepager.vue';
@@ -17,8 +17,8 @@ const router = new VueRouter({
         path: '/components/pager',
         component: Pager
     },{
-        path: '/components/grid',
-        component: Grid
+        path: '/components/datagrid',
+        component: Datagrid
     },{
         path: '/components/overlay',
         component: OverlayView
@@ -43,8 +43,8 @@ new Vue({
                 url: '#/components/pager',
                 id: 'com_1'
             }, {
-                text: 'Grid',
-                url: '#/components/grid',
+                text: 'Datagrid',
+                url: '#/components/datagrid',
                 id: 'com_2'
             }, {
                 text: 'Overlay',

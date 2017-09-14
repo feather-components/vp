@@ -1,5 +1,5 @@
 import Pager from './components/pager';
-import Grid from './components/grid';
+import Datagrid from './components/datagrid';
 import Button from './components/button';
 //--------------------------------------------------------
 import Tablepager from './modules/tablepager';
@@ -9,7 +9,7 @@ import Valid from './directives/valid';
 import Vue from 'vue';
 
 var Components = [
-    Pager,Grid ,
+    Pager,Datagrid ,
 ];
 
 var Modules = [
@@ -33,7 +33,7 @@ function install(Vue){
 }
 
 export {
-    Pager,Grid,
+    Pager,Datagrid,
 
     Tablepager,
 
