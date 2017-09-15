@@ -76,10 +76,10 @@
 
             initEvent(){
                 let self = this;
-                document.addEventListener('click', (event) => {
+                /*document.addEventListener('click', (event) => {
                     console.log(self);
                     self.$refs.pickerOverlay.close();
-                });
+                });*/
             }
             
         },

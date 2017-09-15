@@ -3,7 +3,7 @@ import {Util} from '../../helper';
 
 Mask.show = function(options) {
     let mask = Util.appendInstance(Mask);
-    mask.open();
+    //mask.open();
     if(typeof options.click == 'function'){
         mask.$on('click', function() {
             options.click.call(mask);
