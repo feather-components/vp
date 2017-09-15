@@ -4,10 +4,12 @@ import Button from './components/button';
 import Overlay from './components/overlay';
 import Mask from './components/mask';
 import Alert from './components/alert';
+import Picker from './components/picker';
 //--------------------------------------------------------
 import Tablepager from './modules/tablepager';
 //--------------------------------------------------------
 import Valid from './directives/valid';
+import AutoPosition from './directives/autoposition';
 
 var Components = [
     Pager,Grid ,
@@ -40,7 +42,9 @@ export {
     Button,
     Overlay,
     Mask,
-    Alert
+    Alert,
+    AutoPosition,
+    Picker,
 };
 
 export default {install};

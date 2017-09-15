@@ -8,7 +8,7 @@
             <div class="wrap-title">
                overlay
             </div>
-            <div class="buttons">
+            <div class="buttons clear">
                 <btn size="small" @click="showGlobalMask()">mask</btn>
                 <btn size="small" @click="showMask($refs.innerMask)">mask</btn>
                 <btn size="small" type="danger" @click="showAlert()" >alert</btn>
@@ -22,9 +22,10 @@
             <div class="wrap-title">
                 picked
             </div>
-            <div class="buttons">
-                <btn size="small" @click="">cityPicker</btn>
-                <btn size="small" @click="">datePicker</btn>
+            <div class="buttons clear">
+                <btn size="small" @click="" ref="picker">picker</btn>
+                <btn size="small" @click="" ref="cityPicker">cityPicker</btn>
+                <btn size="small" @click="" ref="datePicker">datePicker</btn>
             </div>
             <vp-mask ref="innerMask" @click="closeMask($refs.innerMask)" style="position:absolute"></vp-mask>
         </div>
@@ -34,12 +35,19 @@
     import { Button } from 'vpui';
     import { Mask } from 'vpui';
     import { Alert } from 'vpui';
+    import { AutoPosition } from 'vpui';
+    import { Picker } from 'vpui';
     export default {
         components: {
             btn: Button,
             vpMask: Mask,
             vpAlert: Alert,
         },
+
+        directives: {
+            autoposition: AutoPosition
+        },
+
         methods: {
             showGlobalMask(){
                 Mask.show({
@@ -76,22 +84,26 @@
                         }
                     }
                 );
-                
             },
 
             showAlertConfirmDefault(){
                 Alert.confirm('默认confirm',function(){
                     alert('confirm');
-                }, true)
-            }
+                }, true);
+            },
+        },
+
+        mounted(){
+            let self =  this;
+            Picker.picker({
+                ref: self.$refs.picker
+            });
         }
     }
 </script>
 <style scoped>
 
     .buttons{
-        overflow: hidden;
-        _zoom: 1; 
         padding: 10px 0 10px 0px;
     }
 
