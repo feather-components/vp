@@ -20,10 +20,10 @@
         </div>
         <div class="wrap">
             <div class="wrap-title">
-                picked
+                picker
             </div>
             <div class="buttons clear">
-                <btn size="small" @click="" ref="picker">picker</btn>
+                <vp-picker class="custom-picker"></vp-picker>
                 <btn size="small" @click="" ref="cityPicker">cityPicker</btn>
                 <btn size="small" @click="" ref="datePicker">datePicker</btn>
             </div>
@@ -42,6 +42,7 @@
             btn: Button,
             vpMask: Mask,
             vpAlert: Alert,
+            vpPicker: Picker,
         },
 
         directives: {
@@ -91,13 +92,6 @@
                     alert('confirm');
                 }, true);
             },
-        },
-
-        mounted(){
-            let self =  this;
-            Picker.picker({
-                ref: self.$refs.picker
-            });
         }
     }
 </script>
@@ -129,5 +123,10 @@
     .wrap-title{
         font-size: 14px;
         color: #666;
+    }
+
+    .custom-picker{
+        float: left;
+        margin-right: 5px;
     }
 </style>

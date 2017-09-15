@@ -1,20 +1,3 @@
-
-<style>
-    .vp-picker.vp-overlay{
-        position: absolute;
-        box-sizing: border-box;
-        margin: auto;
-        background: #fff;
-        border-radius: 4px;
-        width: 100px;
-        min-height: 180px;
-        padding: 24px;
-        color: #333;
-        border: 1px #ccc solid;
-        display: none;
-    }
-</style>
-
 <script>
     import Overlay from '../overlay';
    
@@ -33,7 +16,8 @@
 
         data(){
             return {
-                visibility: true
+                overLayShow: false,
+                direction: 'CENTER-BOTTOM',
             };
         },
 
@@ -57,18 +41,105 @@
                 let pickerTop = self.$el.offsetTop;
                 self.$el.style.bottom = pickerTop ;
                 self.$el.style.left = pickerLeft;*/
-
                 //self.$el.bottom = 
-                
-                document.body.append(self.$el);
+            },
 
+            pickerClick(event){
+                event.cancelBubble = true;
+                this.toggleOverlay();
+            },
+
+            positionOverlay(){
+                let pickerRel = this.$refs.pickerRel;
+                let pickerOverlay = this.$refs.pickerOverlay;
+                switch(this.direction){
+                case 'CENTER-BOTTOM':
+                    pickerOverlay.$el.style.top = `${pickerRel.offsetHeight + 2}px`;
+                    break;
+                }
+            },
+
+            toggleOverlay(){
+                let self = this;
+                let overLay = self.$refs.pickerOverlay;
+                if(!overLay.visibility){
+                    self.positionOverlay();
+                    overLay.open();
+                } else {
+                    overLay.close();
+                }
+            },
+
+            handleBlur(){
+                alert('handleBlur');
+            },
+
+            initEvent(){
+                let self = this;
+                document.addEventListener('click', (event) => {
+                    console.log(self);
+                    self.$refs.pickerOverlay.close();
+                });
             }
-        }
+            
+        },
+
+        computed: {
+            className(){
+                let self = this;
+                let c = [];
+                c.push('vp-picker');
+                if(self.class){
+                    c.push(self.class);
+                }
+                return c.join(' ');
+            }
+        },
+
+        mounted(){
+            this.initEvent();
+        },
+
+
     }
 </script>
 
 <template>
-    <overlay :visible="true" class="vp-picker" position="center">
-   
-    </overlay>
+    <a :class="className" @blur="handleBlur">
+        <div class="vp-picker-rel" ref="pickerRel" @click="pickerClick">
+            <slot>ref</slot>
+        </div>
+        <overlay :visible="overLayShow" class="vp-picker-overlay" position="center" ref="pickerOverlay">
+            <slot name="vp-picker-content">
+                content
+            </slot>
+        </overlay>
+    </a>
 </template>
+
+
+<style>
+    .vp-picker{
+        position: relative;
+        box-sizing: border-box;
+        min-width: 100px;
+        min-height: 24px;
+        color: #333;
+        text-align: center;
+        line-height: 24px;
+        display: block;
+    }
+
+    .vp-picker-overlay{
+        position: absolute;
+        /*border: 1px #ccc solid;*/
+        width: 100%;
+        background-color: #ccc;
+    }
+
+    .vp-picker-rel{
+        border: 1px #ccc solid;
+        
+    /*    position: absolute;
+    */}
+</style>
