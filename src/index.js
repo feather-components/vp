@@ -1,5 +1,5 @@
 import Pager from './components/pager';
-import Grid from './components/grid';
+import Datagrid from './components/datagrid';
 import Button from './components/button';
 import Overlay from './components/overlay';
 import Mask from './components/mask';
@@ -12,7 +12,7 @@ import Valid from './directives/valid';
 import AutoPosition from './directives/autoposition';
 
 var Components = [
-    Pager,Grid ,
+    Pager,Datagrid ,
 ];
 
 var Modules = [
@@ -37,7 +37,7 @@ function install(Vue){
 
 export {
     Pager,
-    Grid,
+    Datagrid,
     Tablepager,
     Button,
     Overlay,
