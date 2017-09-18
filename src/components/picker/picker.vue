@@ -14,7 +14,6 @@
 
         data(){
             return {
-                overLayShow: false,
                 direction: 'CENTER-BOTTOM',
             };
         },
@@ -45,24 +44,59 @@
             pickerClick(event){
                 event.cancelBubble = true;
                 this.toggleOverlay();
+                let overlayEl = this.$refs.pickerOverlay.$el;
             },
 
             positionOverlay(){
                 let pickerRel = this.$refs.pickerRel;
-                let pickerOverlay = this.$refs.pickerOverlay;
+                let overlayEl = this.$refs.pickerOverlay.$el;
+                /* let p = this.getOverFlowParent(pickerRel);*/
+               
+
+                /* if(this.isOverFlow(overlayEl,p)){
+                    
+                }*/
+
                 switch(this.direction){
                 case 'CENTER-BOTTOM':
-                    pickerOverlay.$el.style.top = `${pickerRel.offsetHeight + 2}px`;
+                    overlayEl.style.top = `${pickerRel.offsetHeight + 2}px`;
                     break;
                 }
+            },
+
+
+            isOverFlow(overlayEl, pEl){
+
+            },
+            //getOverFlowParent
+            getOFParentEl(el){
+                let elp = false;
+                if(!el){
+                    elp = this.$refs.pickerRel;
+                }else{
+                    elp = el.parentElement;
+                }
+                //console.log(elp);
+                let style = window.getComputedStyle(elp);
+                if(style.overflow == 'hidden'){
+                    window.getComputedStyle(elp)
+                    return elp;
+                } else {
+                    return this.getOFParentEl(elp);
+                }
+            },
+
+            getOverlayEl(){
+                return this.$refs.pickerOverlay.$el;
             },
 
             toggleOverlay(){
                 let self = this;
                 let overLay = self.$refs.pickerOverlay;
                 if(!overLay.visibility){
-                    self.positionOverlay();
+                    
                     overLay.open();
+                    self.positionOverlay();
                 } else {
                     overLay.close();
                 }
@@ -72,14 +106,62 @@
                 alert('handleBlur');
             },
 
-            initEvent(){
-                let self = this;
-                /*document.addEventListener('click', (event) => {
-                    console.log(self);
-                    self.$refs.pickerOverlay.close();
-                });*/
-            }
+          
+            close(){
+                let overlay = this.$refs.pickerOverlay;
+                overlay.close();
+            },
+
+            clickPickerContent(){
+                alert('pickerContent');
+            },
+
             
+            
+
+
+            overlayOpen(){
+                let pEl = this.getOFParentEl();
+                let overlayEl = this.getOverlayEl(); 
+                let refPickerEl = this.$refs.pickerRel;
+
+                //console.log(pEl.getBoundingClientRect());
+                let pRect = pEl.getBoundingClientRect();
+                let oRect = overlayEl.getBoundingClientRect();
+                let rRect = refPickerEl.getBoundingClientRect();
+
+                /* console.log(overlayEl.getBoundingClientRect());
+                console.log('open');*/
+                console.log(pRect.top + pRect.height,  rRect.top + rRect.height + oRect.height);
+
+                if(pRect.top + pRect.height < rRect.top + rRect.height + oRect.height){
+                    this.direction = 'CENTER-TOP';
+                } else if( rRect.bottom + rRect.height + oRect.height > pEl.bottom + pEl.height){
+                    this.direction = 'CENTER-BOTTOM';
+                } 
+
+                overlayEl.style.visibility = 'visible';
+            }
+
+        },
+
+
+        watch:{
+            direction(v){
+                let overlayEl = this.getOverlayEl(); 
+                console.log(v);
+                switch(v){
+                case 'CENTER-TOP':
+                    overlayEl.style.top = 'inherit';
+                    overlayEl.style.bottom = this.$refs.pickerRel.offsetHeight +2 + 'px';   
+                    break;
+                case 'CENTER-BOTTOM':
+                    console.log('bottom');
+                    overlayEl.style.bottom = 'inherit';
+                    overlayEl.style.top = this.$refs.pickerRel.offsetHeight +2 + 'px';   
+                    break;
+                }
+            }
         },
 
         computed: {
@@ -96,7 +178,7 @@
 
         mounted(){
             Overlay.manager.addOverlay(this, Overlay.manager.types.picker);
-            this.initEvent();
+
         },
 
         destroyed(){
@@ -110,8 +192,8 @@
         <div class="vp-picker-rel" ref="pickerRel" @click="pickerClick">
             <slot>ref</slot>
         </div>
-        <overlay :visible="overLayShow" class="vp-picker-overlay" position="center" ref="pickerOverlay">
-            <slot name="vp-picker-content">
+        <overlay :visible="false" class="vp-picker-overlay" position="center" ref="pickerOverlay" @click.native.stop="clickPickerContent();" @open="overlayOpen()">
+            <slot name="picker-content">
                 content
             </slot>
         </overlay>
@@ -135,6 +217,7 @@
         position: absolute;
         width: 100%;
         background-color: #ccc;
+        visibility: hidden;
     }
 
     .vp-picker-rel{
