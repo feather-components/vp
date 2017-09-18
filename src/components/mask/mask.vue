@@ -1,18 +1,12 @@
-<template>
-    <transition>
-        <div :class="[className, 'vp-mask']" v-show="visibility" @click="$emit('click')">
-            <slot></slot>
-        </div>
-    </transition>
-</template>
-
 <script>
     import Overlay from '../overlay';
     export default{
         mixins: [Overlay],
         name: 'mask',
-        components: {
-            Overlay
+        data() {
+            return {
+                class: 'vp-mask'
+            }
         }
     }
 </script>

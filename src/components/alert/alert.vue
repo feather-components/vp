@@ -84,7 +84,7 @@
     export default {
         name: 'alert',
 
-        mixins: [Overlay],
+        extends: [Overlay],
 
         props: {
             content: {
@@ -123,6 +123,12 @@
                 var self = this;
                 let button = self.buttons[key];
                 button.click.call(self);
+            },
+
+            destroy(){
+                console.log('delete overlay');
+                Overlay.manager.deleteOverlay(this);
+                this._destroy();
             }
         },
 
