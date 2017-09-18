@@ -70,7 +70,7 @@ export default {
 			this.$emit('change',e)
 		},
 		toggle() {
-			this.$emit('input',this.state ? '' : this.value)
+			this.$emit('input',this.state ? undefined : this.value)
 		}
 	},
 	watch: {
