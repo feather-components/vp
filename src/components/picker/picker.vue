@@ -4,8 +4,6 @@
     export default {
         name: 'alert',
 
-        mixins: [Overlay],
-
         props: {
             el: Object
         },
@@ -97,10 +95,13 @@
         },
 
         mounted(){
+            Overlay.manager.addOverlay(this, Overlay.manager.types.picker);
             this.initEvent();
         },
 
-
+        destroyed(){
+            Overlay.manager.deleteOverlay(this);
+        }
     }
 </script>
 
@@ -132,14 +133,11 @@
 
     .vp-picker-overlay{
         position: absolute;
-        /*border: 1px #ccc solid;*/
         width: 100%;
         background-color: #ccc;
     }
 
     .vp-picker-rel{
         border: 1px #ccc solid;
-        
-    /*    position: absolute;
-    */}
+    }
 </style>

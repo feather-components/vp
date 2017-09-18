@@ -124,6 +124,14 @@
                 let button = self.buttons[key];
                 button.click.call(self);
             }
+        },
+
+        mounted(){
+            Overlay.manager.addOverlay(this, Overlay.manager.types.alert);
+        },
+
+        destroyed(){
+            Overlay.manager.deleteOverlay(this);
         }
     }
 </script>

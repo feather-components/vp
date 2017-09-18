@@ -7,7 +7,6 @@
 </template>
 <script>
     import { Event } from '../../helper';
-    import manager from './OverlayManager';
     export default{
         name: 'overlay',
 
@@ -47,15 +46,15 @@
             this.visible && this.open();
         },
 
+        destroyed(){
+            //console.log('overlay destroy');
+        },
+
         methods: {
             open(){
-                console.log('open--------------');
                 let self = this;
                 if(self.visibility) return false;
                 self.visibility = true;
-               
-                manager.addPicker(self);
-
                 self.$nextTick(function(){
                     self.$emit('open');
                 });
@@ -88,6 +87,7 @@
                 self.$el.parentNode && self.$el.parentNode.removeChild(self.$el);
                 self.$emit('destroy');
                 self.destroyed = true;
+                self.$destroy();
             }
         }
     }

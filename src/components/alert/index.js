@@ -14,7 +14,7 @@ var override = (callback) => {
 };
 
 var Alert = override((content, options) => {
-    return Util.appendInstance(Component, {
+    let data = Object.assign({
         content: content,
         extras: options.extras,
         buttons: options.buttons || {
@@ -25,7 +25,9 @@ var Alert = override((content, options) => {
                 }
             }
         }
-    });
+    }, options );
+
+    return Util.appendInstance(Component, data);
 });
 
 Alert.confirm = override((content, options, callback, manualClose) => {

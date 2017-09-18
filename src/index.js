@@ -46,9 +46,9 @@ export {
     Mask,
     Alert,
     AutoPosition,
-    Picker,
     Checkbox,
     Radio,
+    Picker
 };
 
 export default {install};
