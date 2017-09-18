@@ -44,6 +44,8 @@
         },
 
         mounted: function(){
+            console.log(this);
+            console.log('mounted-------------------------' );
             this.visible && this.open();
         },
 
@@ -88,6 +90,8 @@
                 self.$el.parentNode && self.$el.parentNode.removeChild(self.$el);
                 self.$emit('destroy');
                 self.destroyed = true;
+
+                manager.deletePicker(self);
             }
         }
     }
