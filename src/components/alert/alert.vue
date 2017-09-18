@@ -84,7 +84,7 @@
     export default {
         name: 'alert',
 
-        extends: [Overlay],
+        mixins: [Overlay],
 
         props: {
             content: {
@@ -125,11 +125,21 @@
                 button.click.call(self);
             },
 
-            destroy(){
-                console.log('delete overlay');
+
+            destroy(fx = this.fx){
+                let self = this;
+                if(self.destroyed) return;
+                self.close();
+                if(fx){
+                    Event.on(self.$el, 'transitionend webkitTransitionEnd', () => {
+                        self._destroy();
+                    });
+                }else{
+                    self._destroy();
+                }
                 Overlay.manager.deleteOverlay(this);
-                this._destroy();
             }
+
         },
 
         mounted(){
