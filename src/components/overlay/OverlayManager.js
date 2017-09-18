@@ -1,18 +1,19 @@
 var OverlayManager = (function(){
     let instance = false;
-    let pickerMap = {};
+    let overlays = {};
 
     function init() {
         return {
-            addPicker(picker){
-                pickerMap[picker._uid] = picker;
-                console.log(pickerMap);
+            addOverlay(overlay, type){
+                overlays[overlay._uid] = overlay;
+                overlays[overlay._uid]['type'] = type;
+                console.log(overlays);
             },
-            getPickerList(){
-                return pickerMap;
+            getOverlays(){
+                return overlays;
             },
-            deletePicker(picker){
-                delete pickerMap[picker._uid];
+            deleteOverlay(overlay){
+                delete overlays[overlay._uid];
             }
         }
     }

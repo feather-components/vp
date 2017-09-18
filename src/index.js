@@ -44,7 +44,7 @@ export {
     Mask,
     Alert,
     AutoPosition,
-    Picker,
+    Picker
 };
 
 export default {install};

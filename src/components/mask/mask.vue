@@ -1,5 +1,9 @@
 <template>
-    <overlay :visible="visibility" class="vp-mask" @click="$emit('click')"><slot></slot></overlay>
+    <transition>
+        <div :class="[className, 'vp-mask']" v-show="visibility" @click="$emit('click')">
+            <slot></slot>
+        </div>
+    </transition>
 </template>
 
 <script>

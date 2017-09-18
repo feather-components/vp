@@ -7,7 +7,6 @@
 </template>
 <script>
     import { Event } from '../../helper';
-    import manager from './OverlayManager';
     export default{
         name: 'overlay',
 
@@ -44,20 +43,14 @@
         },
 
         mounted: function(){
-            console.log(this);
-            console.log('mounted-------------------------' );
             this.visible && this.open();
         },
 
         methods: {
             open(){
-                console.log('open--------------');
                 let self = this;
                 if(self.visibility) return false;
                 self.visibility = true;
-               
-                manager.addPicker(self);
-
                 self.$nextTick(function(){
                     self.$emit('open');
                 });
@@ -90,8 +83,6 @@
                 self.$el.parentNode && self.$el.parentNode.removeChild(self.$el);
                 self.$emit('destroy');
                 self.destroyed = true;
-
-                manager.deletePicker(self);
             }
         }
     }

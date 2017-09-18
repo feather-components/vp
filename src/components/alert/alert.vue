@@ -124,6 +124,10 @@
                 let button = self.buttons[key];
                 button.click.call(self);
             }
+        },
+
+        mounted(){
+            Overlay.manager.addOverlay(this, 'alert');
         }
     }
 </script>
