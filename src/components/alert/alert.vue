@@ -123,27 +123,15 @@
                 var self = this;
                 let button = self.buttons[key];
                 button.click.call(self);
-            },
-
-
-            destroy(fx = this.fx){
-                let self = this;
-                if(self.destroyed) return;
-                self.close();
-                if(fx){
-                    Event.on(self.$el, 'transitionend webkitTransitionEnd', () => {
-                        self._destroy();
-                    });
-                }else{
-                    self._destroy();
-                }
-                Overlay.manager.deleteOverlay(this);
             }
-
         },
 
         mounted(){
-            Overlay.manager.addOverlay(this, 'alert');
+            Overlay.manager.addOverlay(this, Overlay.manager.types.alert);
+        },
+
+        destroyed(){
+            Overlay.manager.deleteOverlay(this);
         }
     }
 </script>

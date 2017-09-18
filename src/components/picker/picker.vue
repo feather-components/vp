@@ -95,11 +95,13 @@
         },
 
         mounted(){
-            Overlay.manager.addOverlay(this, 'picker');
+            Overlay.manager.addOverlay(this, Overlay.manager.types.picker);
             this.initEvent();
         },
 
-
+        destroyed(){
+            Overlay.manager.deleteOverlay(this);
+        }
     }
 </script>
 

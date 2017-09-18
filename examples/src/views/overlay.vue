@@ -12,6 +12,8 @@
                 <btn size="small" @click="showGlobalMask()">mask</btn>
                 <btn size="small" @click="showMask($refs.innerMask)">mask</btn>
                 <btn size="small" type="danger" @click="showAlert()" >alert</btn>
+                <btn size="small" type="danger" @click="showAlertAuoClose()" >alert</btn>
+                
                 <btn size="small" type="danger" @click="showAlertConfirm()" >confirm</btn>
                 <btn size="small" type="danger" @click="showAlertConfirmDefault()" >defaultconfirm </btn>
                 <btn size="small" type="danger" @click="test()" >overManager </btn>
@@ -67,7 +69,10 @@
                 mask.close();
             },
             showAlert(){
-                Alert("dfafsdfsdfsfsdfsdadfafsdfsdfdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdf");
+                Alert("dfafsdfsdfsfsdfsdadfafsdfsdf");
+            },
+            showAlertAuoClose(){
+                Alert("dfafsdfsdfsfsdfsdadfafsdfsdf",{autoDestroy: true});
             },
             showAlertConfirm(){
                 Alert("dfafsdfsdfsfsdfsdadfafsdfsdfdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdf",

@@ -46,6 +46,10 @@
             this.visible && this.open();
         },
 
+        destroyed(){
+            //console.log('overlay destroy');
+        },
+
         methods: {
             open(){
                 let self = this;
@@ -83,6 +87,7 @@
                 self.$el.parentNode && self.$el.parentNode.removeChild(self.$el);
                 self.$emit('destroy');
                 self.destroyed = true;
+                self.$destroy();
             }
         }
     }
