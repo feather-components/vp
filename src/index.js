@@ -5,6 +5,8 @@ import Overlay from './components/overlay';
 import Mask from './components/mask';
 import Alert from './components/alert';
 import Picker from './components/picker';
+import Checkbox from './components/checkbox';
+import Radio from './components/radio';
 //--------------------------------------------------------
 import Tablepager from './modules/tablepager';
 //--------------------------------------------------------
@@ -12,7 +14,7 @@ import Valid from './directives/valid';
 import AutoPosition from './directives/autoposition';
 
 var Components = [
-    Pager,Datagrid ,
+    Pager, Datagrid, Checkbox, Radio
 ];
 
 var Modules = [
@@ -44,6 +46,8 @@ export {
     Mask,
     Alert,
     AutoPosition,
+    Checkbox,
+    Radio,
     Picker
 };
 

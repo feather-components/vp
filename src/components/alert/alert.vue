@@ -152,6 +152,7 @@
                         v-text="key" 
                         :size="button.size || 'normal'" 
                         :type="button.type || 'main'"
+                        :key="key"
                     ></btn>
                 </section>
             </div>

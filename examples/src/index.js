@@ -5,6 +5,8 @@ Vue.use(VueRouter);
 
 import Pager from './components/pager.vue';
 import Datagrid from './components/datagrid.vue';
+import Checkbox from './components/checkbox.vue';
+import Radio from './components/radio.vue';
 import OverlayView from './views/overlay.vue';
 import ButtonView from './views/button.vue';
 
@@ -27,6 +29,12 @@ const router = new VueRouter({
         path: '/components/button',
         component: ButtonView
     },{
+        path: '/components/checkbox',
+        component: Checkbox
+    },{
+        path: '/components/radio',
+        component: Radio
+    },{
     //MODULES
         path: '/modules/tablepager', 
         component: Tablepager
@@ -43,6 +51,12 @@ new Vue({
     data() {
         return {
             com: [{
+                text: 'Radio',
+                url: '#/components/radio'
+            }, {
+                text: 'Checkbox',
+                url: '#/components/checkbox'
+            }, {
                 text: 'Pager',
                 url: '#/components/pager',
                 id: 'com_1'
