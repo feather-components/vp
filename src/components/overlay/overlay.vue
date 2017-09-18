@@ -7,7 +7,7 @@
 </template>
 <script>
     import { Event } from '../../helper';
-
+    import manager from './OverlayManager';
     export default{
         name: 'overlay',
 
@@ -49,10 +49,13 @@
 
         methods: {
             open(){
+                console.log('open--------------');
                 let self = this;
                 if(self.visibility) return false;
-
                 self.visibility = true;
+               
+                manager.addPicker(self);
+
                 self.$nextTick(function(){
                     self.$emit('open');
                 });

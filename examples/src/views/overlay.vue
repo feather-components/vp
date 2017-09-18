@@ -16,7 +16,7 @@
                 <btn size="small" type="danger" @click="showAlertConfirmDefault()" >defaultconfirm </btn>
                 
             </div>
-            <vp-mask ref="innerMask" @click="closeMask($refs.innerMask)" style="position:absolute"></vp-mask>
+            <vp-mask ref="innerMask" @click="closeMask($refs.innerMask)" style="position:absolute" :visibility="false"></vp-mask>
         </div>
         <div class="wrap">
             <div class="wrap-title">
@@ -27,7 +27,6 @@
                 <btn size="small" @click="" ref="cityPicker">cityPicker</btn>
                 <btn size="small" @click="" ref="datePicker">datePicker</btn>
             </div>
-            <vp-mask ref="innerMask" @click="closeMask($refs.innerMask)" style="position:absolute"></vp-mask>
         </div>
     </div>
 </template>
