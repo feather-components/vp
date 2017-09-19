@@ -11,7 +11,7 @@ var OverlayManager = (function(){
 
     function init() {
         //let manager = this;
-        Event.on(document, 'click', (event) => {
+        Event.on(document, 'click', () => {
             
             for(let key in overlays){
                 let overlay = overlays[key];

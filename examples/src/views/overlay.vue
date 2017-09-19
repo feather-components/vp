@@ -37,7 +37,7 @@
                 </vp-picker>
                 <div class="picker-center-bottom">
                     <vp-picker class="custom-picker" :autoClose="false">base picker
-                        <div slot="picker-content" style="height:250px;">
+                        <div slot="picker-content" style="height:250px;padding:10px;">
                             :autoClose="false"
                         </div>
                     </vp-picker>
