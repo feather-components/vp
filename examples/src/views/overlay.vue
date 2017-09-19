@@ -38,14 +38,7 @@
                 <div class="picker-center-bottom">
                     <vp-picker class="custom-picker" :autoClose="false">base picker
                         <div slot="picker-content" style="height:250px;">
-                            hihi,hihi as left
-                            fdsfds
-                            fdsa
-                            fdsafdsa
-                            fdsafsadf
-                            fdsafsda
-                            fdsafsda
-                            fdsafds
+                            :autoClose="false"
                         </div>
                     </vp-picker>
                 </div>
