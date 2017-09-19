@@ -19,15 +19,10 @@
         },
 
         methods: {
-            init(options){
-                let el = options.ref.$el;
-                console.log(el);
-            },
-
+            
             pickerClick(event){
                 event.cancelBubble = true;
                 this.toggleOverlay();
-                let overlayEl = this.$refs.pickerOverlay.$el;
             },
 
             setDirection(){
