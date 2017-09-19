@@ -111,10 +111,13 @@ export default{
     },
 
     appendInstance(vueComponent, data = {}){
+        //vueComponent.props = Object.assign(vueComponent.props, data);
+        console.log(vueComponent, data);
         var instance = new Vue(vueComponent);
         Object.assign(instance, data);
         instance.$mount();
         document.body.appendChild(instance.$el);
+        console.log(instance);
         return instance;
     },
 

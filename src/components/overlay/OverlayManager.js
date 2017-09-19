@@ -23,8 +23,13 @@ var OverlayManager = (function(){
                     break;
                 }
 
-                ((overlay.$attrs && overlay.$attrs.autoClose) || overlay.autoClose) && overlay.close();
-                ((overlay.$attrs && overlay.$attrs.autoDestroy) || overlay.autoDestroy) && overlay.destroy();
+                if(overlay.autoClose){
+                    overlay.close();
+                }
+
+                if(overlay.autoDestroy){
+                    overlay.destroy();
+                }
             }
         });
 
@@ -32,7 +37,6 @@ var OverlayManager = (function(){
             addOverlay(overlay, type){
                 overlays[overlay._uid] = overlay;
                 overlays[overlay._uid]['type'] = type;
-                console.log(overlays);
             },
             getOverlays(){
                 return overlays;
