@@ -15,9 +15,16 @@ var OverlayManager = (function(){
             
             for(let key in overlays){
                 let overlay = overlays[key];
+                let overlayType = overlay.type;
 
-                switch(key){
+                switch(overlayType){
                 case types.alert:
+                    break;
+                case types.picker:
+                    if(overlay.$attrs && typeof overlay.$attrs.autoClose != 'undefined' && !overlay.$attrs.autoClose){
+                    }else{
+                        overlay.close();
+                    }
                     break;
                 default:
                     break;

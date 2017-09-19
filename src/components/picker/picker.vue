@@ -14,7 +14,7 @@
 
         data(){
             return {
-                direction: 'CENTER-BOTTOM',
+                direction: '',
             };
         },
 
@@ -30,7 +30,7 @@
                 let overlayEl = this.$refs.pickerOverlay.$el;
             },
 
-            setPosition(){
+            setDirection(){
                 let pEl = this.getOFParentEl();
                 let overlayEl = this.getOverlayEl(); 
                 let refPickerEl = this.$refs.pickerRel;
@@ -44,7 +44,24 @@
                     this.direction = 'CENTER-TOP';
                 } else if( rRect.bottom + rRect.height + oRect.height > pEl.bottom + pEl.height){
                     this.direction = 'CENTER-BOTTOM';
-                } 
+                } else {
+                    this.direction = 'CENTER-BOTTOM';
+                }
+
+            },
+
+            setPosition(v){
+                let overlayEl = this.getOverlayEl(); 
+                switch(v){
+                case 'CENTER-TOP':
+                    overlayEl.style.top = 'inherit';
+                    overlayEl.style.bottom = this.$refs.pickerRel.offsetHeight + 2 + 'px';   
+                    break;
+                case 'CENTER-BOTTOM':
+                    overlayEl.style.bottom = 'inherit';
+                    overlayEl.style.top =  this.$refs.pickerRel.offsetHeight + 2 + 'px';   
+                    break;
+                }
 
                 overlayEl.style.visibility = 'visible';
             },
@@ -112,25 +129,10 @@
 
             overlayOpen(){
                 this.closeOtherPicker();
-                this.setPosition();
+                this.setDirection();
+                this.setPosition(this.direction);
             }
 
-        },
-
-        watch:{
-            direction(v){
-                let overlayEl = this.getOverlayEl(); 
-                switch(v){
-                case 'CENTER-TOP':
-                    overlayEl.style.top = 'inherit';
-                    overlayEl.style.bottom = this.$refs.pickerRel.offsetHeight +2 + 'px';   
-                    break;
-                case 'CENTER-BOTTOM':
-                    overlayEl.style.bottom = 'inherit';
-                    overlayEl.style.top = this.$refs.pickerRel.offsetHeight +2 + 'px';   
-                    break;
-                }
-            }
         },
 
         computed: {
