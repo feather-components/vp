@@ -116,7 +116,7 @@
             },
 
             clickPickerContent(){
-                alert('pickerContent');
+              
             },
 
             closeOtherPicker(){
