@@ -12,28 +12,19 @@ var OverlayManager = (function(){
     function init() {
         //let manager = this;
         Event.on(document, 'click', (event) => {
-            //console.log(event);
-            //alert('click');
-            //console.log(overlays);
-            //overlays
+            
             for(let key in overlays){
-                console.log(key);
                 let overlay = overlays[key];
-                
-                if(overlay.autoClose){
-                    overlay.close();
-                }
-                if(overlay.autoDestroy){
-                    overlay.destroy();
-                }
+
                 switch(key){
                 case types.alert:
-
                     break;
                 default:
-                    console.log('clicke --_ddfdas');
                     break;
                 }
+
+                ((overlay.$attrs && overlay.$attrs.autoClose) || overlay.autoClose) && overlay.close();
+                ((overlay.$attrs && overlay.$attrs.autoDestroy) || overlay.autoDestroy) && overlay.destroy();
             }
         });
 
