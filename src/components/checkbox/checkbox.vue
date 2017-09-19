@@ -144,7 +144,7 @@ export default {
 		text-align: center;
 		vertical-align: bottom;
 		border-radius: 2px;
-		transition: background-image .3s;
+		transition: all .3s;
 		z-index: 1;
 	}
 	&:hover .icon-checkbox {
