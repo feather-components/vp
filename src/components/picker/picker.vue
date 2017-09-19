@@ -15,7 +15,7 @@
     import Overlay from '../overlay';
    
     export default {
-        name: 'alert',
+        name: 'picker',
 
         props: {
             el: Object
@@ -165,7 +165,6 @@
         }
     }
 </script>
-
 
 <style>
     .vp-picker{
