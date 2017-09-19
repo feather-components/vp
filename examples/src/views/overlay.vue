@@ -27,7 +27,7 @@
                 picker
             </div>
             <div class="buttons clear">
-                <vp-picker class="custom-picker" :autoClose="true">base picker
+                <vp-picker class="custom-picker" >base picker
                     <div slot="picker-content">
                         fdafasdfasdfaffffffffffff
                         fdsafd
@@ -36,28 +36,21 @@
                     </div>
                 </vp-picker>
                 <div class="picker-center-bottom">
-                    <vp-picker class="custom-picker" :autoClose="true">base picker
-                        <div slot="picker-content" style="height:250px;">
-                            hihi,hihi as left
-                            fdsfds
-                            fdsa
-                            fdsafdsa
-                            fdsafsadf
-                            fdsafsda
-                            fdsafsda
-                            fdsafds
+                    <vp-picker class="custom-picker" :autoClose="false">base picker
+                        <div slot="picker-content" style="height:250px;padding:10px;">
+                            :autoClose="false"
                         </div>
                     </vp-picker>
                 </div>
                 <div class="picker-center-bottom" style="margin-right: 20px;overflow:hidden; height: 100px;border: 1px #ccc solid; padding-top: 20px; padding-left:20px; width:200px; float: left;">
-                    <vp-picker class="custom-picker" :autoClose="true">base picker
+                    <vp-picker class="custom-picker" >base picker
                         <div slot="picker-content">
                             hihi,hihi as left
                         </div>
                     </vp-picker>
                 </div>
                 <div class="picker-center-bottom" style="margin-right: 20px;overflow:hidden; height: 100px;border: 1px #ccc solid; padding-top: 20px; padding-left:20px; width:200px; float: left;">
-                    <vp-picker class="custom-picker" :autoClose="true" style="position:relative; bottom:-60px;">base picker
+                    <vp-picker class="custom-picker"  style="position:relative; bottom:-60px;">base picker
                         <div slot="picker-content">
                             hihi,hihi as left
                         </div>
@@ -105,7 +98,7 @@
                 Alert("dfafsdfsdfsfsdfsdadfafsdfsdf");
             },
             showAlertAuoDestroy(){
-                Alert("dfafsdfsdfsfsdfsdadfafsdfsdf",{autoDestroy: true});
+                Alert("dfafsdfsdfsfsdfsdadfafsdfsdf",{autoDestroy: true, showMask: false});
             },
             showAlertConfirm(){
                 Alert("dfafsdfsdfsfsdfsdadfafsdfsdfdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdfsdfsfsdfsdadfafsdf",

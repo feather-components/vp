@@ -11,20 +11,32 @@ var OverlayManager = (function(){
 
     function init() {
         //let manager = this;
-        Event.on(document, 'click', (event) => {
+        Event.on(document, 'click', () => {
             
             for(let key in overlays){
                 let overlay = overlays[key];
+                let overlayType = overlay.type;
 
-                switch(key){
+                switch(overlayType){
                 case types.alert:
+                    break;
+                case types.picker:
+                    if(overlay.$attrs && typeof overlay.$attrs.autoClose != 'undefined' && !overlay.$attrs.autoClose){
+                    }else{
+                        overlay.close();
+                    }
                     break;
                 default:
                     break;
                 }
 
-                ((overlay.$attrs && overlay.$attrs.autoClose) || overlay.autoClose) && overlay.close();
-                ((overlay.$attrs && overlay.$attrs.autoDestroy) || overlay.autoDestroy) && overlay.destroy();
+                if(overlay.autoClose){
+                    overlay.close();
+                }
+
+                if(overlay.autoDestroy){
+                    overlay.destroy();
+                }
             }
         });
 
@@ -32,7 +44,6 @@ var OverlayManager = (function(){
             addOverlay(overlay, type){
                 overlays[overlay._uid] = overlay;
                 overlays[overlay._uid]['type'] = type;
-                console.log(overlays);
             },
             getOverlays(){
                 return overlays;
