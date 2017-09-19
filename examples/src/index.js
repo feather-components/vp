@@ -9,6 +9,7 @@ import Checkbox from './components/checkbox.vue';
 import Radio from './components/radio.vue';
 import OverlayView from './views/overlay.vue';
 import ButtonView from './views/button.vue';
+import CityPicker from './views/citypicker.vue';
 
 import Tablepager from './modules/tablepager.vue';
 
@@ -25,6 +26,9 @@ const router = new VueRouter({
     },{
         path: '/components/overlay',
         component: OverlayView
+    },{
+        path: '/components/citypicker',
+        component: CityPicker
     },{
         path: '/components/button',
         component: ButtonView
@@ -70,6 +74,9 @@ new Vue({
             }, {
                 text: 'Button',
                 url: '#/components/button'
+            }, {
+                text: 'CityPicker',
+                url: '#/components/citypicker'
             }],
             mod:[{
                 text: 'Tablepager',

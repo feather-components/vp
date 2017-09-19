@@ -178,7 +178,7 @@
         display: block;
     }
 
-    .vp-picker-overlay{
+    .vp-picker .vp-picker-overlay{
         position: absolute;
         width: 100%;
         background-color: #ccc;

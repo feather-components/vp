@@ -5,6 +5,7 @@ import Overlay from './components/overlay';
 import Mask from './components/mask';
 import Alert from './components/alert';
 import Picker from './components/picker';
+import CityPicker from './components/CityPicker';
 import Checkbox from './components/checkbox';
 import Radio from './components/radio';
 //--------------------------------------------------------
@@ -48,7 +49,8 @@ export {
     AutoPosition,
     Checkbox,
     Radio,
-    Picker
+    Picker,
+    CityPicker
 };
 
 export default {install};
