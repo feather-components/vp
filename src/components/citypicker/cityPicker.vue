@@ -6,10 +6,10 @@
         <overlay :visible="false" class="vp-picker-overlay ui3-citypicker-overlay" position="center" ref="pickerOverlay" @click.native.stop="clickPickerContent();" @open="overlayOpen()">
             <slot name="picker-content">
                 <div class="ui3-citypicker-ws">
-                    <a href="javascript:" v-for="word in words" @click="chooseWord()"> {{ word }}</a>
+                    <a href="javascript:" v-for="word in words" @click="chooseWord(word)"> {{ word }}</a>
                 </div>
-                <div class="ui3-citypicker-list">
-                    <div class="ui3-citypicker-wl" v-for="word in words">
+                <div class="ui3-citypicker-list" ref="cityList" id="J-ui3-citypicker-list">
+                    <div class="ui3-citypicker-wl" v-for="word in words" :ref="'cityBlock'+word">
                         <div class="ui3-citypicker-wm">{{word}}</div>
                         <div class="ui3-citypicker-items">
                             <a href="javascript:" v-for="city in getCitysByWord(word)" :class="cityNameClass(city.name)">{{city.name}}</a>
@@ -52,13 +52,14 @@
 
                 return list;
             },
-            
+
             cityNameClass(name){
                 if(name.length > 4) return 'ui3-citypicker-lw';
             },
 
-            chooseWord(){
-                alert('chooseWord');
+            chooseWord(word){
+                let top = this.$refs['cityBlock'+word][0].offsetTop - 63
+                this.$refs.cityList.scrollTop = top;
             }
         },
 
