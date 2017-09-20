@@ -6,13 +6,13 @@
         <overlay :visible="false" class="vp-picker-overlay ui3-citypicker-overlay" position="center" ref="pickerOverlay" @click.native.stop="clickPickerContent();" @open="overlayOpen()">
             <slot name="picker-content">
                 <div class="ui3-citypicker-ws">
-                    <a href="javascript:" v-for="word in words"> {{ word }}</a>
+                    <a href="javascript:" v-for="word in words" @click="chooseWord()"> {{ word }}</a>
                 </div>
                 <div class="ui3-citypicker-list">
                     <div class="ui3-citypicker-wl" v-for="word in words">
                         <div class="ui3-citypicker-wm">{{word}}</div>
                         <div class="ui3-citypicker-items">
-                            <a href="javascript:" v-for="city in getCitysByWord(word)">{{city.name}}</a>
+                            <a href="javascript:" v-for="city in getCitysByWord(word)" :class="cityNameClass(city.name)">{{city.name}}</a>
                         </div>
                     </div>
                 </div>
@@ -51,6 +51,14 @@
                 }
 
                 return list;
+            },
+            
+            cityNameClass(name){
+                if(name.length > 4) return 'ui3-citypicker-lw';
+            },
+
+            chooseWord(){
+                alert('chooseWord');
             }
         },
 
@@ -120,6 +128,7 @@
         color: #5986E1;
         line-height: 16px;
         height: 16px;
+        color: red;
     }
 
     .ui3-citypicker-items{
@@ -134,6 +143,8 @@
         margin-left: 10px;
         line-height: 16px;
         height: 16px;
+        float: left;
+        text-align: left;
     }
 
     .ui3-citypicker-items a:hover, .ui3-citypicker .ui3-citypicker-selected{
@@ -141,7 +152,7 @@
         text-decoration: underline;
     }
 
-    .ui3-citypicker .ui3-citypicker-lw{
+    .ui3-citypicker-overlay .ui3-citypicker-lw{
         width: 106px;
     }
 
