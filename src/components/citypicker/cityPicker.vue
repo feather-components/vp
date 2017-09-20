@@ -99,7 +99,7 @@
 
     .ui3-citypicker-list{
         margin: 10px 17px;
-        height: 400px;
+        height: 230px;
         overflow: auto;
     }
 

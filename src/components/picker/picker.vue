@@ -39,7 +39,7 @@
             },
 
             setDirection(){
-                let pEl = this.getOFParentEl();
+                let pEl = this.getOFParentEl() || document;
                 let overlayEl = this.getOverlayEl(); 
                 let refPickerEl = this.$refs.pickerRel;
 
