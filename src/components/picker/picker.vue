@@ -62,11 +62,11 @@
                 let overlayEl = this.getOverlayEl(); 
                 switch(v){
                 case 'CENTER-TOP':
-                    overlayEl.style.top = 'inherit';
+                    overlayEl.style.top = '';
                     overlayEl.style.bottom = this.$refs.pickerRel.offsetHeight + 2 + 'px';   
                     break;
                 case 'CENTER-BOTTOM':
-                    overlayEl.style.bottom = 'inherit';
+                    overlayEl.style.bottom = '';
                     overlayEl.style.top =  this.$refs.pickerRel.offsetHeight + 2 + 'px';   
                     break;
                 }
@@ -180,7 +180,6 @@
 
     .vp-picker .vp-picker-overlay{
         position: absolute;
-        width: 100%;
         background-color: #ccc;
         visibility: hidden;
     }

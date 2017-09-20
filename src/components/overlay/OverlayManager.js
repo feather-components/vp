@@ -40,6 +40,10 @@ var OverlayManager = (function(){
             }
         });
 
+        Event.on(document.body, 'scroll', () => {
+            alert('scroll');
+        });
+
         return {
             addOverlay(overlay, type){
                 overlays[overlay._uid] = overlay;
