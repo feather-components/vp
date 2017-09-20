@@ -12,7 +12,7 @@
                     <div class="ui3-citypicker-wl" v-for="word in words" :ref="'cityBlock'+word">
                         <div class="ui3-citypicker-wm">{{word}}</div>
                         <div class="ui3-citypicker-items">
-                            <a href="javascript:" v-for="city in getCitysByWord(word)" :class="cityNameClass(city.name)">{{city.name}}</a>
+                            <a href="javascript:" v-for="city in getCitysByWord(word)" :class="cityNameClass(city)" @click="chooseCity(city)">{{city.name}}</a>
                         </div>
                     </div>
                 </div>
@@ -27,11 +27,17 @@
         name: 'cityPicker',
         mixins: [Picker],
         props: {
-            source: Object
+            source: Object,
+            isMultiple: {
+                type: Boolean,
+                default: false,
+            }
         },
         data(){
             return {
-
+                citySource: this.source,
+                words: [],
+                choosedCitys: [],
             }
         },
 
@@ -40,12 +46,13 @@
                 var list = [];
                 word = word.toUpperCase();
 
-                for(let key in this.source){
-                    let city = this.source[key];
+                for(let key in this.citySource){
+                    let city = this.citySource[key];
                     if(city.word == word){
                         list.push({
                             id: key,
-                            name: city.name
+                            name: city.name,
+                            choosed: city.choosed,
                         });
                     }
                 }
@@ -53,29 +60,53 @@
                 return list;
             },
 
-            cityNameClass(name){
-                if(name.length > 4) return 'ui3-citypicker-lw';
+            cityNameClass(city){
+                let className = [];
+                if(city.name.length > 4){
+                    className.push('ui3-citypicker-lw');
+                }
+                if(city.choosed){
+                    className.push('ui3-citypicker-city-choosed');
+                }
+
+                return className.join(' ');
             },
 
             chooseWord(word){
-                let top = this.$refs['cityBlock'+word][0].offsetTop - 63
+                let top = this.$refs['cityBlock'+word][0].offsetTop;
                 this.$refs.cityList.scrollTop = top;
-            }
-        },
+            },
 
-        computed: {
-            words(){
-                var arr = [];
-                for(var i = 65; i < 91; i++){
-                    arr.push(String.fromCharCode(i));
+            chooseCity(city){
+                let sourceCity = this.citySource[city.id];
+                sourceCity['choosed'] = sourceCity['choosed'] ? false : true;
+                if(!this.isMultiple){
+                    if(this.choosedCitys.length === 1){
+                        this.citySource[this.choosedCitys[0].id]['choosed'] = false;
+                    }
+                    this.choosedCitys = [];
                 }
-                return arr;
+                this.choosedCitys.push(city);
+                this.words = this.getWords();
+            },
+
+            getCitys(){
+                return this.choosedCitys;
+            },
+
+            getWords(){
+                let words = [];
+                for(var i = 65; i < 91; i++){
+                    words.push(String.fromCharCode(i));
+                }
+                return words;
             }
         },
 
         mounted(){
-            console.log('mounted');
+            this.words = this.getWords();
         }
+
     }
 </script>
 
@@ -113,6 +144,7 @@
         height: 230px;
         overflow: auto;
         font-size: 12px;
+        position: relative;
     }
 
     .ui3-citypicker-wl{
@@ -138,7 +170,7 @@
 
     .ui3-citypicker-items a{
         margin-bottom: 5px;
-        color: #666;
+        color: #333;
         width: 48px;
         display: inline-block;
         margin-left: 10px;
@@ -164,5 +196,9 @@
     .ui3-citypicker-disabled:hover{
         color: #ccc !important;
         text-decoration: none;
-    };
+    }
+
+    .ui3-citypicker-list .ui3-citypicker-items .ui3-citypicker-city-choosed{
+        color: red;
+    }
 </style>
