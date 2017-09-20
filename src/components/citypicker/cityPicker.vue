@@ -74,6 +74,8 @@
     .city-picker .ui3-citypicker-overlay{
         width: 420px;
         padding-bottom: 10px;
+        border:1px #ccc solid;
+        background-color: #fff;
     }
 
     .ui3-citypicker-ws{
@@ -101,6 +103,7 @@
         margin: 10px 17px;
         height: 230px;
         overflow: auto;
+        font-size: 12px;
     }
 
     .ui3-citypicker-wl{
