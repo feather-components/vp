@@ -80,12 +80,14 @@
                 if(!el){
                     elp = this.$refs.pickerRel;
                 }else{
+                    //elp = el.offsetParent;
                     elp = el.parentElement;
                 }
-                //console.log(elp);
+                if(Object.prototype.toString.call(elp) == '[object HTMLBodyElement]'){
+                    return elp;
+                }
                 let style = window.getComputedStyle(elp);
                 if(style.overflow == 'hidden'){
-                    window.getComputedStyle(elp)
                     return elp;
                 } else {
                     return this.getOFParentEl(elp);
