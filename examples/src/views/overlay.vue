@@ -37,15 +37,69 @@
                 </vp-picker>
                 <div class="picker-center-bottom">
                     <vp-picker class="custom-picker" :autoClose="false">base picker
-                        <div slot="picker-content" style="height:250px;padding:10px;">
+                        <div slot="picker-content" style="height:250px;padding:10px;width: 150px;">
                             :autoClose="false"
                         </div>
                     </vp-picker>
                 </div>
-                <div class="picker-center-bottom" style="margin-right: 20px;overflow:hidden; height: 100px;border: 1px #ccc solid; padding-top: 20px; padding-left:20px; width:200px; float: left;">
+                <div class="picker-center-bottom" style="margin-right: 20px; height: 100px;border: 1px #ccc solid; padding-top: 20px; padding-left:20px; width:200px; float: left;">
                     <vp-picker class="custom-picker" >base picker
                         <div slot="picker-content">
-                            hihi,hihi as left
+                            hihi,hihi as leftf fdsfsd
+                            fdsafsd
+                            fdsafds
+                            fdsafs
+                            fdsafsda
+                            fdsafs
+                            fdsfs
+                            fdsafdas
+                            fdsafdas
+                            fdsafds
+                            fdsafsd
+                            fdsafds
+                            fdsafs
+                            fdsafsda
+                            fdsafs
+                            fdsfs
+                            fdsafdas
+                            fdsafdas
+                            fdsafds
+                            fdsafsd
+                            fdsafds
+                            fdsafs
+                            fdsafsda
+                            fdsafs
+                            fdsfs
+                            fdsafdas
+                            fdsafdas
+                            fdsafds
+                            fdsafsd
+                            fdsafds
+                            fdsafs
+                            fdsafsda
+                            fdsafs
+                            fdsfs
+                            fdsafdas
+                            fdsafdas
+                            fdsafds
+                            fdsafsd
+                            fdsafds
+                            fdsafs
+                            fdsafsda
+                            fdsafs
+                            fdsfs
+                            fdsafdas
+                            fdsafdas
+                            fdsafds
+                            fdsafsd
+                            fdsafds
+                            fdsafs
+                            fdsafsda
+                            fdsafs
+                            fdsfs
+                            fdsafdas
+                            fdsafdas
+                            fdsafds
                         </div>
                     </vp-picker>
                 </div>

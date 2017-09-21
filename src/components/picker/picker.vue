@@ -15,7 +15,7 @@
     import Overlay from '../overlay';
    
     export default {
-        name: 'alert',
+        name: 'picker',
 
         props: {
             el: Object
@@ -39,7 +39,7 @@
             },
 
             setDirection(){
-                let pEl = this.getOFParentEl();
+                let pEl = this.getOFParentEl() || document;
                 let overlayEl = this.getOverlayEl(); 
                 let refPickerEl = this.$refs.pickerRel;
 
@@ -62,11 +62,11 @@
                 let overlayEl = this.getOverlayEl(); 
                 switch(v){
                 case 'CENTER-TOP':
-                    overlayEl.style.top = 'inherit';
+                    overlayEl.style.top = '';
                     overlayEl.style.bottom = this.$refs.pickerRel.offsetHeight + 2 + 'px';   
                     break;
                 case 'CENTER-BOTTOM':
-                    overlayEl.style.bottom = 'inherit';
+                    overlayEl.style.bottom = '';
                     overlayEl.style.top =  this.$refs.pickerRel.offsetHeight + 2 + 'px';   
                     break;
                 }
@@ -80,12 +80,14 @@
                 if(!el){
                     elp = this.$refs.pickerRel;
                 }else{
+                    //elp = el.offsetParent;
                     elp = el.parentElement;
                 }
-                //console.log(elp);
+                if(Object.prototype.toString.call(elp) == '[object HTMLBodyElement]'){
+                    return elp;
+                }
                 let style = window.getComputedStyle(elp);
                 if(style.overflow == 'hidden'){
-                    window.getComputedStyle(elp)
                     return elp;
                 } else {
                     return this.getOFParentEl(elp);
@@ -116,7 +118,7 @@
             },
 
             clickPickerContent(){
-                alert('pickerContent');
+              
             },
 
             closeOtherPicker(){
@@ -166,7 +168,6 @@
     }
 </script>
 
-
 <style>
     .vp-picker{
         position: relative;
@@ -179,9 +180,8 @@
         display: block;
     }
 
-    .vp-picker-overlay{
+    .vp-picker .vp-picker-overlay{
         position: absolute;
-        width: 100%;
         background-color: #ccc;
         visibility: hidden;
     }
