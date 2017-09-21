@@ -78,11 +78,13 @@
             },
 
             chooseCity(city){
-                let sourceCity = this.citySource[city.id];
-                sourceCity['choosed'] = sourceCity['choosed'] ? false : true;
+                let citySourceItem = this.citySource[city.id];
+                citySourceItem['choosed'] = citySourceItem['choosed'] ? false : true;
                 if(!this.isMultiple){
                     if(this.choosedCitys.length === 1){
-                        this.citySource[this.choosedCitys[0].id]['choosed'] = false;
+                        if(city.id != this.choosedCitys[0].id){
+                            this.citySource[this.choosedCitys[0].id]['choosed'] = false;
+                        }
                     }
                     this.choosedCitys = [];
                 }
