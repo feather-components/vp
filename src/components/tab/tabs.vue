@@ -50,7 +50,6 @@ export default {
         this.tabs = this.$children;
     },
     mounted() {
-        console.log(this.storageKey);
         window.addEventListener('hashchange', () => this.selectTab(window.location.hash));
         if (this.findTab(window.location.hash)) {
             this.selectTab(window.location.hash);
