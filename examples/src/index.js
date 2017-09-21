@@ -9,6 +9,7 @@ import Checkbox from './components/checkbox.vue';
 import Radio from './components/radio.vue';
 import OverlayView from './views/overlay.vue';
 import ButtonView from './views/button.vue';
+import Tab from './components/tab.vue';
 
 import Tablepager from './modules/tablepager.vue';
 
@@ -34,6 +35,9 @@ const router = new VueRouter({
     },{
         path: '/components/radio',
         component: Radio
+    },{
+        path: '/components/tab',
+        component: Tab
     },{
     //MODULES
         path: '/modules/tablepager', 
@@ -70,6 +74,9 @@ new Vue({
             }, {
                 text: 'Button',
                 url: '#/components/button'
+            }, {
+                text: 'Tab',
+                url: '#/components/tab'
             }],
             mod:[{
                 text: 'Tablepager',
