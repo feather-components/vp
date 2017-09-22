@@ -14,19 +14,9 @@ export default {
     },
     data() {
         return {
-            val: undefined,
+            val: 2,
             option: {},
-            list: [
-                { value: 1, text: 'option1' },
-                { value: 2, text: 'option2' },
-                { value: 3, text: 'option3' },
-                { value: 4, text: 'option4' },
-                { value: 5, text: 'option5' },
-                { value: 6, text: 'option6' },
-                { value: 7, text: 'option7' },
-                { value: 8, text: 'option8' },
-                { value: 9, text: 'option9', disabled: true }
-            ]
+            list: new Array(5).fill(true).map((item, i) => ({ value: i + 1, text: `option${ i + 1 }` }))
         }
     },
     methods: {
