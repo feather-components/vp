@@ -31,27 +31,27 @@ module.exports = {
 
     module: {
         rules: [{
-            test: /\.vue$/,
-            loader: 'vue-loader',
-            options: {
-                postcss: [require('autoprefixer')()]
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: {
+                    postcss: [require('autoprefixer')()]
+                }
+            },
+
+            {
+                test: /\.(png|jpg|gif)$/,
+                loader: 'url-loader'
+            },
+
+            {
+                test: /\.css$/,
+                loader: 'style-loader!css-loader'
+            },
+
+            {
+                test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
+                loader: 'url-loader'
             }
-        },
-
-        {
-            test: /\.(png|jpg|gif)$/,
-            loader: 'url-loader'
-        },
-
-        {
-            test: /\.css$/,
-            loader: 'style-loader!css-loader'
-        },
-
-        {
-            test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
-            loader: 'url-loader'
-        }
         ]
     },
 
@@ -60,14 +60,8 @@ module.exports = {
             from: './src/iconfont.*',
             to: '../_build_/',
             flatten:true
-        }]),
-        new CopyWebpackPlugin([{
-            from: './src/style.css',
-            to: '../_build_/',
-            flatten:true
-        }]),
-        new CopyWebpackPlugin([{
-            from: './src/legoland.css',
+        },{
+            from: './src/*.css',
             to: '../_build_/',
             flatten:true
         }]),

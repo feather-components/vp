@@ -420,6 +420,46 @@ span {
   color: white;
   transform: rotate(45deg);
 }
+.lg-iadd:after {
+  content: '+';
+  line-height: .9em;
+}
+.lg-iroundadd:before {
+  border-color: currentColor;
+}
+.lg-iroundadd:after {
+  content: '+';
+  line-height: .9em;
+}
+.lg-ihollowadd:before {
+  border-color: currentColor;
+  background-color: currentColor;
+}
+.lg-ihollowadd:after {
+  content: '+';
+  line-height: .9em;
+  color: white;
+}
+.lg-iminus:after {
+  content: '-';
+  line-height: .75em;
+}
+.lg-iroundminus:before {
+  border-color: currentColor;
+}
+.lg-iroundminus:after {
+  content: '-';
+  line-height: .75em;
+}
+.lg-ihollowminus:before {
+  border-color: currentColor;
+  background-color: currentColor;
+}
+.lg-ihollowminus:after {
+  content: '-';
+  line-height: .75em;
+  color: white;
+}
 .lg-iinfo:before {
   border-color: currentColor;
   background-color: currentColor;
@@ -500,7 +540,7 @@ span {
   border-top: none;
   height: .7em;
   width: .8em;
-} 
+}
 /* grid 栅格 */
 .lg-grid-container {
   padding: 15px;
@@ -2355,6 +2395,7 @@ input:focus + .lg-error-b {
   border: none;
   font-size: 14px;
   white-space: nowrap;
+  padding: 0 5px;
 }
 .lg-table thead th.lg-asc {
   cursor: pointer;

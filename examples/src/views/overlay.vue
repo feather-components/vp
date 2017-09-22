@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div> 
 
         <div style="padding-top:50px; margin-bottom: 70px; color: #333">
             Overlay
@@ -111,11 +111,11 @@
                     </vp-picker>
                 </div>
             </div>
-        </div>
+        </div> 
     </div>
 </template>
 <script>
-    import { Button } from 'vpui';
+    import { Button } from 'vpui'; 
     import { Mask } from 'vpui';
     import { Alert } from 'vpui';
     import { AutoPosition } from 'vpui';
@@ -191,12 +191,11 @@
                 }
 
                 Alert(centent.join(' '));
-            }
+            } 
         }
     }
 </script>
-<style>
-
+<style> 
     .buttons{
         padding: 10px 0 10px 0px;
     }
@@ -232,5 +231,5 @@
 
     .custom-picker .vp-picker-overlay{
         width: auto;
-    }
+    } 
 </style>

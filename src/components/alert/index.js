@@ -1,5 +1,5 @@
-import Component from './alert';
-import {Util} from '../../helper';
+import Alert from './alert.vue';
+import {Util} from '../../helper'; 
 
 var override = (callback) => {
     return (...args) => {

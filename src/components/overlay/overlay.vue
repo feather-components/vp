@@ -1,20 +1,28 @@
-<template>
+<teplate>
     <transition>
-        <div :class="className" v-show="visibility" @click="$emit('click')">
+        <div :class="className" v-show="visibility">
             <slot></slot>
         </div>
     </transition>
-</template>
+</teplate>
 <script>
     import { Event } from '../../helper';
     export default{
         name: 'overlay',
 
         props: {
-
             visible: {
                 type: Boolean, 
                 default: false
+            },
+
+            position: {
+                type: String,
+                default: false
+            },
+
+            picked: {
+                type: Object
             }
         },
 
@@ -35,6 +43,12 @@
             className() {
                 let self = this;
                 let c = ['vp-overlay'];
+
+                if(self.picked){
+                    c.push('vp-overlay-absolute');
+                } else {
+                    c.push('vp-overlay-fixed');
+                }
 
                 c.push(self.class || '');
 
@@ -82,7 +96,7 @@
                 }
             },
 
-            _destroy(){
+             _destroy(){
                 var self = this;
                 self.$el.parentNode && self.$el.parentNode.removeChild(self.$el);
                 self.$emit('destroy');
@@ -94,9 +108,12 @@
 </script>
 
 <style>
-    .vp-overlay{
+    .vp-position-absolute {
+        position: absolute;
+    }
+
+    .vp-position-fixed {
         position: fixed;
-        z-index: 10000;
     }
 
     .vp-position-center {
@@ -105,4 +122,6 @@
         transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%);
     }
+
+
 </style>

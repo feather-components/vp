@@ -7,8 +7,7 @@ import Pager from './components/pager.vue';
 import Datagrid from './components/datagrid.vue';
 import Checkbox from './components/checkbox.vue';
 import Radio from './components/radio.vue';
-import OverlayView from './views/overlay.vue';
-import ButtonView from './views/button.vue';
+import OverlayView from './views/overlay.vue'; 
 import Tab from './components/tab.vue';
 import Select from './components/select.vue';
 import CityPicker from './views/citypicker.vue';
@@ -23,40 +22,37 @@ const router = new VueRouter({
     routes: [{
         path: '/components/pager',
         component: Pager
-    },{
+    }, {
         path: '/components/datagrid',
         component: Datagrid
-    },{
+    }, {
         path: '/components/overlay',
         component: OverlayView
-    },{
+    }, {
         path: '/components/citypicker',
         component: CityPicker
-    },{
-        path: '/components/button',
-        component: ButtonView
-    },{
+    }, {
         path: '/components/checkbox',
         component: Checkbox
-    },{
+    }, {
         path: '/components/radio',
         component: Radio
-    },{
+    }, {
         path: '/components/tab',
         component: Tab
     },{
         path: '/components/select',
         component: Select
     },{
-    //MODULES
-        path: '/modules/tablepager', 
+        //MODULES
+        path: '/modules/tablepager',
         component: Tablepager
-    },{
-    //DIRECTIVES
-        path:'/directives/valid',
+    }, {
+        //DIRECTIVES
+        path: '/directives/valid',
         component: Valid
     },{
-    //DIRECTIVES
+        //DIRECTIVES
         path:'/directives/clickoutside',
         component: Clickoutside
     }]
@@ -85,9 +81,6 @@ new Vue({
                 text: 'Overlay',
                 url: '#/components/overlay'
             }, {
-                text: 'Button',
-                url: '#/components/button'
-            }, {
                 text: 'Tab',
                 url: '#/components/tab'
             }, {
@@ -97,12 +90,12 @@ new Vue({
                 text: 'CityPicker',
                 url: '#/components/citypicker'
             }],
-            mod:[{
+            mod: [{
                 text: 'Tablepager',
                 url: '#/modules/tablepager',
                 id: 'mod_1'
             }],
-            dir:[{
+            dir: [{
                 text: 'Valid',
                 url: '#/directives/valid',
                 id: 'dir_1'

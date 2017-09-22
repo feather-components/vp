@@ -95,7 +95,6 @@ export default{
         if(window.Vue){
             install(window.Vue);
         }else{
-
             obj.install = Component.install = install;
         }
 
@@ -107,7 +106,7 @@ export default{
         Object.assign(instance, data);
         instance.$mount();
         document.body.appendChild(instance.$el);
-        return instance;
+        return instance; 
     },
 
     appendInstance(vueComponent, data = {}){
@@ -121,7 +120,7 @@ export default{
     getInstace(vueComponent){
         var instance = new Vue(vueComponent);
         instance.$mount();
-        return instance;
+        return instance; 
     }
 }
 

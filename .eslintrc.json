@@ -18,9 +18,5 @@
   "globals": {
     "BMap": true,
     "$": true
-  },
-
-  "rules": {
-      "indent": ["error", 4]
   }
 }
