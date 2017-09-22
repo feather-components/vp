@@ -8,9 +8,8 @@ import Datagrid from './components/datagrid.vue';
 import Checkbox from './components/checkbox.vue';
 import Radio from './components/radio.vue';
 import OverlayView from './views/overlay.vue'; 
-import ButtonView from './views/button.vue';
 import Tab from './components/tab.vue';
-import CityPicker from './views/citypicker.vue'; 
+import CityPicker from './views/citypicker.vue';
 
 import Tablepager from './modules/tablepager.vue';
 
@@ -21,34 +20,31 @@ const router = new VueRouter({
     routes: [{
         path: '/components/pager',
         component: Pager
-    },{
+    }, {
         path: '/components/datagrid',
         component: Datagrid
-    },{
+    }, {
         path: '/components/overlay',
         component: OverlayView
-    },{  
+    }, {
         path: '/components/citypicker',
         component: CityPicker
-    },{
-        path: '/components/button',
-        component: ButtonView
-    },{
+    }, {
         path: '/components/checkbox',
         component: Checkbox
-    },{
+    }, {
         path: '/components/radio',
         component: Radio
-    },{
+    }, {
         path: '/components/tab',
         component: Tab
-    },{ 
-    //MODULES
-        path: '/modules/tablepager', 
+    }, {
+        //MODULES
+        path: '/modules/tablepager',
         component: Tablepager
-    },{
-    //DIRECTIVES
-        path:'/directives/valid',
+    }, {
+        //DIRECTIVES
+        path: '/directives/valid',
         component: Valid
     }]
 });
@@ -74,23 +70,20 @@ new Vue({
                 id: 'com_2'
             }, {
                 text: 'Overlay',
-                url: '#/components/overlay' 
-            }, {
-                text: 'Button',
-                url: '#/components/button'
+                url: '#/components/overlay'
             }, {
                 text: 'Tab',
                 url: '#/components/tab'
             }, {
                 text: 'CityPicker',
-                url: '#/components/citypicker' 
+                url: '#/components/citypicker'
             }],
-            mod:[{
+            mod: [{
                 text: 'Tablepager',
                 url: '#/modules/tablepager',
                 id: 'mod_1'
             }],
-            dir:[{
+            dir: [{
                 text: 'Valid',
                 url: '#/directives/valid',
                 id: 'dir_1'

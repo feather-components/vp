@@ -82,11 +82,7 @@
 
         data(){
             return {
-<<<<<<< HEAD
-                visibility: true
-=======
                 title: '系统提示！'
->>>>>>> f7a7b795d95167dd5c9bd352fa3f9a669c3f20df
             };
         },
 
@@ -116,9 +112,6 @@
             Overlay.manager.deleteOverlay(this);
         }
     }
-<<<<<<< HEAD
-</script>
-=======
 </script>
 
 <template>
@@ -142,4 +135,3 @@
         </div>
     </overlay>
 </template>
->>>>>>> f7a7b795d95167dd5c9bd352fa3f9a669c3f20df
