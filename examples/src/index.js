@@ -6,7 +6,6 @@ Vue.use(VueRouter);
 import Pager from './components/pager.vue';
 import Datagrid from './components/datagrid.vue';
 import OverlayView from './views/overlay.vue';
-import ButtonView from './views/button.vue';
 
 import Tablepager from './modules/tablepager.vue';
 
@@ -23,9 +22,6 @@ const router = new VueRouter({
     },{
         path: '/components/overlay',
         component: OverlayView
-    },{
-        path: '/components/button',
-        component: ButtonView
     },{
     //MODULES
         path: '/modules/tablepager', 
@@ -53,9 +49,6 @@ new Vue({
             }, {
                 text: 'Overlay',
                 url: '#/components/overlay'
-            }, {
-                text: 'Button',
-                url: '#/components/button'
             }],
             mod:[{
                 text: 'Tablepager',

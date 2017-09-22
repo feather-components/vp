@@ -1,13 +1,12 @@
 import Pager from './components/pager';
 import Datagrid from './components/datagrid';
 import Button from './components/button';
-import Overlay from './components/overlay';
-import Mask from './components/mask';
-import Alert from './components/alert';
 //--------------------------------------------------------
 import Tablepager from './modules/tablepager';
 //--------------------------------------------------------
 import Valid from './directives/valid';
+//--------------------------------------------------------
+import Vue from 'vue';
 
 var Components = [
     Pager,Datagrid ,
@@ -28,19 +27,17 @@ function install(Vue){
     for(let Module of Modules){
         Vue.use(Module);
     }
-    for(let Directive of Directives){
+     for(let Directive of Directives){
         Vue.use(Directive);
     }
 }
 
 export {
-    Pager,
-    Datagrid,
+    Pager,Datagrid,
+
     Tablepager,
-    Button,
-    Overlay,
-    Mask,
-    Alert
+
+    Button
 };
 
 export default {install};
