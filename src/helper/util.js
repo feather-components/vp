@@ -106,7 +106,21 @@ export default{
         Object.assign(instance, data);
         instance.$mount();
         document.body.appendChild(instance.$el);
+        return instance; 
+    },
+
+    appendInstance(vueComponent, data = {}){
+        var instance = new Vue(vueComponent);
+        Object.assign(instance, data);
+        instance.$mount();
+        document.body.appendChild(instance.$el);
         return instance;
+    },
+
+    getInstace(vueComponent){
+        var instance = new Vue(vueComponent);
+        instance.$mount();
+        return instance; 
     }
 }
 

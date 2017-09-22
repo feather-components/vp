@@ -1,6 +1,15 @@
-<template>
-    <overlay :visible="visibility" class="vp-mask" @click="$emit('click')"><slot></slot></overlay>
-</template>
+<script>
+    import Overlay from '../overlay';
+    export default{
+        mixins: [Overlay],
+        name: 'mask',
+        data() {
+            return {
+                class: 'vp-mask'
+            }
+        }
+    }
+</script>
 
 <style>
     .vp-mask.vp-overlay{
@@ -11,14 +20,3 @@
         background: rgba(0, 0, 0, 0.6);
     }
 </style>
-
-<script>
-    import Overlay from '../overlay';
-    export default{
-        mixins: [Overlay],
-        name: 'mask',
-        components: {
-            Overlay
-        }
-    }
-</script>

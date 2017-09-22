@@ -1,15 +1,25 @@
 import Pager from './components/pager';
 import Datagrid from './components/datagrid';
 import Button from './components/button';
+import Overlay from './components/overlay';
+import Mask from './components/mask';
+import Alert from './components/alert';
+import Picker from './components/picker';
+import CityPicker from './components/CityPicker';
+import Checkbox from './components/checkbox';
+import Radio from './components/radio';
+import { Tabs, Tab } from './components/tab';
 //--------------------------------------------------------
 import Tablepager from './modules/tablepager';
 //--------------------------------------------------------
 import Valid from './directives/valid';
+import AutoPosition from './directives/autoposition';
 //--------------------------------------------------------
 import Vue from 'vue';
 
+
 var Components = [
-    Pager,Datagrid ,
+    Pager, Datagrid, Checkbox, Radio, Tabs, Tab
 ];
 
 var Modules = [
@@ -33,11 +43,20 @@ function install(Vue){
 }
 
 export {
-    Pager,Datagrid,
-
+    Pager,
+    Datagrid,
     Tablepager,
-
-    Button
+    Button,
+    Overlay,
+    Mask,
+    Alert,
+    AutoPosition,
+    Checkbox,
+    Radio,
+    Tabs,
+    Tab,
+    Picker,
+    CityPicker
 };
 
 export default {install};

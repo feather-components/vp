@@ -5,7 +5,12 @@ Vue.use(VueRouter);
 
 import Pager from './components/pager.vue';
 import Datagrid from './components/datagrid.vue';
-import OverlayView from './views/overlay.vue';
+import Checkbox from './components/checkbox.vue';
+import Radio from './components/radio.vue';
+import OverlayView from './views/overlay.vue'; 
+import ButtonView from './views/button.vue';
+import Tab from './components/tab.vue';
+import CityPicker from './views/citypicker.vue'; 
 
 import Tablepager from './modules/tablepager.vue';
 
@@ -22,7 +27,22 @@ const router = new VueRouter({
     },{
         path: '/components/overlay',
         component: OverlayView
+    },{  
+        path: '/components/citypicker',
+        component: CityPicker
     },{
+        path: '/components/button',
+        component: ButtonView
+    },{
+        path: '/components/checkbox',
+        component: Checkbox
+    },{
+        path: '/components/radio',
+        component: Radio
+    },{
+        path: '/components/tab',
+        component: Tab
+    },{ 
     //MODULES
         path: '/modules/tablepager', 
         component: Tablepager
@@ -39,6 +59,12 @@ new Vue({
     data() {
         return {
             com: [{
+                text: 'Radio',
+                url: '#/components/radio'
+            }, {
+                text: 'Checkbox',
+                url: '#/components/checkbox'
+            }, {
                 text: 'Pager',
                 url: '#/components/pager',
                 id: 'com_1'
@@ -48,7 +74,16 @@ new Vue({
                 id: 'com_2'
             }, {
                 text: 'Overlay',
-                url: '#/components/overlay'
+                url: '#/components/overlay' 
+            }, {
+                text: 'Button',
+                url: '#/components/button'
+            }, {
+                text: 'Tab',
+                url: '#/components/tab'
+            }, {
+                text: 'CityPicker',
+                url: '#/components/citypicker' 
             }],
             mod:[{
                 text: 'Tablepager',
