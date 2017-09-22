@@ -1,10 +1,10 @@
 <template>
 <div class="tab">
-    <vp-tabs id="1">
-        <vp-tab v-for="i in 10" :name="'tab' + i" class="tab-panel">{{ i }}</vp-tab>
+    <vp-tabs id="1" @changed="change1">
+        <vp-tab v-for="i in 10" :name="'tab' + i" class="tab-panel" :key="i">{{ i }}</vp-tab>
     </vp-tabs>
-    <vp-tabs type="1">
-        <vp-tab v-for="i in 5" :name="'tab' + i" class="tab-panel">{{ i }}</vp-tab>
+    <vp-tabs style-type="surround" @changed="change2">
+        <vp-tab v-for="i in 5" :name="'tab' + i" class="tab-panel" :key="i">{{ i }}</vp-tab>
     </vp-tabs>
 </div>
 </template>
@@ -15,6 +15,14 @@ export default {
     components: {
         'vp-tabs': Tabs,
         'vp-tab': Tab
+    },
+    methods: {
+        change1(tab) {
+            console.log(tab);
+        },
+        change2(tab) {
+            console.log(tab);
+        }
     }
 }
 </script>

@@ -16,13 +16,15 @@
 <script>
 import expiringStorage from './expiringStorage'
 
+const styleNames = ['default', 'surround'];
+
 export default {
 	name: 'tabs',
     props: {
         cacheLifetime: {
             default: 5
         },
-        type: { // 0 default, 1 surround
+        styleType: { // 0 default, 1 surround
             type: Number | String
         },
         id: {
@@ -39,8 +41,8 @@ export default {
             return `vue-tabs-component.cache${ this.id ? '.' + this.id : '' }.${ window.location.host }${ window.location.pathname }` ;
         },
         tabStyle() {
-            if(+this.type) {
-                return 'surround'
+            if(this.styleType && styleNames.indexOf(this.styleType) > -1) {
+                return this.styleType
             } else {
                 return 'default'
             }
@@ -65,19 +67,20 @@ export default {
         }
     },
     methods: {
-        
         findTab(hash) {
             return this.tabs.find(tab => tab.hash === hash);
         },
         selectTab(selectedTabHash) {
+            let index = 0;
             const selectedTab = this.findTab(selectedTabHash);
             if (! selectedTab) {
                 return;
             }
-            this.tabs.forEach(tab => {
+            this.tabs.forEach((tab, i) => {
                 tab.isActive = (tab.hash === selectedTab.hash);
+                tab.isActive && (index = i);
             });
-            this.$emit('change', { tab: selectedTab });
+            this.$emit('changed', { tab: selectedTab, index });
             expiringStorage.set(this.storageKey, selectedTab.hash, this.cacheLifetime);
         }
     }
