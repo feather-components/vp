@@ -9,14 +9,16 @@ import CityPicker from './components/CityPicker';
 import Checkbox from './components/checkbox';
 import Radio from './components/radio';
 import { Tabs, Tab } from './components/tab';
+import Select from './components/select';
 //--------------------------------------------------------
 import Tablepager from './modules/tablepager';
 //--------------------------------------------------------
 import Valid from './directives/valid';
 import AutoPosition from './directives/autoposition';
+import Clickoutside from './directives/clickoutside';
 
 var Components = [
-    Pager, Datagrid, Checkbox, Radio, Tabs, Tab
+    Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select
 ];
 
 var Modules = [
@@ -24,7 +26,8 @@ var Modules = [
 ];
 
 var Directives = [
-    Valid
+    Valid,
+    Clickoutside
 ];
 
 function install(Vue){
@@ -40,6 +43,8 @@ function install(Vue){
 }
 
 export {
+    Clickoutside,
+    Valid,
     Pager,
     Datagrid,
     Tablepager,
@@ -52,6 +57,7 @@ export {
     Radio,
     Tabs,
     Tab,
+    Select,
     Picker,
     CityPicker
 };
