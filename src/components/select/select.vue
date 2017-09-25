@@ -226,6 +226,11 @@ export default {
             }
             &.disabled {
                 color: #ccc;
+                cursor: not-allowed;
+                > label {
+                    color: #ccc;
+                    cursor: not-allowed;
+                }
             }
         }
     }
