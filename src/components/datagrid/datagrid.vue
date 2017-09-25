@@ -20,7 +20,7 @@
     </div>
 </template>
 <script>
-import baseGrid from './basegrid';
+import baseGrid from './baseGrid';
 var Datagrid = {
     name: 'table',
     props: {
@@ -91,21 +91,7 @@ var Datagrid = {
     },
     computed: {
         column() {
-            var header = [];
-            for (var key in this.head) {
-                if (typeof this.head[key] == 'object') {
-                    var style = '';
-                    this.head[key].width ? style = 'width:' + this.head[key].width : '';
-                    header.push(Object.assign(this.head[key], { key: key, style: style }));
-                } else {
-                    header.push({
-                        key: key,
-                        type: 'field',
-                        label: this.head[key]
-                    })
-                }
-            }
-            return header;
+            return this.getColumn(this.head);
         }
     },
     mounted() {
@@ -119,6 +105,29 @@ var Datagrid = {
         }
     },
     methods: {
+        getColumn(column) {
+            var _this = this;
+            var result = []; 
+            for (var key in column) {
+                var temp;
+                if (typeof column[key] == 'object') {
+                    var style = '';
+                    column[key].width ? style = 'width:' + column[key].width : '';
+                    temp = Object.assign(column[key], { key: key, style: style });
+                } else {
+                    temp = {
+                        key: key,
+                        type: 'field',
+                        label: column[key]
+                    };
+                }
+                if (column[key].children) {
+                    temp.children = this.getColumn(column[key].children);
+                }
+                result.push(temp);
+            }
+            return result;
+        },
         getHead(heads, type, fix) {
             if (type == 'right') {
                 return this.getFixHead(heads, fix.right, true);
@@ -179,6 +188,10 @@ export default Datagrid;
 <style>
 .lg-table thead label {
     color: white;
+}
+
+.lg-table thead.multi th {
+    border:1px solid white;
 }
 
 .lg-table-main,
