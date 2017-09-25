@@ -1,29 +1,25 @@
 <template>
     <div>
+        <span class="lg-title">MultiHead： 多行表头</span>
+        <vp-grid :head="table_multi.col" :data="table_multi.data" :colspan="table_multi.colspan"></vp-grid>
         <span class="lg-title">Base： 最简单的表格</span>
         <vp-grid :head="table_base.col" :data="table.data" :colspan="table_base.colspan"></vp-grid>
-
         <span class="lg-title">Action：带操作的表格</span>
         <vp-grid :head="table_action.col" :data="table.data" :colspan="table_action.colspan" @callback:userdefine="userdefine"></vp-grid>
-
         <span class="lg-title">Dynamic Slot：自定义单元格</span>
         <vp-grid :head="table_base.col" :data="table.data" :colspan="table_base.colspan">
             <div style="background-color:lightblue" :slot="'cell:sName_'+i" v-if="i%2" v-for="(item,i) in table.data" v-html="'<a><b>'+item.sName+'</b></a>'"></div>
             <div class="lg-color-plain-bg" slot="col:sName" v-if="key == 'sName'" v-for="(item,key) in table_base.col" v-html="'<a><b>' + table_base.col[key] + '</b></a>'"></div>
-        </vp-grid>        
-
+        </vp-grid>
         <span class="lg-title">CheckBox & Radio & Switch & Sort： 常用操作</span>
         <vp-grid :head="table_check.col" :data="table.data" :colspan="table_check.colspan" @check="check" @checkall="checkall" @radio="radio" @switch="switcher" @sort="sort"></vp-grid>
-
         <span class="lg-title">Fix：表头固定</span>
         <vp-grid :head="table.head" :data="table.data" :colspan="table.colspan" @check="check" @checkall="checkall" @switch="switcher" :fix="table.fix">
         </vp-grid>
-
         <span class="lg-title">Expand： 扩展行</span>
         <vp-grid :head="table_base.col" :data="table.data" :colspan="table_base.colspan" :expand="true">
             <vp-grid slot="trexpand:0" :head="table_base.col" :data="table.data" :colspan="table_base.colspan"></vp-grid>
         </vp-grid>
-
         <!-- <vp-grid :head="table.head" :data="table.data" :colspan="table.colspan" @grid:checkbox="click" @grid:checkall="checkall" @grid:switch="switcher" @grid:sort="sort">
             <template slot="header" scope="props">
                 <span v-html="'<b>'+props.data.label||props.data+'</b>'"></span>
@@ -62,6 +58,63 @@ export default {
     },
     data() {
         return {
+            table_multi: {
+                col: {
+                    A: {
+                        label: 'A',
+                        rowspan: 3
+                    },
+                    B: {
+                        label: 'B',
+                        rowspan: 2,
+                        colspan: 2,
+                        children: {
+                            I: 'I',
+                            J: 'J'
+                        }
+                    },
+                    F: {
+                        label: 'F',
+                        rowspan: 2,
+                        colspan: 2,
+                        children: {
+                            K: 'K',
+                            L: 'L'
+                        }
+                    },
+                    C: {
+                        label: 'C',
+                        colspan: 4,
+                        children: {
+                            G: {
+                                label: 'G',
+                                colspan: 2,
+                                children: {
+                                    M: 'M',
+                                    N: 'N'
+                                }
+                            },
+                            H: {
+                                label: 'H',
+                                colspan: 2,
+                                children: {
+                                    O: 'O',
+                                    P: 'P'
+                                }
+                            }
+                        }
+                    },
+                    D: {
+                        label: 'D',
+                        rowspan: 3
+                    }
+                },
+                data: [
+                    { A: 1, B: 2, C: 3, D: 4, E: 5, F: 6, G: 7, H: 8, I: 9, J: 10, K: 11, L: 12, M: 13, N: 14, O: 16, P: 17 },
+                    { A: 1, B: 2, C: 3, D: 4, E: 5, F: 6, G: 7, H: 8, I: 9, J: 10, K: 11, L: 12, M: 13, N: 14, O: 16, P: 17 }
+                ],
+                colspan: 10
+            },
             table_base: {
                 col: {
                     sName: '姓名',
@@ -122,20 +175,20 @@ export default {
                         type: 'radio',
                         label: 'radio'
                     },
-                    switch1:{
-                        type:'switch',
-                        label:'switch'
+                    switch1: {
+                        type: 'switch',
+                        label: 'switch'
                     },
-                    switch2:{
-                        type:'switch',
-                        label:'开关',
-                        on:'开',
-                        off:'关'
+                    switch2: {
+                        type: 'switch',
+                        label: '开关',
+                        on: '开',
+                        off: '关'
                     },
                     sName: {
-                        type:'sort',
-                        label:'姓名',
-                        klass:'qw'
+                        type: 'sort',
+                        label: '姓名',
+                        klass: 'qw'
                     },
                     sType: '类型',
                     sUserMobile: '获奖联系方式',
@@ -221,15 +274,15 @@ export default {
                 data: [{
                     select: {
                         value: 1,
-                        disable:true
+                        disable: true
                     },
-                    radio:{
-                        value:'r1'
+                    radio: {
+                        value: 'r1'
                     },
-                    switch1: { 
+                    switch1: {
                         checked: false
                     },
-                    switch2: { 
+                    switch2: {
                         checked: false
                     },
                     mobile: true,
@@ -245,7 +298,7 @@ export default {
                     sBeizhu: '备注',
                     slot: 'slot',
                     sStatus: '状态',
-                    $expand:'qqq',
+                    $expand: 'qqq',
                     option: [{
                         type: 'link',
                         url: 'http://www.baidu.com',
@@ -262,14 +315,14 @@ export default {
                     select: {
                         value: 10
                     },
-                    radio:{
-                        value:'r2',
-                        disable:true
+                    radio: {
+                        value: 'r2',
+                        disable: true
                     },
-                    switch1: { 
+                    switch1: {
                         checked: false
                     },
-                    switch2: { 
+                    switch2: {
                         checked: false
                     },
                     mobile: {
@@ -291,15 +344,15 @@ export default {
                 }, {
                     select: {
                         value: 2
-                    },                    
-                    radio:{
-                        value:'r3'
                     },
-                    switch1: { 
-                        disable:true,
-                        label:'禁用'
+                    radio: {
+                        value: 'r3'
                     },
-                    switch2: { 
+                    switch1: {
+                        disable: true,
+                        label: '禁用'
+                    },
+                    switch2: {
                         checked: false
                     },
                     mobile: {
@@ -322,8 +375,8 @@ export default {
                     select: {
                         value: 3
                     },
-                    radio:{
-                        value:'r4'
+                    radio: {
+                        value: 'r4'
                     },
                     switch1: {
                         value: 1,
@@ -350,10 +403,10 @@ export default {
                     select: {
                         value: 4,
                         checked: true
-                    },                    
-                    radio:{
-                        value:'r5',
-                        checked:true
+                    },
+                    radio: {
+                        value: 'r5',
+                        checked: true
                     },
                     switch1: {
                         value: 1,
@@ -386,28 +439,28 @@ export default {
             }
         }
     },
-    created(){
-        this.table.data.forEach(function(data){
-            data.$expand=function(){
+    created() {
+        this.table.data.forEach(function(data) {
+            data.$expand = function() {
                 return 'I am expanded';
             }
         })
     },
     methods: {
-        check(key, index, result) {             
+        check(key, index, result) {
             console.log('checkbox', key, index, result);
         },
         checkall(key, result) {
             console.log('checkall', key, result);
         },
-        radio(key, index, result){
+        radio(key, index, result) {
             console.log('radio', key, index, result);
         },
         switcher(key, index, result) {
-            console.log('switch',key, index, result);
+            console.log('switch', key, index, result);
         },
         sort(key, isAsc) {
-            console.log('sort',key, isAsc);
+            console.log('sort', key, isAsc);
         },
         action(name, arg) {
             console.log(name, arg);
