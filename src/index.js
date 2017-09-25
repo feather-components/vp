@@ -5,7 +5,7 @@ import Overlay from './components/overlay';
 import Mask from './components/mask';
 import Alert from './components/alert';
 import Picker from './components/picker';
-import CityPicker from './components/CityPicker';
+import CityPicker from './components/citypicker';
 import Checkbox from './components/checkbox';
 import Radio from './components/radio';
 import { Tabs, Tab } from './components/tab';
