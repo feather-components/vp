@@ -1,14 +1,14 @@
 <template>
     <table class="lg-table">
-        <thead>
-            <tr>
-                <th v-if="expand && aData.length > 0" style="width:50px">
+        <thead :class="{'multi' : aColumn.length > 1}">
+            <tr v-for="(columns, index) in aColumn">
+                <th v-if="expand && aData.length > 0 && index == 0" style="width:50px" :rowspan="aColumn.length">
                     <span class="lg-checkbox-plain">
                         <input type="checkbox" :id="uid('exp')" @click="onExpandAll()" value="exp" v-model="isAllExpand"/>
                             <label :for="uid('exp')"><span class="lg-i lg-color-sys" :class="expklass('all')"></span></label>
                     </span>
                 </th>
-                <th v-for="(col,i) in column" :style="col.style">
+                <th v-for="(col,i) in columns" :style="col.style" :colspan="col.colspan || 1" :rowspan="col.rowspan || 1">
                     <slot :name="colname(col)">
                         <span v-if="isType('checkbox',col,true)" class="lg-checkbox">
                             <input type="checkbox" :id="uid(col)" @click="onCheckAll(col.key)" :value="col.key" v-model="isAllCheck"/>
@@ -29,7 +29,7 @@
                             <label :for="uid('exp',i)"><span class="lg-i lg-ihollowadd lg-color-sys" :class="expklass(i)"></span></label>
                         </span>
                     </td>
-                    <td v-for="col in column" class="nowrap">
+                    <td v-for="col in aLeafColumn" class="nowrap">
                         <slot :name="cellname(col, i)" :title="item[col.key]">
                             <span v-if="isType('checkbox',col,item[col.key])" class="lg-checkbox">
                                 <input type="checkbox" :value="item[col.key].value" :id="uid(col,i)" @click="onCheck(col.key, i)" v-model="checkResults[col.key]"/>
@@ -51,7 +51,7 @@
                 <tr v-if="expand && isExpand(i)">
                     <td :colspan="colspan+1">
                         <slot :name="trname(i)">
-                             <div v-html="item.$expand()"></div>
+                            <div v-html="item.$expand()"></div>
                         </slot>
                     </td>
                 </tr>
@@ -144,6 +144,18 @@ var BaseGrid = {
     computed: {
         aData() {
             return this.data;
+        },
+        aLeafColumn() {
+            return this.getLeaves(this.column).leaves;
+        },
+        aColumn() {
+            var level = this.getLeaves(this.column).level;
+            var trLine = new Array();
+            for (var i = 0; i < level; i++) {
+                trLine[i] = new Array();
+            }
+            this.getColumnLine(this.column, 0, trLine);
+            return trLine;
         }
     },
     methods: {
@@ -225,8 +237,8 @@ var BaseGrid = {
         cellname(col, index) {
             return 'cell:' + col.key + '_' + index;
         },
-        trname(index){
-            return 'trexpand:'+index;
+        trname(index) {
+            return 'trexpand:' + index;
         },
         expklass(index) {
             if (index == 'all') {
@@ -259,6 +271,32 @@ var BaseGrid = {
             } else {
                 this.isAllExpand = true;
             }
+        },
+        getLeaves(column) {
+            var _this = this;
+            var leaves = [];
+            var level = 0;
+            column.forEach(function(col) {
+                if (col.children) {
+                    var child = _this.getLeaves(col.children);
+                    leaves = leaves.concat(child.leaves);
+                    level = level > child.level ? level : child.level;
+                } else {
+                    leaves.push(col);
+                }
+            })
+            level++;
+            return { leaves, level };
+        },
+        getColumnLine(column, level, result) {
+            // debugger;
+            var _this = this;
+            column.forEach(function(col) {
+                result[level].push(col);
+                if (col.children) {
+                    _this.getColumnLine(col.children, level + (col.rowspan || 1), result);
+                }
+            })
         }
     },
     directives: {

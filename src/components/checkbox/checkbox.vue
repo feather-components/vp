@@ -120,6 +120,7 @@ export default {
     height: 14px;
     display: inline-block;
     vertical-align: middle;
+    line-height: 14px;
     .input-checkbox,
     .icon-checkbox {
         width: 100%;
