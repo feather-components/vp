@@ -6,6 +6,7 @@
     @mouseleave.stop="hoverSelect = false"
     v-clickoutside="outside"
     >
+    <input type="hidden" :name="name" :id="id" :value="val">
     <div class="select-input" @click="toggle">
         <div>
             <template v-if="type === 'single'">{{ text || placeholder }}</template>
