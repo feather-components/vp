@@ -16,6 +16,7 @@ import Tablepager from './modules/tablepager';
 import Valid from './directives/valid';
 import AutoPosition from './directives/autoposition';
 import Clickoutside from './directives/clickoutside';
+import Toast from './components/toast';
 //--------------------------------------------------------
 import Vue from 'vue';
 
@@ -61,7 +62,8 @@ export {
     Tab,
     Select,
     Picker,
-    CityPicker
+    CityPicker,
+    Toast
 };
 
 export default {install};
