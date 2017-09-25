@@ -50,7 +50,7 @@
 <script>
     import vpMask from '../mask';
     import Overlay from '../overlay';
-
+    let manager = Overlay.manager;
     export default {
         name: 'toast',
 
@@ -61,7 +61,13 @@
             Overlay,
         },
 
+
+
         mounted(){
+
+            let toast = manager.getToast();
+            toast && toast.destroy();
+
             let self = this;
             if(self.showMask){
                 self.mask = vpMask.show();
@@ -69,12 +75,15 @@
             setTimeout(() =>{
                 self.destroy();
             }, self.millisecond);
+
+            manager.setToast(this);
         },
 
         destroyed(){
             if(this.showMask){
                 this.mask.destroy();
             }
+            manager.setToast(false);
         }
     }
 </script>

@@ -51,59 +51,7 @@
                         <div slot="picker-content">
                             hihi,hihi as leftf fdsfsd
                             fdsafsd
-                            fdsafds
-                            fdsafs
-                            fdsafsda
-                            fdsafs
-                            fdsfs
-                            fdsafdas
-                            fdsafdas
-                            fdsafds
-                            fdsafsd
-                            fdsafds
-                            fdsafs
-                            fdsafsda
-                            fdsafs
-                            fdsfs
-                            fdsafdas
-                            fdsafdas
-                            fdsafds
-                            fdsafsd
-                            fdsafds
-                            fdsafs
-                            fdsafsda
-                            fdsafs
-                            fdsfs
-                            fdsafdas
-                            fdsafdas
-                            fdsafds
-                            fdsafsd
-                            fdsafds
-                            fdsafs
-                            fdsafsda
-                            fdsafs
-                            fdsfs
-                            fdsafdas
-                            fdsafdas
-                            fdsafds
-                            fdsafsd
-                            fdsafds
-                            fdsafs
-                            fdsafsda
-                            fdsafs
-                            fdsfs
-                            fdsafdas
-                            fdsafdas
-                            fdsafds
-                            fdsafsd
-                            fdsafds
-                            fdsafs
-                            fdsafsda
-                            fdsafs
-                            fdsfs
-                            fdsafdas
-                            fdsafdas
-                            fdsafds
+                            fdsafds fdsafds  fdsafds fdsafds  fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds fdsafds
                         </div>
                     </vp-picker>
                 </div>
@@ -199,7 +147,7 @@
             },
 
             showLoading(mask){
-                Toast.loading('test',mask);
+                Toast.loading('test',mask, 1500);
             }
         }
     }

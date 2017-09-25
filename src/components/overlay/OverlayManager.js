@@ -4,9 +4,11 @@ import { Event } from '../../helper';
 var OverlayManager = (function(){
     let instance = false;
     let overlays = {};
+    let toast = false;
     let types = {
         alert: 'alert',
         picker: 'picker',
+        toast: 'toast',
     };
 
     function init() {
@@ -50,6 +52,12 @@ var OverlayManager = (function(){
             },
             deleteOverlay(overlay){
                 delete overlays[overlay._uid];
+            },
+            setToast(to){
+                toast = to;
+            },
+            getToast(){
+                return toast;
             },
             types
         }
