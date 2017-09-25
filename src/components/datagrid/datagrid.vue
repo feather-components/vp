@@ -20,7 +20,7 @@
     </div>
 </template>
 <script>
-import baseGrid from './baseGrid';
+import baseGrid from './basegrid';
 var Datagrid = {
     name: 'table',
     props: {

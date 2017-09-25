@@ -16,7 +16,11 @@
                 
                 <btn size="small" type="danger" @click="showAlertConfirm()" >confirm</btn>
                 <btn size="small" type="danger" @click="showAlertConfirmDefault()" >defaultconfirm </btn>
+                <btn size="small" type="danger" @click="showLoading(true)" >loading </btn>
+                <btn size="small" type="danger" @click="showLoading(false)" >loading </btn>
+                
                 <btn size="small" type="danger" @click="test()" >overManager </btn>
+
             </div>
             <div style="width: 200px;height: 200px; border: 1px #ccc solid;position: relative;">
                 <vp-mask ref="innerMask" @click="closeMask($refs.innerMask)" style="position:absolute" :visibility="false"></vp-mask>
@@ -121,6 +125,7 @@
     import { AutoPosition } from 'vpui';
     import { Picker } from 'vpui';
     import { Overlay} from 'vpui';
+    import { Toast } from 'vpui';
 
     export default {
         components: {
@@ -191,6 +196,10 @@
                 }
 
                 Alert(centent.join(' '));
+            },
+
+            showLoading(mask){
+                Toast.loading('test',mask);
             }
         }
     }
