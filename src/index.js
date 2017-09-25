@@ -3,6 +3,7 @@ import Datagrid from './components/datagrid';
 import Button from './components/button';
 import Overlay from './components/overlay';
 import Mask from './components/mask';
+import Alert from './components/alert';
 import Picker from './components/picker';
 import CityPicker from './components/CityPicker';
 import Checkbox from './components/checkbox';
@@ -51,7 +52,8 @@ export {
     Tablepager,
     Button,
     Overlay,
-    Mask, 
+    Mask,
+    Alert,
     AutoPosition,
     Checkbox,
     Radio,
