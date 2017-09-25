@@ -9,9 +9,9 @@
     <label class="disabled"><vp-checkbox :part="true" disabled checked /> Disabled Part</label>
 
     <p>checkbox示例2</p>
-    <label><vp-checkbox :value="1" v-model="val" /> checkbox1</label></label>
-    <label><vp-checkbox :value="2" v-model="val" /> checkbox2</label></label>
-    <label><vp-checkbox :value="3" v-model="val" /> checkbox3</label></label>
+    <label><vp-checkbox :value="1" v-model="val" /> checkbox1</label>
+    <label><vp-checkbox :value="2" v-model="val" /> checkbox2</label>
+    <label><vp-checkbox :value="3" v-model="val" /> checkbox3</label>
     <div>已选择：{{ val }}</div>
 
     <p>checkbox示例3</p>
