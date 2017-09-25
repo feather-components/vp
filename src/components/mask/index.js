@@ -1,5 +1,5 @@
 import Mask from './mask';
-import {Util} from '../../helper'; 
+import {Util} from '../../helper';
 
 Mask.show = function(options) {
     let mask = Util.appendInstance(Mask);
@@ -10,5 +10,7 @@ Mask.show = function(options) {
         }
     });
     return mask;
-} 
+}
+
+
 export default Util.register(Mask);
