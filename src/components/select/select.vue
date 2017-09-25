@@ -1,7 +1,7 @@
 <template>
 <div class="select"
-    :class="{ hover: hoverSelect, focus: selectMode }"
-    @mouseenter.stop="hoverSelect = true"
+    :class="{ hover: hoverSelect, focus: selectMode, disabled: disabled }"
+    @mouseenter.stop="!disabled && (hoverSelect = true)"
     @mouseleave.stop="hoverSelect = false"
     v-clickoutside="outside"
     >
@@ -9,7 +9,7 @@
         <div>{{ text || placeholder }}</div>
     </div>
     <transition name="dropDown">
-    <ul class="select-list" v-if="selectMode" @mouseleave="hoverKey = undefined">
+    <ul class="select-list" v-show="selectMode" @mouseleave="hoverKey = undefined">
         <li v-for="option in options"
             @mouseenter="!option.disabled && (hoverKey = option.value)"
             @click="select(option)"
@@ -34,9 +34,14 @@ export default {
         },
         options: {
             type: Array | Object,
-            default: []
+            default: () => []
         },
-        value: null
+        type: {
+            type: String,
+            default: 'single' // single、 multiple、search、multiple-search
+        },
+        value: null,
+        disabled: false
     },
     data() {
         return {
@@ -50,15 +55,13 @@ export default {
     },
     methods: {
         toggle() {
+            if(this.disabled) return;
             this.selectMode = !this.selectMode;
         },
         select(option) {
-            if(!option) {
-                return ;
-            }
-            if(option.disabled) {
-                return ;
-            }
+            if(this.disabled) return;
+            if(!option) return;
+            if(option.disabled) return;
             this.hoverSelect = false;
             this.text = option.text;
             this.val = this.activeKey = this.hoverKey = option.value;
@@ -84,6 +87,7 @@ export default {
     width: 150px;
     position: relative;
     font-size: 12px;
+    user-select: none;
     &.focus .select-input {
         box-shadow: 0 1px 6px rgba(68,117,232,.5);
         border-color: #4475E8;
@@ -93,6 +97,12 @@ export default {
     }
     &.hover .select-input {
         border-color: #4475E8;
+    }
+    &.disabled .select-input {
+        cursor: not-allowed;
+        background-color: #f3f3f3;
+        border-color: #d9d9d9;
+        color: #ccc;
     }
     &-input {
         border: 1px solid #999;
@@ -142,6 +152,7 @@ export default {
             cursor: pointer;
             &.active {
                 color: #4475E8;
+                background-color: #f3f3f3;
             }
             &.hover {
                 background-color: #F0F8FD;
