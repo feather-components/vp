@@ -26,7 +26,7 @@ import Clickoutside from './directives/clickoutside.vue';
 // COMPONENTS
 const com = [
     // elements
-    { path: '/components/button', components: Button, text: 'Button', id: 'com_1' },
+    { path: '/components/button', component: Button, text: 'Button', id: 'com_1' },
     { path: '/components/radio', component: Radio, text: 'Radio' },
     { path: '/components/checkbox', component: Checkbox, text: 'Checkbox' },
     { path: '/components/select', component: Select, text: 'Select'},
