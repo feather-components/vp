@@ -22,7 +22,7 @@ const router = new VueRouter({
     //COMPONENTS
     routes: [{
         path: '/components/button',
-        components: Button
+        component: Button
     }, {
         path: '/components/pager',
         component: Pager
