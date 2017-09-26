@@ -89,6 +89,7 @@ export default {
                     break;
                 case 'multiple':
                     setTimeout(() => {
+                        !this.val && (this.val = []);
                         this.mulOpts = this.options.filter(item => this.val.indexOf(item.value) > -1);
                         this.$emit('input', this.val);
                         this.$emit('select', this.mulOpts);
