@@ -19,105 +19,44 @@ import Tablepager from './modules/tablepager.vue';
 import Valid from './directives/valid.vue';
 import Clickoutside from './directives/clickoutside.vue';
 
+// COMPONENTS
+const com = [
+    { path: '/components/button', components: Button, text: 'Button', id: 'com_1' },
+    { path: '/components/radio', component: Radio, text: 'Radio' },
+    { path: '/components/checkbox', component: Checkbox, text: 'Checkbox' },
+    { path: '/components/select', component: Select, text: 'Select'},
+    { path: '/components/pager', component: Pager, text: 'Pager' },
+    { path: '/components/tab', component: Tab, text: 'Tab' },
+    { path: '/components/datagrid', component: Datagrid, text: 'Datagrid' },
+    { path: '/components/overlay', component: OverlayView, text: 'OverlayView' },
+    { path: '/components/citypicker', component: CityPicker, text: 'CityPicker' },
+    { path: '/components/datepicker', component: DatePicker, text: 'DatePicker' },
+]
+
+// MODULES
+const mod = [
+    { path: '/modules/tablepager', component: Tablepager, text: 'Tablepager', id: 'mod_1' }
+]
+
+// DIRECTIVES
+const dir = [
+    { path: '/directives/valid', component: Valid, text: 'Valid', id: 'dir_1' },
+    { path:'/directives/clickoutside', component: Clickoutside, text: 'Clickoutside', id: 'dir_2' }
+]
+
 const router = new VueRouter({
-    //COMPONENTS
-    routes: [{
-        path: '/components/button',
-        components: Button
-    }, {
-        path: '/components/pager',
-        component: Pager
-    }, {
-        path: '/components/datagrid',
-        component: Datagrid
-    }, {
-        path: '/components/overlay',
-        component: OverlayView
-    }, {
-        path: '/components/citypicker',
-        component: CityPicker
-    }, {
-        path: '/components/datepicker',
-        component: DatePicker
-    }, {
-        path: '/components/checkbox',
-        component: Checkbox
-    }, {
-        path: '/components/radio',
-        component: Radio
-    }, {
-        path: '/components/tab',
-        component: Tab
-    },{
-        path: '/components/select',
-        component: Select
-    },{
-        //MODULES
-        path: '/modules/tablepager',
-        component: Tablepager
-    }, {
-        //DIRECTIVES
-        path: '/directives/valid',
-        component: Valid
-    },{
-        //DIRECTIVES
-        path:'/directives/clickoutside',
-        component: Clickoutside
-    }]
-});
+    routes: [...com, ...mod, ...dir].map(({ path, component }) => ({ path, component }))
+})
 
 new Vue({
     el: '#app',
     router: router,
     data() {
         return {
-            com: [{
-                text: 'Button',
-                url: '#/components/button'
-            }, {
-                text: 'Radio',
-                url: '#/components/radio'
-            }, {
-                text: 'Checkbox',
-                url: '#/components/checkbox'
-            }, {
-                text: 'Pager',
-                url: '#/components/pager',
-                id: 'com_1'
-            }, {
-                text: 'Datagrid',
-                url: '#/components/datagrid',
-                id: 'com_2'
-            }, {
-                text: 'Overlay',
-                url: '#/components/overlay'
-            }, {
-                text: 'Tab',
-                url: '#/components/tab'
-            }, {
-                text: 'Select',
-                url: '#/components/select'
-            }, {
-                text: 'CityPicker',
-                url: '#/components/citypicker'
-            }, {
-                text: 'DatePicker',
-                url: '#/components/datepicker'
-            }],
-            mod: [{
-                text: 'Tablepager',
-                url: '#/modules/tablepager',
-                id: 'mod_1'
-            }],
-            dir: [{
-                text: 'Valid',
-                url: '#/directives/valid',
-                id: 'dir_1'
-            }, {
-                text: 'Clickoutside',
-                url: '#/directives/clickoutside'
-            }],
-            active: 'com_1'
+            active: 'com_1',
+            com: com.map(({ text, path }) => ({ url: '#' + path, text })),
+            mod: mod.map(({ text, path }) => ({ url: '#' + path, text })),
+            dir: dir.map(({ text, path }) => ({ url: '#' + path, text }))
         }
     },
     method: {
@@ -125,4 +64,4 @@ new Vue({
             this.active = id;
         }
     }
-});
+})
