@@ -3,15 +3,16 @@ import Vue from 'vue';
 
 Vue.use(VueRouter);
 
+import Button from './components/button.vue';
 import Pager from './components/pager.vue';
 import Datagrid from './components/datagrid.vue';
 import Checkbox from './components/checkbox.vue';
 import Radio from './components/radio.vue';
-import OverlayView from './views/overlay.vue'; 
+import OverlayView from './components/overlay.vue'; 
 import Tab from './components/tab.vue';
 import Select from './components/select.vue';
-import CityPicker from './views/citypicker.vue';
 import DatePicker from './components/datepicker.vue';
+import CityPicker from './components/citypicker.vue';
 
 import Tablepager from './modules/tablepager.vue';
 
@@ -21,6 +22,9 @@ import Clickoutside from './directives/clickoutside.vue';
 const router = new VueRouter({
     //COMPONENTS
     routes: [{
+        path: '/components/button',
+        components: Button
+    }, {
         path: '/components/pager',
         component: Pager
     }, {
@@ -68,6 +72,9 @@ new Vue({
     data() {
         return {
             com: [{
+                text: 'Button',
+                url: '#/components/button'
+            }, {
                 text: 'Radio',
                 url: '#/components/radio'
             }, {
