@@ -11,6 +11,7 @@ import OverlayView from './views/overlay.vue';
 import Tab from './components/tab.vue';
 import Select from './components/select.vue';
 import CityPicker from './views/citypicker.vue';
+import DatePicker from './components/datepicker.vue';
 
 import Tablepager from './modules/tablepager.vue';
 
@@ -31,6 +32,9 @@ const router = new VueRouter({
     }, {
         path: '/components/citypicker',
         component: CityPicker
+    }, {
+        path: '/components/datepicker',
+        component: DatePicker
     }, {
         path: '/components/checkbox',
         component: Checkbox
@@ -89,6 +93,9 @@ new Vue({
             }, {
                 text: 'CityPicker',
                 url: '#/components/citypicker'
+            }, {
+                text: 'DatePicker',
+                url: '#/components/datepicker'
             }],
             mod: [{
                 text: 'Tablepager',
