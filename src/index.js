@@ -11,6 +11,7 @@ import Checkbox from './components/checkbox';
 import Radio from './components/radio';
 import { Tabs, Tab } from './components/tab';
 import Select from './components/select';
+import WaterFall from './components/waterfall';
 //--------------------------------------------------------
 import Tablepager from './modules/tablepager';
 //--------------------------------------------------------
@@ -22,7 +23,7 @@ import Toast from './components/toast';
 import Vue from 'vue';
 
 var Components = [
-    Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select, Datepanel, Datepicker
+    Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select, Datepanel, Datepicker,WaterFall
 ];
 
 var Modules = [
@@ -66,7 +67,8 @@ export {
     CityPicker,
     Datepanel,
     Datepicker,
-    Toast
+    Toast,
+    WaterFall
 };
 
 export default {install};
