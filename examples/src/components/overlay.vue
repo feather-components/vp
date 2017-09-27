@@ -1,9 +1,7 @@
 <template>
     <div>
-
-        <div style="padding-top:50px; margin-bottom: 70px; color: #333">
-            Overlay
-        </div>
+        <br/>
+        <br/>
         <div class="wrap">
             <div class="wrap-title">
                overlay

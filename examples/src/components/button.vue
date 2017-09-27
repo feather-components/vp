@@ -1,9 +1,8 @@
 <template>
     <div>
-        <div style="padding-top:50px; margin-bottom: 70px; color: #333">
-            Button
-        </div>
-
+        <br/>
+        <br/>
+        <br/>
         <div class="buttons-wrap">
             <div class="buttons-wrap-title">1st Button</div>
             <div class="buttons-list">

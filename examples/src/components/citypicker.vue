@@ -1,10 +1,7 @@
 <template>
     <div>
-        <div style="padding-top:50px; margin-bottom: 70px; color: #333">
-            CityPicker
-        </div>
-        <picker style="width: 100px;position:absolute; top: 300px;" :source="sSource" :autoClose="false"><slot>全国单选x</slot></picker>
-        <picker style="width: 100px;position:absolute; top: 300px; left: 500px;" :source="mSource" :isMultiple="true" ><slot>全国多选</slot></picker>
+        <picker style="width: 100px;position:absolute; top: 100px;" :source="sSource" :autoClose="false"><slot>全国单选</slot></picker>
+        <picker style="width: 100px;position:absolute; top: 100px; left: 500px;" :source="mSource" :isMultiple="true" ><slot>全国多选</slot></picker>
         
     </div>
 </template>
