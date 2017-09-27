@@ -11,7 +11,7 @@ import Checkbox from './components/checkbox';
 import Radio from './components/radio';
 import { Tabs, Tab } from './components/tab';
 import Select from './components/select';
-import WaterFall from './components/waterfall';
+import { WaterFall, WaterFallItem} from './components/waterfall';
 //--------------------------------------------------------
 import Tablepager from './modules/tablepager';
 //--------------------------------------------------------
@@ -68,7 +68,8 @@ export {
     Datepanel,
     Datepicker,
     Toast,
-    WaterFall
+    WaterFall,
+    WaterFallItem
 };
 
 export default {install};
