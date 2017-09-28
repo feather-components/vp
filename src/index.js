@@ -21,7 +21,7 @@ import Clickoutside from './directives/clickoutside';
 import Toast from './components/toast';
 //--------------------------------------------------------
 import Vue from 'vue';
-
+console.log(1);
 var Components = [
     Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select, Datepanel, Datepicker,WaterFall
 ];
