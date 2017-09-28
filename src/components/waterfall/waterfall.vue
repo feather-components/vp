@@ -1,5 +1,5 @@
 <template>
-    <div class="vp-water-fall">
+    <div class="vp-water-fall" @resize="fallResize">
         <div ref="waterFallColumnWrap" class="vp-water-fall-column-wrap"></div>
         <div ref="tempBlock" class="vp-water-fall-temp">
             <slot></slot>
@@ -54,6 +54,11 @@
                         columns[index + 1] = tempColumn;
                     }
                 }
+            },
+
+            fallResize(event){
+                alert('ddff');
+                console.log(eveent.target);
             }
         },
         mounted(){
@@ -61,6 +66,9 @@
             this.$nextTick(() => {
                 this.cloneItemToCloumn();
             });
+            this.$el.onresize = function(){
+                console.log('resize');
+            }
         }
     }
 </script>
