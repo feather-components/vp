@@ -18,6 +18,8 @@ import WaterFall from './components/waterfall.vue';
 
 import CityPicker from './components/citypicker.vue';
 import DatePicker from './components/datepicker.vue';
+import Uploader from './components/uploader.vue';
+import ProgressBar from './components/progressbar.vue';
 
 import Tablepager from './modules/tablepager.vue';
 
@@ -47,6 +49,8 @@ const com = [
     { path: '/components/citypicker', component: CityPicker, text: 'CityPicker' },
     { path: '/components/datepicker', component: DatePicker, text: 'DatePicker' },
     { path: '/components/waterfall', component: WaterFall, text: 'WaterFall' },
+    { path: '/components/uploader', component: Uploader, text: 'Uploader' },
+    { path: '/components/progressbar', component: ProgressBar, text: 'ProgressBar' }
        
 ]
 

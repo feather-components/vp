@@ -19,11 +19,13 @@ import Valid from './directives/valid';
 import AutoPosition from './directives/autoposition';
 import Clickoutside from './directives/clickoutside';
 import Toast from './components/toast';
+import Uploader from './components/uploader';
+import ProgressBar from './components/progressbar';
 //--------------------------------------------------------
 import Vue from 'vue';
 
 var Components = [
-    Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select, Datepanel, Datepicker,WaterFall
+    Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select, Datepanel, Datepicker,WaterFall,Uploader,ProgressBar
 ];
 
 var Modules = [
@@ -68,7 +70,9 @@ export {
     Datepanel,
     Datepicker,
     Toast,
-    WaterFall
+    WaterFall,
+    Uploader,
+    ProgressBar
 };
 
 export default {install};
