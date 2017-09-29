@@ -1,8 +1,21 @@
 <template>
     <div>
-
-        <div style="padding-top:50px; margin-bottom: 70px; color: #333">
-            Overlay
+        <br/>
+        <br/>
+        <div class="wrap">
+            <div class="wrap-title">
+                toast
+            </div>
+            <div class="buttons clear">
+                <btn size="normal" type="success" @click="showTip('success', '成功', true)">success</btn>
+                <btn size="normal" type="success" @click="showTip('success', '成功', false)">success</btn>
+                <btn size="normal" type="danger" @click="showTip('error', '失败', true)">error</btn>
+                <btn size="normal" type="danger" @click="showTip('error', '失败', false)">error</btn>
+                <btn size="normal" type="highlight" @click="showTip('warn', '警告', true)">warn</btn>
+                <btn size="normal" type="highlight" @click="showTip('warn', '警告', false)">warn</btn>
+                <btn size="normal" @click="showTip('loading', '加载中', true)" >loading</btn>
+                <btn size="normal" @click="showTip('loading', '加载中', false)" >loading</btn>
+            </div>
         </div>
         <div class="wrap">
             <div class="wrap-title">
@@ -16,8 +29,6 @@
                 
                 <btn size="small" type="danger" @click="showAlertConfirm()" >confirm</btn>
                 <btn size="small" type="danger" @click="showAlertConfirmDefault()" >defaultconfirm </btn>
-                <btn size="small" type="danger" @click="showLoading(true)" >loading </btn>
-                <btn size="small" type="danger" @click="showLoading(false)" >loading </btn>
                 
                 <btn size="small" type="danger" @click="test()" >overManager </btn>
 
@@ -146,8 +157,8 @@
                 Alert(centent.join(' '));
             },
 
-            showLoading(mask){
-                Toast.loading('test',mask, 1500);
+            showTip(status,txt,mask){
+                Toast[status](txt,mask, 1500)
             }
         }
     }

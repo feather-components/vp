@@ -1,7 +1,7 @@
 <template>
     <overlay :visible="true" class="vp-toast" position="center">
         <div class="vp-toast-content">
-            <i class="vp-toast-icon"></i><div class="vp-toast-msg" v-html="msg"></div>
+            <i :class="'vp-toast-icon ' + iconName"></i><div class="vp-toast-msg" v-html="msg"></div>
         </div>
     </overlay>
 </template>
@@ -33,11 +33,22 @@
     }
 
     .vp-toast-icon{
-        background: url('./images/loading.gif') no-repeat;
         width: 32px;
         height:32px;
         margin-right: 10px;
         display: inline-block;
+    }
+    .vp-toast-success{
+        background: url('./images/success.png') no-repeat;
+    }
+    .vp-toast-error{
+        background: url('./images/error.png') no-repeat;
+    }
+    .vp-toast-warn{
+        background: url('./images/warn.png') no-repeat;
+    }
+    .vp-toast-loading{
+        background: url('./images/loading.gif') no-repeat;
     }
     .vp-toast-msg{
         height: 32px;
@@ -60,8 +71,6 @@
             vpMask,
             Overlay,
         },
-
-
 
         mounted(){
 
