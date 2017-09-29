@@ -12,6 +12,7 @@ import Tab from './components/tab.vue';
 import Pager from './components/pager.vue';
 
 import Datagrid from './components/datagrid.vue';
+import Timeline from './components/timeline.vue';
 
 import OverlayView from './components/overlay.vue';
 import WaterFall from './components/waterfall.vue';
@@ -41,6 +42,7 @@ const com = [
 
     // data
     { path: '/components/datagrid', component: Datagrid, text: 'Datagrid' },
+    { path: '/components/timeline', component: Timeline, text: 'Timeline' },
 
     // overlays
     { path: '/components/overlay', component: OverlayView, text: 'OverlayView' },
