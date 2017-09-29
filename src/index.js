@@ -23,7 +23,7 @@ import Uploader from './components/uploader';
 import ProgressBar from './components/progressbar';
 //--------------------------------------------------------
 import Vue from 'vue';
-console.log(1);
+
 var Components = [
     Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select, Timepanel, Datepanel, Datepicker,WaterFall,Uploader,ProgressBar
 ];
