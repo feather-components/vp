@@ -1,7 +1,7 @@
 <template>
     <div>
         <br>
-        <upload text="选择文件" multiple fileType="audio/wav,image.jpg" url="./" :fileMaxSize="1000" :showProgress="true" :showFileName="true"></upload>
+        <upload text="选择文件" multiple fileType="audio/wav,image.jpg" url="./" :fileMaxSize="1000" :fileMaxNum="5" :showProgress="true" :showFileName="true"></upload>
     </div>
 </template>
 <script>

@@ -48,6 +48,10 @@
                 type: Number,
                 default:0
             },
+            fileMaxNum:{
+                type: Number,
+                default:0
+            },
             showProgress:{
                 type: Boolean,
                 default:false
@@ -66,7 +70,10 @@
                 var self = this;
                 console.log(document.querySelector("#fileUpload").files);
                 var oFiles = document.querySelector("#fileUpload").files;
-                console.log(oFiles);
+                if(self.fileMaxNum>0&&oFiles.length>self.fileMaxNum){
+                    alert(`单次可上传最大文件数为${self.fileMaxNum}`);
+                    return;
+                }
                 if(oFiles.length>0){
                     self.$refs.innerMask.open();
                     self.showProgress2 = true;
