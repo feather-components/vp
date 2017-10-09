@@ -2,7 +2,7 @@
 <div class="cont">
     <p>DatePanel</p>
     <div class="date-panel">
-        <div>
+        <!-- <div>
             <p>英文头部（默认）</p>
             <div style="margin-bottom: 10px">
                 <select v-model="dp1.year" @change="select1">
@@ -40,6 +40,12 @@
             </div>
             <datepanel :show-simple="true" v-model="date3" ref="d3" lang="Zh"></datepanel>
             <div>当前日期：{{ date3.toLocaleDateString() }}</div>
+        </div> -->
+        <div>
+            <p>选择范围</p>
+            <div style="margin-bottom: 39px">
+            </div>
+            <datepanel select-range="2017-10-09,2017-10-15"></datepanel>
         </div>
     </div>
 </div>

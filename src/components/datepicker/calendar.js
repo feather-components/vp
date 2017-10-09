@@ -11,8 +11,23 @@ function Date2Object(time) {
     return { year, month, date, day, hours, minutes, seconds, milliseconds }
 }
 
-function String2Date(str) {}
-function Date2String(time) {}
+function select2Range(select) {
+    let start, stop;
+    if(typeof select === 'string') {
+        const arr = select.split(',');
+        start = new Date(arr[0]);
+        stop = new Date(arr[1]);
+    } else if(select instanceof Array && select.length) {
+        start = new Date(select[0]);
+        stop = new Date(select[1]);
+    } else {
+        start = new Date;
+        stop = new Date;
+    }
+    return {
+        start, stop
+    }
+}
 
 // 获得当前月份的天数
 function getDateAmount(year, month){
@@ -73,7 +88,7 @@ function calendar() {
     return datesArr.slice(0,6);
 }
 
-
 export {
-    calendar
+    calendar,
+    select2Range
 }
