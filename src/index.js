@@ -12,6 +12,7 @@ import Radio from './components/radio';
 import { Tabs, Tab } from './components/tab';
 import Select from './components/select';
 import { WaterFall, WaterFallItem} from './components/waterfall';
+import Timeline from './components/timeline';
 //--------------------------------------------------------
 import Tablepager from './modules/tablepager';
 //--------------------------------------------------------
@@ -25,7 +26,7 @@ import ProgressBar from './components/progressbar';
 import Vue from 'vue';
 
 var Components = [
-    Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select, Timepanel, Datepanel, Datepicker,WaterFall,Uploader,ProgressBar
+    Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select, Timepanel, Datepanel, Datepicker,WaterFall,Uploader,ProgressBar,Timeline
 ];
 
 var Modules = [
@@ -74,7 +75,8 @@ export {
     WaterFall,
     Uploader,
     ProgressBar,
-    WaterFallItem
+    WaterFallItem,
+    Timeline
 };
 
 export default {install};

@@ -1,6 +1,6 @@
 <template>
     <water-fall :source="source" :column="4">
-        <item v-for="item in source" class="block-item">
+        <item v-for="(item, index) in source" class="block-item" :key="index">
             <div class="block-item-inner" click="">
                 {{ item.title }}
             </div>
