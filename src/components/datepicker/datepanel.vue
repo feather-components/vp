@@ -7,11 +7,19 @@
         <div class="date-list-items" v-for="(dates, i) in calendarData">
             <template v-for="(date, j) in dates">
                 <div v-if="showSimple"
-                    :class="{ 'simple-date': date.currentMonth, 'active': date.active || (isToday(date) && !hasChecked), 'today': isToday(date) }"
+                    :class="{ 
+                        'simple-date': date.currentMonth,
+                        'active': date.active || (isToday(date) && !hasChecked) && date.currentMonth,
+                        'today': isToday(date)
+                    }"
                     @click="selectDate(date, [i,j])">{{ date.currentMonth && (isToday(date) ? '今' : date.date) }}</div>
                 <div v-else
                     class="normal-date"
-                    :class="{ 'current-month': date.currentMonth, 'active': date.active || (isToday(date) && !hasChecked), 'today': isToday(date) }"
+                    :class="{
+                        'current-month': date.currentMonth,
+                        'active': date.active || (isToday(date) && !hasChecked),
+                        'today': isToday(date)
+                    }"
                     @click="selectDate(date, [i,j])">{{ isToday(date) ? '今' : date.date }}</div>
             </template>
         </div>
@@ -53,12 +61,16 @@ export default {
         month: {
             type: Number | String,
             default: new Date().getMonth() + 1
+        },
+        selectRange: {
+            type: String | Array
         }
     },
     data() {
         return {
             calendarData: [],
             prevPos: [],
+            curDate: undefined,
             hasChecked: false, //判断是否选择过日历
         }
     },
@@ -73,34 +85,47 @@ export default {
             return isNaN(this.month) ? (new Date().getMonth() + 1) : this.month
         },
         now() {
-            let td = new Date(this.today), curDate = td instanceof Date ? td : new Date();
-            return curDate;
+            let td = new Date(this.today), cdate = td instanceof Date ? td : new Date();
+            return cdate;
         }
     },
     methods: {
-        selectDate(dateObj, pos) {
-            if(this.showSimple && !dateObj.currentMonth) return ;
+        selectDate(dateObj, jump) {
+            if(this.showSimple && !dateObj.currentMonth && !jump) return ;
             !this.hasChecked && (this.hasChecked = true);
-            let pPos = this.prevPos;
-            if(pPos.length) {
-                this.calendarData[pPos[0]][pPos[1]].active = false;
-            }
-            dateObj.active = true;
-            this.prevPos = pos;
+            this.setActiveDate(dateObj);
             this.$emit('select', dateObj);
             this.$emit('input', new Date(dateObj.year, dateObj.month - 1, dateObj.date));
+        },
+        setActiveDate(obj) {
+            let { year, month, date } = obj;
+            let i = 0, j = 0;
+            let pp = this.prevPos;
+            pp.length && (this.calendarData[pp[0]][pp[1]].active = false);
+            this.calendarData.forEach((item, ii) => {
+                item.forEach((st, jj) => {
+                    if(st.year === year && st.month === month && st.date === date) {
+                        i = ii;
+                        j = jj;
+                    }
+                })
+            });
+            this.prevPos = [i,j];
+            this.calendarData[i][j].active = true;
+            this.curDate = this.calendarData[i][j].date;
         },
         isToday(dateObj) {
             return dateObj.date === this.now.getDate() &&
                 this.now.getMonth() + 1 === dateObj.month &&
                 this.now.getFullYear() === dateObj.year;
         },
-        setCalendar(year,month) {
-            this.calendarData = calendar(year, month - 1)
-            this.$emit('input', new Date(year, month - 1));
+        setCalendar(year, month) {
+            this.calendarData = calendar(year, month - 1);
+            this.selectDate({ year, month, date: this.curDate }, true);
         }
     },
     created() {
+        this.curDate = this.now.getDate();
         this.calendarData = calendar(this.curYear, this.curMonth - 1)
     }
 }
@@ -140,7 +165,7 @@ export default {
                 border: 1px solid transparent;
                 border-radius: 2px;
                 transition: all .2s;
-                &:first-child, &:first-child.current-month {
+                &:first-child, &:first-child.current-month, &:first-child.simple-date {
                     color: #FF6E40;
                 }
                 &.normal-date,
@@ -163,6 +188,24 @@ export default {
                 }
                 &.today {
                     border-color: #4475E8;
+                    color: #4475E8;
+                }
+                &.range-cell {
+                    border-radius: 0;
+                    position: relative;
+                    &:before {
+                        content: "";
+                        display: block;
+                        background: #ecf6fd;
+                        border-radius: 0;
+                        border: 0;
+                        position: absolute;
+                        top: 4px;
+                        bottom: 4px;
+                        left: 0;
+                        right: 0;
+                        z-index: 0;
+                    }
                 }
             }
         }
