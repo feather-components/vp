@@ -39,8 +39,8 @@ function check(el, vm, target, rules, fieldName, tag, autocheck) {
     for (var ruleName in rules) {
         if (Rule[ruleName]) { //default rule
             var rule = Rule[ruleName];
-            var arg = typeof rules[ruleName] == 'object' ? rules[ruleName][0] : rules[ruleName];
-            var msg = typeof rules[ruleName] == 'object' && rules[ruleName][1] != undefined ? rules[ruleName][1] : rule.msg;
+            var arg = typeof Array.isArray(rules[ruleName]) ? rules[ruleName] : rules[ruleName][0];
+            var msg = typeof rules[ruleName] == 'object' && !Array.isArray(rules[ruleName]) ? rules[ruleName][1] : rule.msg;
             if (!autocheck || ruleName != 'required') { //never check required at real-time
                 switch (typeof rule.exp) {
                     case 'function':
