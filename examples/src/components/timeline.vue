@@ -4,7 +4,7 @@
             <vp-timeline :type="exp1.icon" :node="node" :current="2" @nodeClick="exp1.click"></vp-timeline>
             <div class="example-remark">
                 <div class="example-title">
-                    <span>Base TimeLine</span>
+                    <span>Base</span>
                 </div>                
                 <div class="example-memo">
                     <btn v-for="(btn,i) in exp1.aType" @click="exp1click(i)" :type="exp1.btnType[i]?'main':'plain'">{{btn}}</btn> 
@@ -15,13 +15,13 @@
             <vp-timeline size="small" :node="node" :current="2"></vp-timeline>
             <div class="example-remark">
                 <div class="example-title">
-                    <span>Small TimeLine</span>
+                    <span>Small</span>
                 </div> 
             </div>
         </div>
         <div class="example-box">
             <vp-timeline type="userdefine" :node="node" :current="2">
-                <span v-for="(n,i) in node" :slot="'icon'+i" class="lg-i lg-ihollowcheck lg-color-success" style="font-size:24px"></span>
+                <span v-for="(n,i) in node" :slot="'icon'+i" class="lg-i lg-ihollowcheck lg-color-success" style="font-size:23px"></span>
                 <div v-for="(n,i) in node" :slot="'remark'+i">
                     <div class="lg-color-success" style="line-height:16px;font-size:12px">{{n.remark}}</div>
                 </div>
@@ -42,7 +42,8 @@
                     <btn v-for="(btn,i) in exp4.aType" @click="exp4click(i)" :type="exp4.btnType[i]?'main':'plain'">{{btn}}</btn> 
                 </div>
             </div>
-        </div>        
+        </div> 
+</canvas>       
     </div>
 </template>
 <style>
@@ -92,29 +93,27 @@ export default {
                 }
             },
             exp4:{
-                btnType:[1,0,0,0],
-                width:'',
-                aType:['flex','auto','100px','200px']
+                btnType:[0,1,0,0],
+                width:'auto',
+                aType:['flex','auto','150px','200px']
             },
             node:[{
                 title:'Start'
             },{
-                title:'Second',
+                title:'Secondwderewdse',
                 remark:'2017-09-09 12:00:00'
             },{
                 title:'Third',
                 remark:'2017-09-09 12:00:00'
             },{
                 title:'Last',
-                remark:'2017-09-09 12:00:00'
+                remark:'2017-09-09'
             },{
                 title:'Last',
                 remark:'2017-09-09 12:00:00'
             }],
             current:2
         }
-    },
-    created() {
     },
     methods: {
         exp1click(index){
