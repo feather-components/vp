@@ -34,7 +34,7 @@
                     <label>整数：</label><input type="text" v-valid="{required: true, int: true}">
                 </div>
                 <div class="lg-form-line">
-                    <label>区间2~5：</label><input type="text" v-valid="{required: true, range: [2,5]}">
+                    <label>区间2~5：</label><input type="text" v-valid="{required: true, float: true, range: [2,5]}">
                 </div>
                 <div class="lg-form-line">
                     <label>长度6：</label><input type="text" v-valid="{required: true, length: 6}">
@@ -47,7 +47,7 @@
 </template>
 <script>
     import {
-        Valid
+        Valid, Toast
     } from 'vpui';
 
     export default{
@@ -56,7 +56,9 @@
         },
         methods:{
             check(){
+                let errLen = this.$vform['default'].checkAll().length;
                 this.$vform['default'].checkAll();
+                errLen && Toast.success('验证通过，发送请求', true);
             }
         }
     }
