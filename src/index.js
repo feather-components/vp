@@ -19,7 +19,7 @@ import Tablepager from './modules/tablepager';
 import Valid from './directives/valid';
 import AutoPosition from './directives/autoposition';
 import Clickoutside from './directives/clickoutside';
-import Drag from './directives/drag';
+import { Drag, DragDrop } from './directives/drag';
 import Toast from './components/toast';
 import Uploader from './components/uploader';
 import ProgressBar from './components/progressbar';
@@ -37,7 +37,8 @@ var Modules = [
 var Directives = [
     Valid,
     Clickoutside,
-    Drag
+    Drag,
+    DragDrop
 ];
 
 function install(Vue){
@@ -53,6 +54,7 @@ function install(Vue){
 }
 
 export {
+    DragDrop,
     Drag,
     Clickoutside,
     Valid,
