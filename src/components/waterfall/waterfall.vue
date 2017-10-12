@@ -8,6 +8,7 @@
 </template>
 <script>
     let columns = [];
+    let reResizeTimer = {};
     export default{
         name: 'waterfall',
         props: {
@@ -56,14 +57,30 @@
                         columns[index + 1] = tempColumn;
                     }
                 }
-            }
+            },
+
+            reWidth(){
+                clearTimeout(reResizeTimer);
+                let self = this;
+                reResizeTimer = setTimeout(function(){
+                    let columnSize = self.column;
+                    let columnWidth = self.$el.clientWidth / columnSize + 'px';
+                    columns.forEach((column) => {
+                        column.style.width = columnWidth;
+                    });
+                }, 200)
+            }   
 
         },
         mounted(){
             this.appendColumn();
             this.$nextTick(() => {
                 this.cloneItemToCloumn();
+                window.addEventListener('resize', this.reWidth)
             });
+        },
+        deactivated(){
+            window.removeEventListener('resize', this.reWidth)
         }
     }
 </script>
