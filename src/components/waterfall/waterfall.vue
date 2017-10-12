@@ -31,9 +31,11 @@
                     columnSize-- ;
                 }
             },
+            
             getColumn(index){
                 return columns[index];
             },
+
             cloneItemToCloumn(){
                 let itemList = this.$refs.tempBlock.children;
                 let item = false;
@@ -55,6 +57,7 @@
                     }
                 }
             }
+
         },
         mounted(){
             this.appendColumn();

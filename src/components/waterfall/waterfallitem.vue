@@ -1,6 +1,6 @@
 
 <template>
-    <div class="water-fall-item" @click="clickAbc">
+    <div class="water-fall-item">
         <slot></slot>
     </div>
 </template>
@@ -13,9 +13,6 @@
             move(){
                 let self = this;
                 self.$parent.getColumn(0).append(self.$el);
-            },
-            clickAbc(){
-                alert('abc')
             }
         },
         mounted(){
