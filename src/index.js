@@ -18,6 +18,7 @@ import Tablepager from './modules/tablepager';
 import Valid from './directives/valid';
 import AutoPosition from './directives/autoposition';
 import Clickoutside from './directives/clickoutside';
+import Drag from './directives/drag';
 import Toast from './components/toast';
 //--------------------------------------------------------
 import Vue from 'vue';
@@ -32,7 +33,8 @@ var Modules = [
 
 var Directives = [
     Valid,
-    Clickoutside
+    Clickoutside,
+    Drag
 ];
 
 function install(Vue){
@@ -48,6 +50,7 @@ function install(Vue){
 }
 
 export {
+    Drag,
     Clickoutside,
     Valid,
     Pager,
