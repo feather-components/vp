@@ -4,12 +4,6 @@ var dragElement = null;
 export default {
 	bind (el, binding, vnode) {
 		
-
-		
-
-
-
-
 		var elt = [];
 		for (var i = 0, len = el.children.length; i < len; i++) {
 			elt.push(el.children[i]);
@@ -20,9 +14,6 @@ export default {
 		});
 		console.log(arrList)
 		arrListNub++;
-		
-
-
 
 		function bd (item, index, arr, listIndex) {
 			item.draggable = true;
@@ -74,9 +65,9 @@ export default {
 				// 你是外来生物
 				// 解绑
 				// 这应该是传进来的函数不是dragElement对象的绑定函数，是item的,所以一直无效，草
-				dragElement.eventList.forEach(function (element, elementIndex, array) {
+				/*dragElement.eventList.forEach(function (element, elementIndex, array) {
 					dragElement[element.evt] = null;
-				});
+				});*/
 
 				item.parentNode.insertBefore(dragElement, item);
 				// 同化--插到相应的位置
