@@ -7,6 +7,6 @@
   "clean": false,
   "license": "ISC",
   "dependencies": {
-    "vue": "feather-components/vue#production"
+    "vue": "feather-components/vue"
   }
 }
