@@ -11,8 +11,23 @@ function Date2Object(time) {
     return { year, month, date, day, hours, minutes, seconds, milliseconds }
 }
 
-function String2Date(str) {}
-function Date2String(time) {}
+function select2Range(select) {
+    let start, stop;
+    if(typeof select === 'string') {
+        const arr = select.split(',');
+        start = new Date(arr[0]);
+        stop = new Date(arr[1]);
+    } else if(select instanceof Array && select.length) {
+        start = new Date(select[0]);
+        stop = new Date(select[1]);
+    } else {
+        start = new Date;
+        stop = new Date;
+    }
+    return {
+        start, stop
+    }
+}
 
 // 获得当前月份的天数
 function getDateAmount(year, month){
@@ -40,18 +55,21 @@ function calendar() {
     let currentMonthDates = createNumberArray(currentMonthAmount, month, year, true); // 当前月日期
     
     let beginIndex = new Date(year, month - 1, 1).getDay(); //月初是周几
+    if(beginIndex % 7 < 2) {
+        beginIndex += 7;
+    }
     let endIndex = new Date(year, month - 1, currentMonthAmount).getDay();//月末是周几
 
     let prevMonth = month - 1, prevYear = year, nextMonth = month + 1, nextYear = year;
-    if(prevMonth < 1) {
-        prevMonth = 12;
+    if(prevMonth < 0) {
+        prevMonth = 11;
         prevYear = year - 1;
     }
-    if(nextMonth > 12) {
-        nextMonth = 1;
+    if(nextMonth > 11) {
+        nextMonth = 0;
         nextYear = year + 1;
     }
-    let prevMonthAmount = getDateAmount(prevYear, prevMonth - 1); // 上个月总天数
+    let prevMonthAmount = getDateAmount(prevYear, prevMonth); // 上个月总天数
     let prevMonthDates = createNumberArray(prevMonthAmount, prevMonth, prevYear).filter(item => item.date > prevMonthAmount - beginIndex) //上个月部分日期
     let nextMonthDates = createNumberArray(14 - endIndex - 1, nextMonth, nextYear) //下个月部分日期
     
@@ -70,7 +88,7 @@ function calendar() {
     return datesArr.slice(0,6);
 }
 
-
 export {
-    calendar
+    calendar,
+    select2Range
 }

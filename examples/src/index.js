@@ -26,6 +26,9 @@ import Tablepager from './modules/tablepager.vue';
 
 import Valid from './directives/valid.vue';
 import Clickoutside from './directives/clickoutside.vue';
+import Drag from './directives/drag.vue';
+import DragDrop from './directives/dragDrop.vue';
+import Tooltip from './directives/tooltip.vue';
 
 
 // COMPONENTS
@@ -64,7 +67,10 @@ const mod = [
 // DIRECTIVES
 const dir = [
     { path: '/directives/valid', component: Valid, text: 'Valid', id: 'dir_1' },
-    { path:'/directives/clickoutside', component: Clickoutside, text: 'Clickoutside', id: 'dir_2' }
+    { path:'/directives/clickoutside', component: Clickoutside, text: 'Clickoutside', id: 'dir_2' },
+    { path:'/directives/drag', component: Drag, text: 'Drag', id: 'dir_3' },
+    { path:'/directives/dragDrop', component: DragDrop, text: 'DragDrop', id: 'dir_4' },
+    { path:'/directives/tooltip', component: Tooltip, text: 'Tooltip', id: 'dir_5'}
 ]
 
 const router = new VueRouter({

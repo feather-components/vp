@@ -25,7 +25,7 @@ export default {
     },
     int: {
         msg: '必须为整数',
-        exp: /^(?:\d+(?:\.\d+)?)$/
+        exp: /^-?\d+$/
     },
     range: {
         msg: '必须在范围内',
@@ -45,9 +45,9 @@ export default {
     },
     length: {
         msg: '长度不正确',
-        exp: function(value, range) {
+        exp: function(value, length) {
             if (value) {
-                return (new RegExp('^[\\s\\S]{' + range + '}$')).test(value);
+                return (new RegExp('^[\\s\\S]{' + length + '}$')).test(value);
             }
             return true;
         }

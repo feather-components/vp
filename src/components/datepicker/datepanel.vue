@@ -7,12 +7,22 @@
         <div class="date-list-items" v-for="(dates, i) in calendarData">
             <template v-for="(date, j) in dates">
                 <div v-if="showSimple"
-                    :class="{ 'simple-date': date.currentMonth, 'active': date.active || (isToday(date) && !hasChecked), 'today': isToday(date) }"
-                    @click="selectDate(date, [i,j])">{{ date.currentMonth && (isToday(date) ? '今' : date.date) }}</div>
+                    :class="{ 
+                        'simple-date': date.currentMonth,
+                        'active': date.active || (isToday(date) && !hasChecked) && date.currentMonth,
+                        'today': isToday(date)
+                    }"
+                    @click="selectDate(date)">{{ date.currentMonth && date.date }}</div>
                 <div v-else
                     class="normal-date"
-                    :class="{ 'current-month': date.currentMonth, 'active': date.active || (isToday(date) && !hasChecked), 'today': isToday(date) }"
-                    @click="selectDate(date, [i,j])">{{ isToday(date) ? '今' : date.date }}</div>
+                    :class="{
+                        'current-month': date.currentMonth,
+                        'active': date.active || (isToday(date) && !hasChecked),
+                        'today': isToday(date),
+                        'range-cell': date.hover && !date.active
+                    }"
+                    @click="selectDate(date)"
+                    @mouseenter="hoverDate(date)"><em>{{ date.date }}</em></div>
             </template>
         </div>
     </div>
@@ -20,7 +30,7 @@
 </template>
 <script>
 
-import { calendar } from './calendar.js'
+import { calendar, select2Range } from './calendar.js'
 
 const langArr = {
     En: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
@@ -53,12 +63,17 @@ export default {
         month: {
             type: Number | String,
             default: new Date().getMonth() + 1
+        },
+        selectRange: {
+            type: String | Array
         }
     },
     data() {
         return {
+            selectPoints: {},
             calendarData: [],
             prevPos: [],
+            curDate: undefined,
             hasChecked: false, //判断是否选择过日历
         }
     },
@@ -73,34 +88,117 @@ export default {
             return isNaN(this.month) ? (new Date().getMonth() + 1) : this.month
         },
         now() {
-            let td = new Date(this.today), curDate = td instanceof Date ? td : new Date();
-            return curDate;
+            let td = new Date(this.today), cdate = td instanceof Date ? td : new Date();
+            return cdate;
         }
     },
     methods: {
-        selectDate(dateObj, pos) {
+        selectDate(dateObj) {
             if(this.showSimple && !dateObj.currentMonth) return ;
             !this.hasChecked && (this.hasChecked = true);
-            let pPos = this.prevPos;
-            if(pPos.length) {
-                this.calendarData[pPos[0]][pPos[1]].active = false;
+            if(this.selectRange) {
+                this.setRangeAnchor(dateObj);
+            } else {
+                this.setActiveDate(dateObj);
+                this.$emit('select', dateObj);
+                this.$emit('input', new Date(dateObj.year, dateObj.month - 1, dateObj.date));
             }
-            dateObj.active = true;
-            this.prevPos = pos;
-            this.$emit('select', dateObj);
-            this.$emit('input', new Date(dateObj.year, dateObj.month - 1, dateObj.date));
+        },
+        setActiveDate(obj) {
+            let { year, month, date } = obj;
+            let i = 0, j = 0;
+            let pp = this.prevPos;
+            pp.length && (this.calendarData[pp[0]][pp[1]].active = false);
+            this.calendarData.forEach((item, ii) => {
+                item.forEach((st, jj) => {
+                    if(st.year === year && st.month === month && st.date === date) {
+                        i = ii;
+                        j = jj;
+                    }
+                })
+            });
+            this.prevPos = [i,j];
+            this.calendarData[i][j].active = true;
+            this.curDate = this.calendarData[i][j].date;
+        },
+        setRangeAnchor(obj) {
+            let start = this.selectPoints.startPoint, stop = this.selectPoints.stopPoint;
+            if(!obj.currentMonth) return ;
+            if(start && stop && start.date > stop.date) {
+                [start, stop] = [stop, start];
+                this.calendarData.forEach(item => {
+                    item.forEach(sItem => {
+                        sItem.hover = false;
+                    })
+                })
+            }
+            if(start && stop) {
+                this.calendarData.forEach(item => {
+                    item.forEach(sItem => {
+                        if(stop.date === sItem.date || start.date === sItem.date) {
+                            sItem.active = false;
+                        }
+                    })
+                })
+                obj.active = true;
+                this.selectPoints.startPoint = start = obj;
+                this.selectPoints.stopPoint = stop = undefined;
+            } else {
+                if(!start) {
+                    obj.active = true;
+                    this.selectPoints.startPoint = start = obj;
+                } else {
+                    if(stop) {
+                        this.calendarData.forEach(item => {
+                            item.forEach(sItem => {
+                                if(stop.date === sItem.date) {
+                                    sItem.active = false;
+                                }
+                            })
+                        })
+                    }
+                    obj.active = true;
+                    this.selectPoints.stopPoint = stop = obj;
+                }
+
+            }
+            
+            this.selectPoints.startPoint = start;
+            this.selectPoints.stopPoint = stop;
+        },
+        hoverDate(obj) {
+            let start = this.selectPoints.startPoint, stop = this.selectPoints.stopPoint, calendar = [...this.calendarData];
+            if(stop) return ;
+            if(start) {
+                calendar.forEach(item => {
+                    item.forEach(sItem => {
+                        if(this.compareItem(obj,start)) {
+                            sItem.hover = this.compareItem(sItem,start) && this.compareItem(obj, sItem) && sItem.currentMonth;
+                        } else {
+                            sItem.hover = this.compareItem(start,sItem) && this.compareItem(sItem, obj) && sItem.currentMonth;
+                        }
+                    })
+                })
+                this.calendarData = calendar;
+            }
+            // console.log(obj);
+        },
+        compareItem(o1,o2) {
+            let d1 = new Date(o1.year, o1.month - 1, o1.date), d2 = new Date(o2.year, o2.month - 1, o2.date);
+            return d1.getTime() - d2.getTime() >= 0
         },
         isToday(dateObj) {
             return dateObj.date === this.now.getDate() &&
                 this.now.getMonth() + 1 === dateObj.month &&
                 this.now.getFullYear() === dateObj.year;
         },
-        setCalendar(year,month) {
-            this.calendarData = calendar(year, month - 1)
-            this.$emit('input', new Date(year, month - 1));
+        setCalendar(year, month) {
+            this.calendarData = calendar(year, month - 1);
+            this.selectDate({ year, month, date: this.curDate }, true);
         }
     },
     created() {
+        this.curDate = this.now.getDate();
         this.calendarData = calendar(this.curYear, this.curMonth - 1)
     }
 }
@@ -140,7 +238,27 @@ export default {
                 border: 1px solid transparent;
                 border-radius: 2px;
                 transition: all .2s;
-                &:first-child, &:first-child.current-month {
+                &.range-cell {
+                    border-radius: 0;
+                    position: relative;
+                    &:before {
+                        content: "";
+                        display: block;
+                        background: #ecf6fd;
+                        border-radius: 0;
+                        border: 0;
+                        position: absolute;
+                        top: -1px;
+                        bottom: -1px;
+                        left: -4px;
+                        right: -4px;
+                        z-index: 1;
+                        width: 100%;
+                        height: 100%;
+                        padding: 1px 5px;
+                    }
+                }
+                &:first-child, &:first-child.current-month, &:first-child.simple-date {
                     color: #FF6E40;
                 }
                 &.normal-date,
@@ -157,12 +275,24 @@ export default {
                     border-color: #4475E8;
                     color: #4475E8;
                 }
+                &.today {
+                    border-color: #4475E8;
+                    color: #4475E8;
+                    em {
+                        color: #4475E8;
+                    }
+                }
                 &.active {
                     color: #fff !important;
                     background-color: #4475E8;
+                    em {
+                        color: #fff !important;
+                    }
                 }
-                &.today {
-                    border-color: #4475E8;
+                em {
+                    font-style: normal;
+                    position: relative;
+                    z-index: 2;
                 }
             }
         }

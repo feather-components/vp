@@ -2,7 +2,7 @@
 <div class="cont">
     <p>DatePanel</p>
     <div class="date-panel">
-        <div>
+        <!-- <div>
             <p>英文头部（默认）</p>
             <div style="margin-bottom: 10px">
                 <select v-model="dp1.year" @change="select1">
@@ -29,7 +29,7 @@
             <div>当前日期：{{ date2.toLocaleDateString() }}</div>
         </div>
         <div>
-            <p>简式显示</p>
+            <p>简式显示（中文）</p>
             <div style="margin-bottom: 10px">
                 <select v-model="dp3.year" @change="select3">
                     <option v-for="i in 10" :value="2010 + i">{{ 2010 + i }}</option>
@@ -38,14 +38,22 @@
                     <option v-for="i in 12" :value="i">{{ i }}</option>
                 </select>
             </div>
-            <datepanel :show-simple="true" v-model="date3" ref="d3"></datepanel>
+            <datepanel :show-simple="true" v-model="date3" ref="d3" lang="Zh"></datepanel>
             <div>当前日期：{{ date3.toLocaleDateString() }}</div>
+        </div> -->
+        <div>
+            <p>选择范围</p>
+            <div style="margin-bottom: 39px">
+            </div>
+            <datepanel select-range="2017-10-09,2017-10-15"></datepanel>
         </div>
     </div>
 </div>
 </template>
 <script>
 import { Datepanel, Datepicker, Timepanel } from 'vpui'
+
+let d = new Date(), year = d.getFullYear(), month = d.getMonth() + 1;
 export default {
     name: 'datepicker-page',
     components: {
@@ -57,16 +65,16 @@ export default {
             date2: new Date,
             date3: new Date,
             dp1: {
-                year: 2017,
-                month: 9
+                year,
+                month
             },
             dp2: {
-                year: 2017,
-                month: 9
+                year,
+                month
             },
             dp3: {
-                year: 2017,
-                month: 9
+                year,
+                month
             }
         }
     },
@@ -101,7 +109,6 @@ export default {
             vertical-align: top;
             > p {
                 font-size: 14px;
-                padding: 0 8px;
             }
         }
     }
