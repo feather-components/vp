@@ -5,8 +5,5 @@
   "main": "src/index.js",
   "author": "babyclever",
   "clean": false,
-  "license": "ISC",
-  "dependencies": {
-    "vue": "feather-components/vue#production"
-  }
+  "license": "ISC"
 }
