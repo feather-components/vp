@@ -59,12 +59,12 @@ export default {
     display: flex;
     flex-wrap: wrap;
     &-item {
-        cursor: pointer;
         width: 33.33%;
         text-align: center;
         height: 45px;
         line-height: 45px;
         > span {
+            cursor: pointer;
             line-height: 1;
             padding: 4px 6px;
             border-radius: 3px;
