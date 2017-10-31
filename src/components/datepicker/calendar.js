@@ -11,6 +11,7 @@ function Date2Object(time) {
     return { year, month, date, day, hours, minutes, seconds, milliseconds }
 }
 
+// 将选择数据转化为对象
 function select2Range(select) {
     let start, stop;
     if(typeof select === 'string') {
@@ -88,7 +89,17 @@ function calendar() {
     return datesArr.slice(0,6);
 }
 
+function createYearArray(year) {
+    let start = year - year % 10, end = start + 10;
+    const arr = [];
+    for(let i = start - 1; i <= end; i++) {
+        arr.push(i);
+    }
+    return arr;
+}
+
 export {
     calendar,
-    select2Range
+    select2Range,
+    createYearArray
 }
