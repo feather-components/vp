@@ -89,11 +89,31 @@ function calendar() {
     return datesArr.slice(0,6);
 }
 
-function createYearArray(year) {
-    let start = year - year % 10, end = start + 10;
-    const arr = [];
-    for(let i = start - 1; i <= end; i++) {
+function createYearArray(obj) {
+    let arr = [], begin, end;
+    if(typeof obj === 'number') {
+        begin = obj - obj % 10;
+        end = begin + 10;
+    } else if(obj instanceof Array) {
+        begin = obj[0];
+        end = +obj[1] + 1;
+    } else {
+        let rg = obj.split('~');
+        begin = +rg[0];
+        end = +rg[1] + 1;
+    }
+    for(let i = begin - 1; i <= end; i++) {
         arr.push(i);
+    }
+    return arr;
+}
+
+function createYearRangArray(range) {
+    let c = +range.split('~')[0];
+    let begin = c - c % 100, end = begin + 100;
+    const arr = [];
+    for(let i = begin - 10; i <= end; i += 10) {
+        arr.push(i + '~' + (i + 9))
     }
     return arr;
 }
@@ -101,5 +121,6 @@ function createYearArray(year) {
 export {
     calendar,
     select2Range,
-    createYearArray
+    createYearArray,
+    createYearRangArray
 }

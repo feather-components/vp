@@ -14,25 +14,64 @@
         </span>
     </div>
     <div class="drop-box">
-        <yearpanel></yearpanel>
+        <div class="picker-header">
+            <span><i class="picker-icon left" @click="prev"></i></span>
+            <span><em v-if="showRange">{{ range }}</em><em v-else @click="openRangePanel">{{ year }}</em></span>
+            <span><i class="picker-icon right" @click="next"></i></span>
+        </div>
+        <yearrangepanel v-model="range" @change="changeYearRange" v-if="showRange"></yearrangepanel>
+        <yearpanel v-model="year" :range="range" v-else></yearpanel>
     </div>
 </div>
 </template>
 <script>
 import Yearpanel from './yearpanel.vue'
+import Yearrangepanel from './yearrangepanel.vue'
+
+let y = new Date().getFullYear(), begin = y - y % 10, end = begin + 9;
 export default {
     name: 'yearpicker',
     data() {
         return {
-            year: undefined
+            year: y,
+            range: begin + '~' + end,
+            showRange: false
         }
     },
     methods: {
         select() {
 
+        },
+        changeYearRange(obj) {
+            this.year = obj.begin + (this.year % 10)
+            this.showRange = false;
+        },
+        openRangePanel() {
+            let b = this.year - this.year % 10, e = b + 9;
+            this.range = b + '~' + e;
+            this.showRange = true;
+        },
+        prev() {
+            if(this.showRange) {
+                let rg = this.range.split('~'), begin = +rg[0] - 100, end = +rg[1] - 100;
+                this.range = begin + '~' + end;
+            } else {
+                this.year = this.year - 10;
+            }
+        },
+        next() {
+            if(this.showRange) {
+                let rg = this.range.split('~'), begin = +rg[0] + 100, end = +rg[1] + 100;
+                this.range = begin + '~' + end;
+            } else {
+                this.year = this.year + 10;
+            }
         }
     },
-    components: { Yearpanel }
+    mounted() {
+        // console.log(this.range);
+    },
+    components: { Yearpanel, Yearrangepanel }
 }
 </script>
 <style lang="less" scoped>
@@ -45,6 +84,69 @@ export default {
 ::-moz-placeholder {
     color: #ccc;
 }
+
+.drop-box {
+    .picker-header {
+        height: 30px;
+        line-height: 32px;
+        border-bottom: 1px solid #e1e1e1;
+        display: flex;
+        em {
+            font-style: normal;
+            // color: #4475E8;
+            cursor: pointer;
+        }
+        > span {
+            display: block;
+            flex: 1;
+            text-align: center;
+            position: relative;
+            &:nth-child(2) {
+                flex: 5;
+            }
+        }
+        .picker-icon {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-top: 7px solid transparent;
+            border-bottom: 7px solid transparent;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+            cursor: pointer;
+            &:after {
+                content: '';
+                display: block;
+                width: 0;
+                height: 0;
+                position: absolute;
+                top: -8px;
+                border-top: 8px solid transparent;
+                border-bottom: 8px solid transparent;
+                z-index: 1;
+            }
+            &.left {
+                border-right: 7px solid #999;
+                &:after {
+                    right: -9px;
+                    border-right: 8px solid white;
+                }
+            }
+            &.right {
+                border-left: 7px solid #999;
+                &:after {
+                    left: -9px;
+                    border-left: 8px solid white;
+                }
+            }
+        }
+    }
+}
+
 .input {
     position: relative;
     border: 1px solid #999;

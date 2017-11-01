@@ -1,62 +1,66 @@
 <template>
-<ul class="year">
-    <li class="year-item" v-for="(year, index) in years">
+<ul class="range">
+    <li class="range-item" v-for="(range, index) in ranges">
         <span @mouseenter="curIndex = index"
             @mouseleave="curIndex = undefined"
-            @click="check(year, index)"
+            @click="check(range, index)"
             :class="{ 
                 active: curIndex === index,
                 checked: checkIndex === index,
-                ignore: (index === 0 || index === years.length - 1)
-            }">{{ year }}</span>
+                ignore: (index === 0 || index === ranges.length - 1)
+            }">{{ range }}</span>
     </li>
 </ul>
 </template>
 <script>
-import { createYearArray } from './calendar'
+import { createYearRangArray } from './calendar'
+
+let year = new Date().getFullYear(), begin = year - year % 10, end = begin + 9;
+
 export default {
-    name: 'yearpanel',
+    name: 'yearrangepanel',
     props: {
         value: {
-            type: Number | String,
-            default: new Date().getFullYear()
-        },
-        range: {
-            type: String | Array
+            type: String,
+            default: begin + '~' + end
         }
     },
     data() {
         return {
-            years: createYearArray(this.range || this.value),
+            ranges: createYearRangArray(this.value),
             curIndex: undefined,
             checkIndex: undefined
         }
     },
     created() {
-        this.checkIndex = this.years.indexOf(this.value);
+        this.checkIndex = this.ranges.indexOf(this.value);
     },
     methods: {
-        check(year, index) {
-            if(index === 0 || index === this.years.length - 1) {
-                this.years = createYearArray(year);
+        check(range, index) {
+            if(index === 0 || index === this.ranges.length - 1) {
+                this.ranges = createYearRangArray(range);
             } else {
+                let rg = range.split('~'), b = +rg[0], e = +rg[1];
                 this.checkIndex = index;
+                this.$emit('change', {
+                    range,
+                    begin: b,
+                    end: e
+                })
             }
-            this.$emit('input', this.years[this.checkIndex]);
+            this.$emit('input', this.ranges[this.checkIndex]);
         }
     },
     watch: {
         value(c) {
-            this.years = createYearArray(c)
-        },
-        range(r) {
-            this.years = createYearArray(r)
+            this.ranges = createYearRangArray(c)
+            this.checkIndex = this.ranges.indexOf(c);
         }
     }
 }
 </script>
 <style lang="less" scoped>
-.year {
+.range {
     width: 216px;
     height: 180px;
     display: flex;
