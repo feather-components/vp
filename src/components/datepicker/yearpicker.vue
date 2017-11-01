@@ -1,9 +1,8 @@
 <template>
 <div class="yearpicker">
-    <div class="input">
+    <div class="input" @click="open = !open">
         <input type="text" readonly
             class="input-text"
-            @click="select"
             v-model="year"
             placeholder="Select year">
         <span class="picker-icon">
@@ -13,15 +12,17 @@
             </svg>
         </span>
     </div>
-    <div class="drop-box">
+    <transition name="dropDown">
+    <div class="drop-box" v-if="open">
         <div class="picker-header">
             <span><i class="picker-icon left" @click="prev"></i></span>
             <span><em v-if="showRange">{{ range }}</em><em v-else @click="openRangePanel">{{ year }}</em></span>
             <span><i class="picker-icon right" @click="next"></i></span>
         </div>
         <yearrangepanel v-model="range" @change="changeYearRange" v-if="showRange"></yearrangepanel>
-        <yearpanel v-model="year" :range="range" v-else></yearpanel>
+        <yearpanel v-model="year" :range="range" v-else @change="open = false"></yearpanel>
     </div>
+    </transition>
 </div>
 </template>
 <script>
@@ -33,15 +34,13 @@ export default {
     name: 'yearpicker',
     data() {
         return {
+            open: false,
             year: y,
             range: begin + '~' + end,
             showRange: false
         }
     },
     methods: {
-        select() {
-
-        },
         changeYearRange(obj) {
             this.year = obj.begin + (this.year % 10)
             this.showRange = false;
@@ -183,5 +182,19 @@ export default {
     box-shadow: 0 1px 6px rgba(0,0,0,.2);
     background-color: #fff;
     z-index: 10;
+}
+
+.dropDown {
+    &-enter-active,
+    &-leave-active {
+        transition: all .1s;
+        transform-origin: center top;
+    }
+    &-enter,
+    &-leave-to{
+        opacity: 0;
+        transform: scaleY(.8);
+        transform-origin: center top;
+    }
 }
 </style>

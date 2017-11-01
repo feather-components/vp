@@ -43,6 +43,7 @@ export default {
                 this.checkIndex = index;
             }
             this.$emit('input', this.years[this.checkIndex]);
+            this.$emit('change', this.years[this.checkIndex]);
         }
     },
     watch: {
