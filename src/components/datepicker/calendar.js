@@ -118,9 +118,15 @@ function createYearRangArray(range) {
     return arr;
 }
 
+function quantity(v) {
+    if(!v) { return ; }
+    return v < 10 ? '0' + v : v
+}
+
 export {
     calendar,
     select2Range,
     createYearArray,
-    createYearRangArray
+    createYearRangArray,
+    quantity
 }

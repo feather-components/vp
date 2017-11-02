@@ -41,9 +41,9 @@ export default {
                 this.years = createYearArray(year);
             } else {
                 this.checkIndex = index;
+                this.$emit('change', this.years[this.checkIndex]);
             }
             this.$emit('input', this.years[this.checkIndex]);
-            this.$emit('change', this.years[this.checkIndex]);
         }
     },
     watch: {

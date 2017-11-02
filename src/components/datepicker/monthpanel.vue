@@ -43,6 +43,7 @@ export default {
         check(month, index) {
             this.checkIndex = index;
             this.$emit('input', this.months.indexOf(month) + 1);
+            this.$emit('change', this.months.indexOf(month) + 1);
         }
     },
     watch: {

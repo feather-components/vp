@@ -16,7 +16,7 @@
     <div class="drop-box" v-if="open">
         <div class="picker-header">
             <span><i class="picker-icon left" @click="prev"></i></span>
-            <span><em v-if="showRange">{{ range }}</em><em v-else @click="openRangePanel">{{ year }}</em></span>
+            <span><em @click="openRangePanel">{{ range }}</em></span>
             <span><i class="picker-icon right" @click="next"></i></span>
         </div>
         <yearrangepanel v-model="range" @change="changeYearRange" v-if="showRange"></yearrangepanel>
@@ -32,6 +32,11 @@ import Yearrangepanel from './yearrangepanel.vue'
 let y = new Date().getFullYear(), begin = y - y % 10, end = begin + 9;
 export default {
     name: 'yearpicker',
+    props: {
+        value: {
+            type: Number | String | Object
+        }
+    },
     data() {
         return {
             open: false,
@@ -54,7 +59,10 @@ export default {
             if(this.showRange) {
                 let rg = this.range.split('~'), begin = +rg[0] - 100, end = +rg[1] - 100;
                 this.range = begin + '~' + end;
+                this.year = this.year - 100;
             } else {
+                let rg = this.range.split('~'), begin = +rg[0] - 10, end = +rg[1] - 10;
+                this.range = begin + '~' + end;
                 this.year = this.year - 10;
             }
         },
@@ -62,13 +70,13 @@ export default {
             if(this.showRange) {
                 let rg = this.range.split('~'), begin = +rg[0] + 100, end = +rg[1] + 100;
                 this.range = begin + '~' + end;
+                this.year = this.year + 100;
             } else {
+                let rg = this.range.split('~'), begin = +rg[0] + 10, end = +rg[1] + 10;
+                this.range = begin + '~' + end;
                 this.year = this.year + 10;
             }
         }
-    },
-    mounted() {
-        // console.log(this.range);
     },
     components: { Yearpanel, Yearrangepanel }
 }
