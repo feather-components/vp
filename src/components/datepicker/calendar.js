@@ -11,6 +11,7 @@ function Date2Object(time) {
     return { year, month, date, day, hours, minutes, seconds, milliseconds }
 }
 
+// 将选择数据转化为对象
 function select2Range(select) {
     let start, stop;
     if(typeof select === 'string') {
@@ -88,7 +89,44 @@ function calendar() {
     return datesArr.slice(0,6);
 }
 
+function createYearArray(obj) {
+    let arr = [], begin, end;
+    if(typeof obj === 'number') {
+        begin = obj - obj % 10;
+        end = begin + 10;
+    } else if(obj instanceof Array) {
+        begin = obj[0];
+        end = +obj[1] + 1;
+    } else {
+        let rg = obj.split('~');
+        begin = +rg[0];
+        end = +rg[1] + 1;
+    }
+    for(let i = begin - 1; i <= end; i++) {
+        arr.push(i);
+    }
+    return arr;
+}
+
+function createYearRangArray(range) {
+    let c = +range.split('~')[0];
+    let begin = c - c % 100, end = begin + 100;
+    const arr = [];
+    for(let i = begin - 10; i <= end; i += 10) {
+        arr.push(i + '~' + (i + 9))
+    }
+    return arr;
+}
+
+function quantity(v) {
+    if(!v) { return ; }
+    return v < 10 ? '0' + v : v
+}
+
 export {
     calendar,
-    select2Range
+    select2Range,
+    createYearArray,
+    createYearRangArray,
+    quantity
 }
