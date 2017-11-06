@@ -97,7 +97,7 @@
         font-size: 12px;
         font-family: Arial, "Microsoft Yahei", "Helvetica Neue", "Hiragino Sans GB", sans-serif;
         height: 28px;
-        min-width: 72px;
+        min-width: 60px;
         cursor: pointer;
         outline: none;
         border: 1px solid #5986e1;
@@ -106,6 +106,7 @@
         background-color: #5986e1;
         -webkit-text-stroke-width: 0;
         box-sizing: border-box;
+        line-height: 1px;
     }
 
     .vp-btn:last-child,
@@ -183,7 +184,7 @@
     .vp-btn-small-o-highlight {
         height: 24px;
         font-size: 12px;
-        min-width: 66px;
+        min-width: 48px;
     }
 
     .vp-btn-small:before {
