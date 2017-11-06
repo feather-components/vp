@@ -122,6 +122,7 @@ export default {
                 } else {
                     this.mulOpts = []
                 }
+                this.val = c;
             } else {
                 let curOption = this.options.find(item => item.value === this.value);
                 this.text = curOption ? curOption.text : undefined;
