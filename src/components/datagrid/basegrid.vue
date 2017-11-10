@@ -44,7 +44,7 @@
                                 <label :for="uid(col,i)">{{col.on || 'ON'}}</label>
                             </span>
                             <a v-else-if="isType('action',col,true)" v-action="{act,item}" v-for="(act,key) in col.actions">{{key}}</a>
-                            <span v-else>{{cellFormat(item, col.key)}}</span>
+                            <span v-else v-html="cellFormat(item, col.key)"></span>
                         </slot>
                     </td>
                 </tr>

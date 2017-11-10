@@ -32,6 +32,6 @@ export default {
 		};
 	},
 	unbind (el) {
-		el.style.position = 'inherit';
+		// el.style.position = 'inherit';
 	}
 }

@@ -153,6 +153,7 @@ class Validator {
         if (!vm.$vform[group])
             vm.$vform[group] = {
                 checkAll: this.checkAll,
+                resetStyle : this.resetStyle,
                 fields: []
             }
         vm.$vform[group].fields.push({
@@ -228,6 +229,12 @@ class Validator {
             err = err.concat(check(item.el, item.vm, item.target, item.rules, item.field, item.tag, false));
         })
         return err;
+    }
+
+    resetStyle() {
+        this.fields.forEach(function (item, index, arr) {
+            removeErrorStyle(item.el);
+        });
     }
 
     checkOne() {
