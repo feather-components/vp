@@ -17,8 +17,8 @@
         border-radius: 4px;
         padding: 15px;
         padding-right: 25px;
-        color: #333;
-        box-shadow: 0 8px 8px 0;
+        color: #ccc;
+        box-shadow: 0 2px 8px 0;
     }
 
     .vp-toast-content{
