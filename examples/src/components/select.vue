@@ -30,6 +30,10 @@
         <vp-select width="350" type="multiple" v-model="val6" :options="list6" :disabled="true" @select="function(o){ option6 = o }"></vp-select>
         <span>当前选项值：{{ val6 }}， 选择项：{{ option6 }}</span>
     </div>
+    <div>
+        <vp-select width="350" :options="list7" v-model="val7" type="multiple"></vp-select>
+        <button @click="changeVal">change</button>
+    </div>
 </div>
 </template>
 <script>
@@ -65,6 +69,16 @@ export default {
             val6: [1,3],
             option6: {},
             list6: [...arr],
+
+            val7: [],
+            option7: {},
+            list7: [...arr]
+        }
+    },
+    methods: {
+        changeVal() {
+            this.val7 = [2];
+            // console.log(this.val7);
         }
     }
 }

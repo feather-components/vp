@@ -114,6 +114,22 @@ export default {
         let curOption = this.options.find(item => item.value === this.value);
         this.select(curOption);
     },
+    watch: {
+        value(c,o) {
+            if(this.type === 'multiple' && Array.isArray(c)) {
+                if(c.length) {
+                    this.mulOpts = this.options.filter(item => c.indexOf(item.value) > -1);
+                } else {
+                    this.mulOpts = []
+                }
+                this.val = c;
+            } else {
+                let curOption = this.options.find(item => item.value === this.value);
+                this.text = curOption ? curOption.text : undefined;
+                this.val = c;
+            }
+        }
+    },
     directives: {
         clickoutside: Clickoutside
     },
