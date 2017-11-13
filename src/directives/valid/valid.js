@@ -114,6 +114,14 @@ function insertAfter(newElement, targetElement) {
     };
 }
 
+function detachField(vm, group, el) {
+    if (vm.$vform) {
+        vm.$vform[group].fields = vm.$vform[group].fields.filter(function(e) {
+            return e.el != el;
+        })
+    }
+}
+
 class Validator {
     constructor(el, binding, vnode) {
         var vm = vnode.context;
