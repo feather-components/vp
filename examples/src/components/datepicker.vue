@@ -9,15 +9,41 @@
             </div>
 
             <br/>
-            <p>MonthPicker</p>
+            <p>MonthPicker 格式中间的分隔符可以自定义</p>
             <div class="panel">
-                <monthpicker></monthpicker>
+                <div>
+                    format: YYYY-MM
+                    <monthpicker></monthpicker>
+                </div>
+                <div>
+                    format:YYYY~MM
+                    <monthpicker format="YYYY~MM"></monthpicker>
+                </div>
+                <div>
+                    format:YYYY/MM
+                    <monthpicker format="YYYY/MM"></monthpicker>
+                </div>
+                <div>
+                    format:YYYY.MM
+                    <monthpicker format="YYYY.MM"></monthpicker>
+                </div>
+                <div>
+                    中文
+                    <monthpicker lang="zh"></monthpicker>
+                </div>
             </div>
 
             <br/>
             <p>DatePicker</p>
             <div class="panel">
-                <datepicker></datepicker>
+                <div>
+                    默认 format:YYYY-MM-DD
+                    <datepicker></datepicker>
+                </div>
+                <div>
+                    中文 format:YYYY/MM/DD
+                    <datepicker lang="zh" format="YYYY/MM/DD"></datepicker>
+                </div>
             </div>
         </div>
     </section>
@@ -36,7 +62,7 @@
                 </div>
                 <div>
                     <p>月份（中文）&nbsp;&nbsp;当前月份：{{ month2 }}</p>
-                    <monthpanel v-model="month2" type="zh"></monthpanel>
+                    <monthpanel v-model="month2" lang="zh"></monthpanel>
                 </div>
             </div>
 
@@ -66,7 +92,7 @@
                             <option v-for="i in 12" :value="i">{{ i }}</option>
                         </select>
                     </div>
-                    <datepanel lang="Zh" v-model="date2" ref="d2"></datepanel>
+                    <datepanel lang="zh" v-model="date2" ref="d2"></datepanel>
                     <div>当前日期：{{ date2.toLocaleDateString() }}</div>
                 </div>
                 <div>
@@ -79,7 +105,7 @@
                             <option v-for="i in 12" :value="i">{{ i }}</option>
                         </select>
                     </div>
-                    <datepanel :show-simple="true" v-model="date3" ref="d3" lang="Zh"></datepanel>
+                    <datepanel :show-simple="true" v-model="date3" ref="d3" lang="zh"></datepanel>
                     <div>当前日期：{{ date3.toLocaleDateString() }}</div>
                 </div>
                 <div>

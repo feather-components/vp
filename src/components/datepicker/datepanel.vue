@@ -33,8 +33,8 @@
 import { calendar, select2Range } from './calendar.js'
 
 const langArr = {
-    En: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-    Zh: ['日', '一', '二', '三', '四', '五', '六']
+    en: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+    zh: ['日', '一', '二', '三', '四', '五', '六']
 }
 
 export default {
@@ -50,7 +50,7 @@ export default {
         },
         lang: {
             type: String,
-            default: 'En' // En Zh
+            default: 'en' // en zh
         },
         showSimple: {
             type: Boolean,
@@ -79,7 +79,7 @@ export default {
     },
     computed: {
         days() {
-            return langArr[this.lang] || langArr['En']
+            return langArr[this.lang] || langArr['en']
         },
         curYear(){
             return isNaN(this.year) ? new Date().getFullYear() : this.year
@@ -100,7 +100,7 @@ export default {
                 this.setRangeAnchor(dateObj);
             } else {
                 this.setActiveDate(dateObj);
-                this.$emit('select', dateObj);
+                this.$emit('change', dateObj);
                 this.$emit('input', new Date(dateObj.year, dateObj.month - 1, dateObj.date));
             }
         },

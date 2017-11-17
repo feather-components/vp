@@ -24,14 +24,14 @@ export default {
             type: Number | String,
             default: new Date().getMonth()
         },
-        type: {
+        lang: {
             type: String,
             default: 'en'
         }
     },
     data() {
         return {
-            months: MONTH[this.type],
+            months: ['en','zh'].indexOf(this.lang) > -1 ? MONTH[this.lang] : MONTH['en'],
             curIndex: undefined,
             checkIndex: undefined
         }

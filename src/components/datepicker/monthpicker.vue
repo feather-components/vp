@@ -1,5 +1,5 @@
 <template>
-<div class="yearpicker">
+<div class="monthpicker">
     <div class="input" @click="open = !open">
         <input type="text" readonly
             class="input-text"
@@ -25,7 +25,7 @@
             <yearpanel v-model="year" :range="range" v-else @change="showYear = false"></yearpanel>
         </template>
         <template v-else>
-            <monthpanel :type="type" v-model="month" @change="changeMonth"></monthpanel>
+            <monthpanel :lang="lang" v-model="month" @change="changeMonth"></monthpanel>
         </template>
     </div>
     </transition>
@@ -56,7 +56,7 @@ export default {
                 }
             }
         },
-        type: {
+        lang: {
             type: String,
             default: 'en'
         },
@@ -77,10 +77,10 @@ export default {
     },
     computed: {
         monthArr() {
-            return MONTH[this.type]
+            return ['en','zh'].indexOf(this.lang) > -1 ? MONTH[this.lang] : MONTH['en']
         },
         ym() {
-            return this.year + '-' + quantity(this.month)
+            return this.format.replace('YYYY', this.year).replace('MM',quantity(this.month))
         }
     },
     created() {
@@ -139,7 +139,13 @@ export default {
         },
         changeMonth() {
             this.open = false;
-            typeof this.value === 'string' ? this.$emit('input', this.ym) : this.$emit('input', { year: this.year, month: this.month })
+            if(typeof this.value === 'string') {
+                this.$emit('input', this.ym)
+                this.$emit('change', this.ym)
+            } else {
+                this.$emit('input', { year: this.year, month: this.month })
+                this.$emit('change', { year: this.year, month: this.month })
+            }
         }
     },
     components: { Monthpanel, Yearpanel, Yearrangepanel }
@@ -245,7 +251,7 @@ export default {
     }
 }
 
-.yearpicker {
+.monthpicker {
     position: relative;
 }
 .drop-box {
