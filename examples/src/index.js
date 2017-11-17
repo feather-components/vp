@@ -7,6 +7,7 @@ import Button from './components/button.vue';
 import Radio from './components/radio.vue';
 import Checkbox from './components/checkbox.vue';
 import Select from './components/select.vue';
+import Dialog from './components/dialog.vue';
 
 import Tab from './components/tab.vue';
 import Pager from './components/pager.vue';
@@ -38,6 +39,7 @@ const com = [
     { path: '/components/radio', component: Radio, text: 'Radio' },
     { path: '/components/checkbox', component: Checkbox, text: 'Checkbox' },
     { path: '/components/select', component: Select, text: 'Select'},
+    { path: '/components/dialog', component: Dialog, text: 'Dialog'},
 
     // groups
     { path: '/components/pager', component: Pager, text: 'Pager' },
