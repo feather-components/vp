@@ -32,9 +32,11 @@
         },
         methods: {
             showDefaultDialog() {
+                Mask.show();
                 this.$refs.defaultDialog.open();
             },
             showCustomDialog() {
+                Mask.show();
                 this.$refs.customDialog.open();
             },
             ok() {
@@ -42,6 +44,7 @@
             },
             cancel() {
                 alert('cancel');
+                Mask.hide();
                 this.$refs.customDialog.close();
             }
         }

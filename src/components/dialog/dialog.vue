@@ -1,5 +1,6 @@
 <template>
     <overlay class="vp-dialog" position="center" v-show="visibility">
+        <i class="vp-dialog-close-icon" @click="close"></i>
         <div class="vp-dialog-title">
             <div class="vp-dialog-title-text">
                 <slot name="title">系统提示！</slot>
@@ -44,6 +45,11 @@
         },
         methods: {
             buttonClick(){
+                vpMask.hide();
+                this.visibility = false;
+            },
+            close(){
+                vpMask.hide();
                 this.visibility = false;
             }
         },
@@ -81,6 +87,38 @@
         padding: 24px;
         color: #333;
         box-shadow: 0 8px 8px 0;
+        z-index: 10001;
+    }
+    .vp-dialog-close-icon{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: block;
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+    }
+
+    .vp-dialog-close-icon::before,
+    .vp-dialog-close-icon::after{
+        position: absolute;
+        top: 12px;
+        right: 2px;
+        display: block;
+        content: '';
+        height: 0;
+        width: 20px;
+        border-top: 2px solid #999;
+    }
+
+    .vp-dialog-close-icon::before{
+        -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
+    }
+
+    .vp-dialog-close-icon::after{
+        -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
     }
 
     .vp-dialog-title{
