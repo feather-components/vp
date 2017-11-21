@@ -6,9 +6,20 @@
         @mouseleave="curIndex = undefined"
         @click="check(item,index)"
         :class="{ checked: index === checkIndex, active: index === curIndex }">{{ item | dbv }}</li>
+    <li class="scroll-item no-item" :style="{ height: '152px' }"> </li>
 </ul>
 </template>
 <script>
+function throttle(func, wait) {
+    let timer = null;
+    return function () {
+        let args = arguments;
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+            return typeof func === 'function' && func.apply(this, args);
+        }, wait);
+    }
+}
 export default {
     name: 'scrollpicker',
     props: {
@@ -24,7 +35,8 @@ export default {
         return {
             items: this.list,
             curIndex: undefined,
-            checkIndex: this.list.indexOf(this.value)
+            checkIndex: this.list.indexOf(this.value),
+            speed: 7
         }
     },
     methods: {
@@ -67,6 +79,9 @@ export default {
         }
         &.checked {
             color: #4475E8;
+        }
+        &.no-item {
+            cursor: default;
         }
     }
 }

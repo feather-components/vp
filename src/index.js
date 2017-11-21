@@ -6,7 +6,7 @@ import Mask from './components/mask';
 import Alert from './components/alert';
 import Picker from './components/picker';
 import CityPicker from './components/citypicker';
-import { Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker } from './components/datepicker';
+import { Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker } from './components/datepicker';
 import Checkbox from './components/checkbox';
 import Radio from './components/radio';
 import { Tabs, Tab } from './components/tab';
@@ -29,7 +29,7 @@ import ProgressBar from './components/progressbar';
 import Vue from 'vue';
 
 var Components = [
-    Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select, Dialog, Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, WaterFall,Uploader,ProgressBar,Timeline
+    Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select, Dialog, Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker, WaterFall,Uploader,ProgressBar,Timeline
 ];
 
 var Modules = [
@@ -85,6 +85,7 @@ export {
     Yearpicker,
     Monthpicker,
     Datepicker,
+    Datetimepicker,
     Toast,
     WaterFall,
     Uploader,

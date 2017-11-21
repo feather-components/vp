@@ -57,13 +57,22 @@
                     <datepicker lang="zh"></datepicker>
                 </div>
             </div>
+
+            <br/>
+            <p>Datetimepicker 格式中间的分隔符可以自定义</p>
+            <div class="panel">
+                <div>
+                    默认 format:YYYY-MM-DD hh:mm:ss
+                    <datetimepicker></datetimepicker>
+                </div>
+            </div>
         </div>
     </section>
     <section>
         <strong>Parts</strong>
         <div class="cont cont-panel">
             <p>Yearpanel & Monthpanel</p>
-            <div class="panel">
+            <div class="panel" v-if="false">
                 <div>
                     <p>年份&nbsp;&nbsp;当前年份：{{ year }}</p>
                     <yearpanel v-model="year"></yearpanel>
@@ -80,7 +89,7 @@
 
             <br/>
             <p>Datepanel</p>
-            <div class="panel">
+            <div class="panel" v-if="false">
                 <div>
                     <p>英文头部（默认）</p>
                     <div style="margin-bottom: 10px">
@@ -132,12 +141,16 @@
             <p>Timepanel</p>
             <div class="panel">
                 <div>
-                    <p>时分&nbsp;&nbsp;当前时间：{{ time1 }}</p>
+                    <p>时分&nbsp;&nbsp;{{ time1 }}</p>
                     <timepanel v-model="time1"></timepanel>
                 </div>
                 <div>
-                    <p>时分秒&nbsp;&nbsp;当前时间：{{ time2 }}</p>
+                    <p>时分秒&nbsp;&nbsp;{{ time2 }}</p>
                     <timepanel v-model="time2" :hasSeconds="true"></timepanel>
+                </div>
+                <div>
+                    <p>时分秒&nbsp;&nbsp;当前时间：{{ time3 }}</p>
+                    <timepanel v-model="time3" :hasSeconds="true"></timepanel>
                 </div>
             </div>
         </div>
@@ -145,7 +158,7 @@
 </div>
 </template>
 <script>
-import { Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker } from 'vpui'
+import { Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker } from 'vpui'
 
 const dbv = v => v < 10 ? ''.concat(0,v) : v;
 
@@ -153,7 +166,7 @@ let d = new Date(), year = d.getFullYear(), month = d.getMonth() + 1, hours = d.
 export default {
     name: 'datepicker-page',
     components: {
-        Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker
+        Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker
     },
     data() {
         return {
@@ -177,6 +190,7 @@ export default {
             month2: 10,
             time1: dbv(hours) + ':' + dbv(minutes),
             time2: dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
+            time3: dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
         }
     },
     computed: {
@@ -195,8 +209,7 @@ export default {
     mounted() {
         setInterval(() => {
             let dd = new Date(), h = dd.getHours(), m = dd.getMinutes(), s = dd.getSeconds(), ms = dd.getMilliseconds();
-            this.time1 = dbv(h) + ':' + dbv(m);
-            this.time2 = dbv(h) + ':' + dbv(m) + ':' + dbv(s);
+            this.time3 = dbv(h) + ':' + dbv(m) + ':' + dbv(s);
         }, 1000);
     }
 }

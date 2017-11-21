@@ -5,10 +5,12 @@ const MONTH = {
 
 export default {
     created() {
-        document.addEventListener('click', e => {
-            if(this.$el.compareDocumentPosition(e.target) < 20) {
-                this.open = false;
-            }
+        this.$nextTick(() => {
+            document.addEventListener('click', e => {
+                if(this.$el && this.$el.compareDocumentPosition(e.target) < 20) {
+                    this.open = false;
+                }
+            });
         });
     },
     computed: {
