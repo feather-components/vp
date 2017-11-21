@@ -3,13 +3,13 @@
     <section>
         <strong>Pickers</strong>
         <div class="cont">
-            <p>YearPicker</p>
+            <p>Yearpicker</p>
             <div class="panel">
                 <yearpicker></yearpicker>
             </div>
 
             <br/>
-            <p>MonthPicker 格式中间的分隔符可以自定义</p>
+            <p>Monthpicker 格式中间的分隔符可以自定义</p>
             <div class="panel">
                 <div>
                     format: YYYY-MM
@@ -34,23 +34,35 @@
             </div>
 
             <br/>
-            <p>DatePicker</p>
+            <p>Datepicker 格式中间的分隔符可以自定义</p>
             <div class="panel">
                 <div>
                     默认 format:YYYY-MM-DD
                     <datepicker></datepicker>
                 </div>
                 <div>
-                    中文 format:YYYY/MM/DD
-                    <datepicker lang="zh" format="YYYY/MM/DD"></datepicker>
+                    format:YYYY~MM~DD
+                    <datepicker format="YYYY~MM~DD"></datepicker>
+                </div>
+                <div>
+                    format:YYYY/MM/DD
+                    <datepicker format="YYYY/MM/DD"></datepicker>
+                </div>
+                <div>
+                    format:YYYY.MM.DD
+                    <datepicker format="YYYY.MM.DD"></datepicker>
+                </div>
+                <div>
+                    中文
+                    <datepicker lang="zh"></datepicker>
                 </div>
             </div>
         </div>
     </section>
     <section>
         <strong>Parts</strong>
-        <div class="cont">
-            <p>YearPanel & MonthPanel</p>
+        <div class="cont cont-panel">
+            <p>Yearpanel & Monthpanel</p>
             <div class="panel">
                 <div>
                     <p>年份&nbsp;&nbsp;当前年份：{{ year }}</p>
@@ -67,7 +79,7 @@
             </div>
 
             <br/>
-            <p>DatePanel</p>
+            <p>Datepanel</p>
             <div class="panel">
                 <div>
                     <p>英文头部（默认）</p>
@@ -117,7 +129,7 @@
             </div>
 
             <br/>
-            <p>TimePanel</p>
+            <p>Timepanel</p>
             <div class="panel">
                 <div>
                     <p>时分&nbsp;&nbsp;当前时间：{{ time1 }}</p>
@@ -210,10 +222,15 @@ section {
             font-size: 12px;
             display: inline-block;
             margin-right: 20px;
-            vertical-align: top;
+            vertical-align: bottom;
             > p {
                 font-size: 14px;
             }
+        }
+    }
+    &.cont-panel {
+        .panel > div {
+            vertical-align: top;
         }
     }
     select {
