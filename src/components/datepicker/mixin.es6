@@ -4,7 +4,7 @@ const MONTH = {
 };
 
 export default {
-    created() {
+    /*created() {
         document.addEventListener('click', e => {
             if(this.$el.compareDocumentPosition(e.target) < 20) {
                 this.open = false;
@@ -15,5 +15,5 @@ export default {
         monthArr() {
             return ['en','zh'].indexOf(this.lang) > -1 ? MONTH[this.lang] : MONTH['en']
         }
-    }
+    }*/
 }

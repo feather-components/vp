@@ -34,7 +34,7 @@ import mixin from './mixin.es6'
 let y = new Date().getFullYear(), begin = y - y % 10, end = begin + 9;
 export default {
     name: 'yearpicker',
-    mixins: [mixin],
+    //mixins: [mixin],
     props: {
         value: {
             type: Number | String | Object
