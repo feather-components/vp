@@ -42,15 +42,12 @@ import Yearpanel from './yearpanel.vue'
 import Yearrangepanel from './yearrangepanel.vue'
 
 import { quantity } from './calendar'
-
-const MONTH = {
-    en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    zh: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一', '十二']
-};
+import mixin from './mixin.es6'
 
 let _d = new Date(), y = _d.getFullYear(), m = _d.getMonth() + 1, d = _d.getDate(), begin = y - y % 10, end = begin + 9;
 export default {
     name: 'datepicker',
+    mixins: [mixin],
     props: {
         value: {
             type: String | Object,
@@ -85,9 +82,6 @@ export default {
         }
     },
     computed: {
-        monthArr() {
-            return ['en','zh'].indexOf(this.lang) > -1 ? MONTH[this.lang] : MONTH['en']
-        },
         ymd() {
             return this.format
                 .replace('YYYY', this.year)
