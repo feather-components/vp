@@ -72,7 +72,7 @@
         <strong>Parts</strong>
         <div class="cont cont-panel">
             <p>Yearpanel & Monthpanel</p>
-            <div class="panel" v-if="false">
+            <div class="panel">
                 <div>
                     <p>年份&nbsp;&nbsp;当前年份：{{ year }}</p>
                     <yearpanel v-model="year"></yearpanel>
@@ -89,7 +89,7 @@
 
             <br/>
             <p>Datepanel</p>
-            <div class="panel" v-if="false">
+            <div class="panel">
                 <div>
                     <p>英文头部（默认）</p>
                     <div style="margin-bottom: 10px">
