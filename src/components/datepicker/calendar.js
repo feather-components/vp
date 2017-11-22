@@ -119,7 +119,7 @@ function createYearRangArray(range) {
 }
 
 function quantity(v) {
-    if(!v) { return ; }
+    if(v === undefined || v === null || v < 0) { return ; }
     return v < 10 ? '0' + v : v
 }
 

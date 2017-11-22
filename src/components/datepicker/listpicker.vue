@@ -6,7 +6,7 @@
         @mouseleave="curIndex = undefined"
         @click="check(item,index)"
         :class="{ checked: index === checkIndex, active: index === curIndex }">{{ item | dbv }}</li>
-    <li class="scroll-item no-item" :style="{ height: '152px' }"> </li>
+    <li class="scroll-item no-item" :style="{ height: '200px' }"> </li>
 </ul>
 </template>
 <script>
@@ -65,7 +65,7 @@ export default {
 .scroll {
     width: 108px;
     background-color: #fff;
-    height: 180px;
+    height: 228px;
     overflow: auto;
     display: inline-block;
     &-item {

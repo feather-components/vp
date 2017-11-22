@@ -82,10 +82,10 @@ export default {
             return langArr[this.lang] || langArr['en']
         },
         curYear(){
-            return isNaN(this.year) ? new Date().getFullYear() : this.year
+            return isNaN(this.year) ? this.value.getFullYear() : this.year
         },
         curMonth(){
-            return isNaN(this.month) ? (new Date().getMonth() + 1) : this.month
+            return isNaN(this.month) ? this.value.getMonth() + 1 : this.month
         },
         now() {
             let td = new Date(this.today), cdate = td instanceof Date ? td : new Date();
@@ -99,9 +99,12 @@ export default {
             if(this.selectRange) {
                 this.setRangeAnchor(dateObj);
             } else {
+            // console.log(dateObj.year, dateObj.month, dateObj.date)
                 this.setActiveDate(dateObj);
                 this.$emit('change', dateObj);
-                this.$emit('input', new Date(dateObj.year, dateObj.month - 1, dateObj.date));
+                let { year, month, date } = dateObj;
+                let d = new Date, h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
+                this.$emit('input', new Date(year, month - 1, date, h, m, s));
             }
         },
         setActiveDate(obj) {
@@ -181,7 +184,6 @@ export default {
                 })
                 this.calendarData = calendar;
             }
-            // console.log(obj);
         },
         compareItem(o1,o2) {
             let d1 = new Date(o1.year, o1.month - 1, o1.date), d2 = new Date(o2.year, o2.month - 1, o2.date);
@@ -192,14 +194,16 @@ export default {
                 this.now.getMonth() + 1 === dateObj.month &&
                 this.now.getFullYear() === dateObj.year;
         },
-        setCalendar(year, month) {
+        /*setCalendar(year, month) {
             this.calendarData = calendar(year, month - 1);
             this.selectDate({ year, month, date: this.curDate }, true);
-        }
+        }*/
     },
     created() {
-        this.curDate = this.now.getDate();
+        this.curDate = this.value.getDate() || this.now.getDate();
         this.calendarData = calendar(this.curYear, this.curMonth - 1)
+        console.log(this.calendarData)
+        this.selectDate({year: this.curYear, month: this.curMonth, date: this.curDate, active: true})
     }
 }
 </script>

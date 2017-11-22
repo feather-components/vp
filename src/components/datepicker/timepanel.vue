@@ -34,18 +34,29 @@ export default {
     },
     methods: {
         change() {
-            let second = this.hasSeconds ? ':' + dbv(this.second) : '';
-            this.$emit('input', dbv(this.hour) + ':' + dbv(this.minute) + second);
+            let second = this.hasSeconds ? ':' + dbv(this.second) : '', time;
+            if(typeof this.value === 'string') {
+                time = dbv(this.hour) + ':' + dbv(this.minute) + second;
+            } else {
+                time = new Date((new Date).toLocaleDateString() + ' ' + this.hour + ':' + this.minute + ':' + this.second);
+            }
+            this.$emit('input', time);
+            this.$emit('change', time);
         },
         setTime() {
             let v = this.value, hms;
-            if(v && typeof v === 'string') {
+            if(!v) return ;
+            if(typeof v === 'string') {
                 hms = v.split(':');
                 if(hms.length) {
                     this.hour = +hms[0]
                     this.minute = +hms[1]
                     hms.length > 2 && (this.second = +hms[2])
                 }
+            } else if(v instanceof Date) {
+                this.hour = v.getHours()
+                this.minute = v.getMinutes()
+                this.second = v.getSeconds()
             }
         }
     },

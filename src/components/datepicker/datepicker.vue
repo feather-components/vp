@@ -284,6 +284,7 @@ export default {
 }
 .date-panel {
     padding: 10px;
+    box-sizing: border-box;
 }
 .drop-box {
     position: absolute;

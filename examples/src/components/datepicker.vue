@@ -3,11 +3,11 @@
     <section>
         <strong>Pickers</strong>
         <div class="cont">
-            <p>Yearpicker</p>
+            <!-- <p>Yearpicker</p>
             <div class="panel">
                 <yearpicker></yearpicker>
             </div>
-
+            
             <br/>
             <p>Monthpicker 格式中间的分隔符可以自定义</p>
             <div class="panel">
@@ -32,7 +32,7 @@
                     <monthpicker lang="zh"></monthpicker>
                 </div>
             </div>
-
+            
             <br/>
             <p>Datepicker 格式中间的分隔符可以自定义</p>
             <div class="panel">
@@ -56,19 +56,23 @@
                     中文
                     <datepicker lang="zh"></datepicker>
                 </div>
-            </div>
+            </div> -->
 
             <br/>
             <p>Datetimepicker 格式中间的分隔符可以自定义</p>
             <div class="panel">
                 <div>
-                    默认 format:YYYY-MM-DD hh:mm:ss
-                    <datetimepicker></datetimepicker>
+                    默认 format:YYYY-MM-DD hh:mm
+                    <datetimepicker format="YYYY-MM-DD hh:mm:ss" v-model="datetime1"></datetimepicker>
                 </div>
+                <!-- <div>
+                    format:YYYY-MM-DD hh:mm:ss
+                    <datetimepicker format="YYYY-MM-DD hh:mm:ss" :has-seconds="true"></datetimepicker>
+                </div> -->
             </div>
         </div>
     </section>
-    <section>
+    <!-- <section>
         <strong>Parts</strong>
         <div class="cont cont-panel">
             <p>Yearpanel & Monthpanel</p>
@@ -154,7 +158,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 </div>
 </template>
 <script>
@@ -162,7 +166,7 @@ import { Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, D
 
 const dbv = v => v < 10 ? ''.concat(0,v) : v;
 
-let d = new Date(), year = d.getFullYear(), month = d.getMonth() + 1, hours = d.getHours(), minutes = d.getMinutes(), seconds = d.getSeconds(), ms = d.getMilliseconds();
+let d = new Date(), year = d.getFullYear(), month = d.getMonth() + 1, date = d.getDate(), hours = d.getHours(), minutes = d.getMinutes(), seconds = d.getSeconds(), ms = d.getMilliseconds();
 export default {
     name: 'datepicker-page',
     components: {
@@ -191,6 +195,7 @@ export default {
             time1: dbv(hours) + ':' + dbv(minutes),
             time2: dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
             time3: dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
+            datetime1: year + '-' + month + '-' + date + ' ' + dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
         }
     },
     computed: {

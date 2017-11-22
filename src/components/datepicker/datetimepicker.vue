@@ -3,7 +3,7 @@
     <div class="input" @click="open = !open">
         <input type="text" readonly
             class="input-text"
-            v-model="ymd"
+            v-model="ymdhms"
             placeholder="Select month">
         <span class="picker-icon">
             <svg t="1509440995295" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4681" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22">
@@ -14,28 +14,43 @@
     </div>
     <transition name="dropDown">
     <div class="drop-box" v-if="open">
-        <div class="picker-header">
-            <span><i class="picker-icon left" @click="prev"></i></span>
-            <span v-if="showRange || showYear" @click="showRange = true"><em>{{ range }}</em></span>
-            <span v-else-if="showMonth" @click="openRangePanel"><em>{{ year }}</em></span>
-            <span v-else @click="showMonth = true"><em>{{ monthArr[month - 1] }} {{ year }}</em></span>
-            <span><i class="picker-icon right" @click="next"></i></span>
+        <div class="date" v-if="showDatePanel">
+            <div class="picker-header">
+                <span><i class="picker-icon left" @click="prev"></i></span>
+                <span v-if="showRange || showYear" @click="showRange = true"><em>{{ range }}</em></span>
+                <span v-else-if="showMonth" @click="openRangePanel"><em>{{ year }}</em></span>
+                <span v-else @click="showMonth = true"><em>{{ monthArr[month - 1] }} {{ year }}</em></span>
+                <span><i class="picker-icon right" @click="next"></i></span>
+            </div>
+            <template v-if="showYear">
+                <yearrangepanel v-model="range" @change="changeYearRange" v-if="showRange"></yearrangepanel>
+                <yearpanel v-model="year" :range="range" v-else @change="showYear = false"></yearpanel>
+            </template>
+            <template v-else-if="showMonth">
+                <monthpanel :lang="lang" v-model="month" @change="showMonth = false"></monthpanel>
+            </template>
+            <template v-else>
+                <datepanel class="date-panel" :lang="lang" v-model="DATE" @change="changeDate"></datepanel>
+            </template>
+            <div class="footer">
+                <span @click="showDatePanel = false">{{ lang === 'zh' ? '选择时间' : 'Select Time' }}</span><button @click="OK">{{ lang === 'zh' ? '确定' : 'OK' }}</button>
+            </div>
         </div>
-        <template v-if="showYear">
-            <yearrangepanel v-model="range" @change="changeYearRange" v-if="showRange"></yearrangepanel>
-            <yearpanel v-model="year" :range="range" v-else @change="showYear = false"></yearpanel>
-        </template>
-        <template v-else-if="showMonth">
-            <monthpanel :lang="lang" v-model="month" @change="showMonth = false"></monthpanel>
-        </template>
-        <template v-else>
-            <datepanel class="date-panel" :lang="lang" v-model="DATE" @change="changeDate"></datepanel>
-        </template>
+        <div class="time" v-else>
+            <div class="picker-header">
+                <span><em>{{ monthArr[month - 1] }} {{ date }} {{ year }}</em></span>
+            </div>
+            <timepanel class="time-panel" v-model="DATE" @change="changeTime"></timepanel>
+            <div class="footer">
+                <span @click="showDatePanel = true">{{ lang === 'zh' ? '选择日期' : 'Select Date' }}</span><button @click="OK">{{ lang === 'zh' ? '确定' : 'OK' }}</button>
+            </div>
+        </div>
     </div>
     </transition>
 </div>
 </template>
 <script>
+import Timepanel from './timepanel.vue'
 import Datepanel from './datepanel.vue'
 import Monthpanel from './monthpanel.vue'
 import Yearpanel from './yearpanel.vue'
@@ -44,20 +59,28 @@ import Yearrangepanel from './yearrangepanel.vue'
 import { quantity } from './calendar'
 import mixin from './mixin.es6'
 
-let _d = new Date(), y = _d.getFullYear(), m = _d.getMonth() + 1, d = _d.getDate(), begin = y - y % 10, end = begin + 9;
+let _d = new Date(),
+    y = _d.getFullYear(),
+    m = _d.getMonth() + 1,
+    d = _d.getDate(),
+    hh = _d.getHours(),
+    mm = _d.getMinutes(),
+    ss = _d.getSeconds(),
+    begin = y - y % 10,
+    end = begin + 9;
 export default {
     name: 'datetimepicker',
     mixins: [mixin],
     props: {
         value: {
-            type: String | Object,
+            type: String | Date,
             default() {
-                return {
-                    year: y,
-                    month: m,
-                    date: d
-                }
+                return new Date
             }
+        },
+        hasSeconds: {
+            type: Boolean,
+            default: false
         },
         lang: {
             type: String,
@@ -74,36 +97,43 @@ export default {
             year: undefined,
             month: undefined,
             date: undefined,
+            hour: undefined,
+            minute: undefined,
+            second: undefined,
             range: begin + '~' + end,
             showRange: false,
             showYear: false,
             showMonth: false,
-            DATE: undefined
+            DATE: undefined,
+            showDatePanel: true,
+            dtFormat: this.hasSeconds ? this.format : this.format.replace(':ss', '')
         }
     },
     computed: {
-        ymd() {
-            return this.format
-                .replace('YYYY', this.year)
+        ymdhms() {
+            return this.dtFormat.replace('YYYY', this.year)
                 .replace('MM', quantity(this.month))
                 .replace('DD', quantity(this.date))
+                .replace('hh', quantity(this.hour))
+                .replace('mm', quantity(this.minute))
+                .replace('ss', quantity(this.second));
         }
     },
     created() {
-        if(typeof this.value === 'string') {
-            let ymd = this.value.split('-');
-            this.year = +ymd[0];
-            this.month = +ymd[1];
-            this.date = +ymd[2];
-        } else {
-            let { year, month, date } = this.value;
-            this.year = year;
-            this.month = month;
-            this.date = date;
-        }
-        this.DATE = new Date(this.year, this.month - 1, this.date);
+        this.setDateTime();
     },
     methods: {
+        setDateTime(c) {
+            const d = new Date(c || this.value);
+            if(!(d instanceof Date)) return;
+            this.year = d.getFullYear();
+            this.month = d.getMonth() + 1;
+            this.date = d.getDate();
+            this.hour = d.getHours();
+            this.minute = d.getMinutes();
+            this.hasSeconds && (this.second = d.getSeconds());
+            this.DATE = d;
+        },
         changeYearRange(obj) {
             this.year = obj.begin + (this.year % 10)
             this.showRange = false;
@@ -158,25 +188,38 @@ export default {
                 }
             }
         },
-        changeDate() {
+        changeDate(obj) {
+            this.year = obj.year;
+            this.month = obj.month;
+            this.date = obj.date;
+        },
+        changeTime(obj) {
+            this.hour = obj.getHours();
+            this.minute = obj.getMinutes();
+            this.second = obj.getSeconds();
+        },
+        OK() {
+            this.showDatePanel = true;
             this.open = false;
-            if(this.value === 'string') {
-                this.$emit('input', this.ymd)
-                this.$emit('change', this.ymd)
-            } else {
-                this.$emit('input', { year: this.year, month: this.month, date: this.date })
-                this.$emit('change', { year: this.year, month: this.month, date: this.date })
-            }
+            this.DATE = new Date(this.year, this.month - 1, this.date, this.hour, this.minute, this.second);
+            // this.$emit('change', this.DATE);
+            // this.$emit('input', this.DATE);
         }
     },
     watch: {
         DATE(c) {
-            this.date = c.getDate();
-            this.month = c.getMonth() + 1;
             this.year = c.getFullYear();
+            this.month = c.getMonth() + 1;
+            this.date = c.getDate();
+            this.hour = c.getHours();
+            this.minute = c.getMinutes();
+            this.second = c.getSeconds();
+        },
+        value(c) {
+            this.setDateTime(c);
         }
     },
-    components: { Datepanel, Monthpanel, Yearpanel, Yearrangepanel }
+    components: { Timepanel, Datepanel, Monthpanel, Yearpanel, Yearrangepanel }
 }
 </script>
 <style lang="less" scoped>
@@ -255,12 +298,12 @@ export default {
 .input {
     position: relative;
     border: 1px solid #999;
-    width: 128px;
+    width: 148px;
     cursor: pointer;
     &-text {
         line-height: 28px;
         height: 28px;
-        width: 100px;
+        width: 124px;
         border: none;
         cursor: pointer;
         &:focus, &:active, &:visited {
@@ -284,7 +327,29 @@ export default {
 }
 .date-panel {
     padding: 10px;
+    box-sizing: border-box;
 }
+
+.footer {
+    text-align: right;
+    padding: 10px 15px;
+    border-top: 1px solid #e1e1e1;
+    span {
+        margin-right: 10px;
+        color: #4475E8;
+        cursor: pointer;
+    }
+    button {
+        color: #fff;
+        width: 40px;
+        height: 24px;
+        border: none;
+        border-radius: 2px;
+        background-color: #4475E8;
+        cursor: pointer;
+    }
+}
+
 .drop-box {
     position: absolute;
     margin-top: 2px;
