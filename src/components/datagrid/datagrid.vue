@@ -72,7 +72,7 @@ var Datagrid = {
     data: function() {
         var tables = [{
             klass: 'lg-table-main',
-            style: 'min-width:1200px',
+            /*style: 'min-width:1200px',*/
             ref: 'main'
         }];
         this.fix.right && tables.push({
