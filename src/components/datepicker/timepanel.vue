@@ -77,7 +77,7 @@ export default {
             this.change()
         },
         value(c) {
-            // this.setTime();
+            this.setTime();
         }
     }
 }

@@ -1,5 +1,6 @@
 <template>
 <div>
+    <!-- <Daterangepicker></Daterangepicker> -->
     <section>
         <strong>Pickers</strong>
         <div class="cont">
@@ -158,7 +159,7 @@
 </div>
 </template>
 <script>
-import { Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker } from 'vpui'
+import { Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker, Daterangepicker } from 'vpui'
 
 const dbv = v => v < 10 ? ''.concat(0,v) : v;
 
@@ -166,7 +167,7 @@ let d = new Date(), year = d.getFullYear(), month = d.getMonth() + 1, date = d.g
 export default {
     name: 'datepicker-page',
     components: {
-        Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker
+        Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker, Daterangepicker
     },
     data() {
         return {
