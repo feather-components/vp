@@ -57,12 +57,10 @@ export default {
             default: false
         },
         year: {
-            type: Number | String,
-            default: new Date().getFullYear()
+            type: Number | String
         },
         month: {
-            type: Number | String,
-            default: new Date().getMonth() + 1
+            type: Number | String
         },
         selectRange: {
             type: String | Array
@@ -82,10 +80,10 @@ export default {
             return langArr[this.lang] || langArr['en']
         },
         curYear(){
-            return isNaN(this.year) ? this.value.getFullYear() : this.year
+            return  this.year || this.value.getFullYear()
         },
         curMonth(){
-            return isNaN(this.month) ? this.value.getMonth() + 1 : this.month
+            return this.month || (this.value.getMonth() + 1)
         },
         now() {
             let td = new Date(this.today), cdate = td instanceof Date ? td : new Date();
@@ -99,12 +97,11 @@ export default {
             if(this.selectRange) {
                 this.setRangeAnchor(dateObj);
             } else {
-            // console.log(dateObj.year, dateObj.month, dateObj.date)
                 this.setActiveDate(dateObj);
-                this.$emit('change', dateObj);
+                let d = this.value, h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
                 let { year, month, date } = dateObj;
-                let d = new Date, h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
                 this.$emit('input', new Date(year, month - 1, date, h, m, s));
+                this.$emit('change', dateObj);
             }
         },
         setActiveDate(obj) {
@@ -194,16 +191,32 @@ export default {
                 this.now.getMonth() + 1 === dateObj.month &&
                 this.now.getFullYear() === dateObj.year;
         },
-        /*setCalendar(year, month) {
+        setCalendar(year, month) {
             this.calendarData = calendar(year, month - 1);
             this.selectDate({ year, month, date: this.curDate }, true);
-        }*/
+        }
     },
     created() {
         this.curDate = this.value.getDate() || this.now.getDate();
-        this.calendarData = calendar(this.curYear, this.curMonth - 1)
-        console.log(this.calendarData)
-        this.selectDate({year: this.curYear, month: this.curMonth, date: this.curDate, active: true})
+        this.calendarData = calendar(this.curYear, this.curMonth - 1);
+        !this.hasChecked && (this.hasChecked = true);
+        this.setActiveDate({ year: this.curYear, month: this.curMonth, date: this.curDate });
+
+        // 打印矩阵
+        /*this.calendarData.forEach(item => {
+            let str = '';
+            item.forEach(it => {
+                str += it.year+'.'+it.month+'.'+it.date + '\t';
+            })
+            console.log(str)
+        })*/
+    },
+    watch: {
+        value(c) {
+            let year = c.getFullYear(), month = c.getMonth() + 1, date = c.getDate();
+            this.curDate = date;
+            this.setActiveDate({ year, month, date })
+        }
     }
 }
 </script>

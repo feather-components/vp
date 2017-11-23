@@ -30,7 +30,7 @@
                 <monthpanel :lang="lang" v-model="month" @change="showMonth = false"></monthpanel>
             </template>
             <template v-else>
-                <datepanel class="date-panel" :lang="lang" v-model="DATE" @change="changeDate"></datepanel>
+                <datepanel class="date-panel" :lang="lang" v-model="DATE" @change="changeDate" ref="dp"></datepanel>
             </template>
             <div class="footer">
                 <span @click="showDatePanel = false">{{ lang === 'zh' ? '选择时间' : 'Select Time' }}</span><button @click="OK">{{ lang === 'zh' ? '确定' : 'OK' }}</button>
@@ -40,7 +40,7 @@
             <div class="picker-header">
                 <span><em>{{ monthArr[month - 1] }} {{ date }} {{ year }}</em></span>
             </div>
-            <timepanel class="time-panel" v-model="DATE" @change="changeTime"></timepanel>
+            <timepanel class="time-panel" v-model="DATE" @change="changeTime" :hasSeconds="hasSeconds"></timepanel>
             <div class="footer">
                 <span @click="showDatePanel = true">{{ lang === 'zh' ? '选择日期' : 'Select Date' }}</span><button @click="OK">{{ lang === 'zh' ? '确定' : 'OK' }}</button>
             </div>
@@ -163,11 +163,12 @@ export default {
                 this.year--;
             } else {
                 this.month = this.month - 1;
-                if(this.month === 0) {
+                if(this.month < 1) {
                     this.month = 12
                     this.year--;
                 }
             }
+            this.$refs.dp.setCalendar(this.year, this.month);
         },
         next() {
             if(this.showYear) {
@@ -182,11 +183,12 @@ export default {
                 this.year++;
             } else {
                 this.month = this.month + 1;
-                if(this.month === 13) {
+                if(this.month > 12) {
                     this.month = 1;
                     this.year++;
                 }
             }
+            this.$refs.dp.setCalendar(this.year, this.month);
         },
         changeDate(obj) {
             this.year = obj.year;
@@ -201,20 +203,11 @@ export default {
         OK() {
             this.showDatePanel = true;
             this.open = false;
-            this.DATE = new Date(this.year, this.month - 1, this.date, this.hour, this.minute, this.second);
-            // this.$emit('change', this.DATE);
-            // this.$emit('input', this.DATE);
+            this.$emit('change', this.DATE);
+            this.$emit('input', this.DATE);
         }
     },
     watch: {
-        DATE(c) {
-            this.year = c.getFullYear();
-            this.month = c.getMonth() + 1;
-            this.date = c.getDate();
-            this.hour = c.getHours();
-            this.minute = c.getMinutes();
-            this.second = c.getSeconds();
-        },
         value(c) {
             this.setDateTime(c);
         }

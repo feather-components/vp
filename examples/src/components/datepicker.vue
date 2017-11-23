@@ -3,7 +3,7 @@
     <section>
         <strong>Pickers</strong>
         <div class="cont">
-            <!-- <p>Yearpicker</p>
+            <p>Yearpicker</p>
             <div class="panel">
                 <yearpicker></yearpicker>
             </div>
@@ -14,10 +14,6 @@
                 <div>
                     format: YYYY-MM
                     <monthpicker></monthpicker>
-                </div>
-                <div>
-                    format:YYYY~MM
-                    <monthpicker format="YYYY~MM"></monthpicker>
                 </div>
                 <div>
                     format:YYYY/MM
@@ -41,10 +37,6 @@
                     <datepicker></datepicker>
                 </div>
                 <div>
-                    format:YYYY~MM~DD
-                    <datepicker format="YYYY~MM~DD"></datepicker>
-                </div>
-                <div>
                     format:YYYY/MM/DD
                     <datepicker format="YYYY/MM/DD"></datepicker>
                 </div>
@@ -56,7 +48,7 @@
                     中文
                     <datepicker lang="zh"></datepicker>
                 </div>
-            </div> -->
+            </div>
 
             <br/>
             <p>Datetimepicker 格式中间的分隔符可以自定义</p>
@@ -65,14 +57,18 @@
                     默认 format:YYYY-MM-DD hh:mm
                     <datetimepicker format="YYYY-MM-DD hh:mm:ss" v-model="datetime1"></datetimepicker>
                 </div>
-                <!-- <div>
-                    format:YYYY-MM-DD hh:mm:ss
-                    <datetimepicker format="YYYY-MM-DD hh:mm:ss" :has-seconds="true"></datetimepicker>
-                </div> -->
+                <div>
+                    format:YYYY/MM/DD hh:mm:ss
+                    <datetimepicker format="YYYY/MM/DD hh:mm:ss" :has-seconds="true" v-model="datetime2"></datetimepicker>
+                </div>
+                <div>
+                    中文
+                    <datetimepicker format="YYYY-MM-DD hh:mm:ss" :has-seconds="true" lang="zh" v-model="datetime3"></datetimepicker>
+                </div>
             </div>
         </div>
     </section>
-    <!-- <section>
+    <section>
         <strong>Parts</strong>
         <div class="cont cont-panel">
             <p>Yearpanel & Monthpanel</p>
@@ -158,7 +154,7 @@
                 </div>
             </div>
         </div>
-    </section> -->
+    </section>
 </div>
 </template>
 <script>
@@ -195,7 +191,9 @@ export default {
             time1: dbv(hours) + ':' + dbv(minutes),
             time2: dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
             time3: dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
-            datetime1: year + '-' + month + '-' + date + ' ' + dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
+            datetime1: year + '-' + month + '-' + date + ' ' + dbv(hours) + ':' + dbv(minutes),
+            datetime2: year + '-' + month + '-' + date + ' ' + dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
+            datetime3: year + '-' + month + '-' + date + ' ' + dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
         }
     },
     computed: {

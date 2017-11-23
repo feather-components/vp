@@ -62,12 +62,12 @@ function calendar() {
     let endIndex = new Date(year, month - 1, currentMonthAmount).getDay();//月末是周几
 
     let prevMonth = month - 1, prevYear = year, nextMonth = month + 1, nextYear = year;
-    if(prevMonth < 0) {
-        prevMonth = 11;
+    if(prevMonth < 1) {
+        prevMonth = 12;
         prevYear = year - 1;
     }
-    if(nextMonth > 11) {
-        nextMonth = 0;
+    if(nextMonth > 12) {
+        nextMonth = 1;
         nextYear = year + 1;
     }
     let prevMonthAmount = getDateAmount(prevYear, prevMonth); // 上个月总天数

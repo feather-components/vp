@@ -13,7 +13,10 @@ const dbv = v => v < 10 ? ''.concat(0,v) : v;
 export default {
     name: 'timepanel',
     props: {
-        value: String | Date,
+        value:{
+            type: String | Date,
+            default: () => new Date
+        },
         hasSeconds: {
             type: Boolean,
             default: false
@@ -38,7 +41,7 @@ export default {
             if(typeof this.value === 'string') {
                 time = dbv(this.hour) + ':' + dbv(this.minute) + second;
             } else {
-                time = new Date((new Date).toLocaleDateString() + ' ' + this.hour + ':' + this.minute + ':' + this.second);
+                time = new Date(this.value.toLocaleDateString() + ' ' + this.hour + ':' + this.minute + ':' + this.second);
             }
             this.$emit('input', time);
             this.$emit('change', time);
@@ -74,7 +77,7 @@ export default {
             this.change()
         },
         value(c) {
-            this.setTime();
+            // this.setTime();
         }
     }
 }
