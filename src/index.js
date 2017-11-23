@@ -1,4 +1,5 @@
 import Pager from './components/pager';
+import MiniPager from './components/pager/minipager.js';
 import Datagrid from './components/datagrid';
 import Button from './components/button';
 import Overlay from './components/overlay';
@@ -29,7 +30,11 @@ import ProgressBar from './components/progressbar';
 import Vue from 'vue';
 
 var Components = [
+<<<<<<< HEAD
     Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select, Dialog, Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker, WaterFall,Uploader,ProgressBar,Timeline
+=======
+    MiniPager,Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select, Dialog, Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, WaterFall,Uploader,ProgressBar,Timeline
+>>>>>>> 0387b111a811b7160d4e93aeee7576dcdc4ecbe8
 ];
 
 var Modules = [
@@ -91,7 +96,8 @@ export {
     Uploader,
     ProgressBar,
     WaterFallItem,
-    Timeline
+    Timeline,
+    MiniPager
 };
 
 export default {install};

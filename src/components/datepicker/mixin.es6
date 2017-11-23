@@ -8,13 +8,14 @@ export default {
         this.$nextTick(() => {
             document.addEventListener('click', e => {
                 if(this.$el && this.$el.compareDocumentPosition(e.target) < 20) {
-                    this.open = false;
+                    'undefined' !== typeof this.open && (this.open = false);
                 }
             });
         });
     },
     computed: {
         monthArr() {
+            if('undefined' === typeof this.lang) return [];
             return ['en','zh'].indexOf(this.lang) > -1 ? MONTH[this.lang] : MONTH['en']
         }
     }

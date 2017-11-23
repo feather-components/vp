@@ -47,7 +47,7 @@ import mixin from './mixin.es6'
 let _d = new Date(), y = _d.getFullYear(), m = _d.getMonth() + 1, d = _d.getDate(), begin = y - y % 10, end = begin + 9;
 export default {
     name: 'datepicker',
-    mixins: [mixin],
+    //mixins: [mixin],
     props: {
         value: {
             type: String | Object,
