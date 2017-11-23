@@ -30,11 +30,7 @@ import ProgressBar from './components/progressbar';
 import Vue from 'vue';
 
 var Components = [
-<<<<<<< HEAD
-    Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select, Dialog, Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker, WaterFall,Uploader,ProgressBar,Timeline
-=======
-    MiniPager,Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select, Dialog, Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, WaterFall,Uploader,ProgressBar,Timeline
->>>>>>> 0387b111a811b7160d4e93aeee7576dcdc4ecbe8
+    MiniPager,Pager, Datagrid, Checkbox, Radio, Tabs, Tab, Select, Dialog, Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker, WaterFall,Uploader,ProgressBar,Timeline
 ];
 
 var Modules = [

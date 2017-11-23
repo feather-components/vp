@@ -59,6 +59,11 @@ import Yearrangepanel from './yearrangepanel.vue'
 import { quantity } from './calendar'
 import mixin from './mixin.es6'
 
+const MONTH = {
+    en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    zh: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一', '十二']
+};
+
 let _d = new Date(),
     y = _d.getFullYear(),
     m = _d.getMonth() + 1,
@@ -117,6 +122,10 @@ export default {
                 .replace('hh', quantity(this.hour))
                 .replace('mm', quantity(this.minute))
                 .replace('ss', quantity(this.second));
+        },
+        monthArr() {
+            if('undefined' === typeof this.lang) return [];
+            return ['en','zh'].indexOf(this.lang) > -1 ? MONTH[this.lang] : MONTH['en']
         }
     },
     created() {
