@@ -37,7 +37,7 @@ import Yearpanel from './yearpanel.vue'
 import Yearrangepanel from './yearrangepanel.vue'
 
 import { quantity } from './calendar'
-import mixin from './mixin.es6'
+import mixin from './mixin'
 
 const MONTH = {
     en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],

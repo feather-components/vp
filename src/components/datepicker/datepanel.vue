@@ -247,8 +247,9 @@ export default {
             display: flex;
             > div {
                 color: #999;
-                height: 20px;
-                line-height: 20px;
+                height: 18px;
+                width: 18px;
+                line-height: 18px;
                 flex: 1;
                 text-align: center;
                 margin: 4px;

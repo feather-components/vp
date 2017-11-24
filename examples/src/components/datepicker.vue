@@ -1,6 +1,6 @@
 <template>
 <div>
-    <!-- <Daterangepicker></Daterangepicker> -->
+    <Daterangepicker></Daterangepicker>
     <section>
         <strong>Pickers</strong>
         <div class="cont">
