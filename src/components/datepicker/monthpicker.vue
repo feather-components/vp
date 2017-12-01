@@ -89,7 +89,7 @@ export default {
     },
     created() {
         if(typeof this.value === 'string') {
-            let ym = this.value.split('-');
+            let ym = this.value.split('/');
             this.year = +ym[0];
             this.month = +ym[1];
         } else {

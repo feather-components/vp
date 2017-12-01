@@ -1,7 +1,8 @@
 <template>
 <div>
-    <Daterangepicker></Daterangepicker>
-    <section>
+    <!-- <daterangepicker style="margin-top: 10px" v-model="daterange" lang="zh"></daterangepicker> -->
+    <datetimerangepicker :hasSeconds="true" style="margin-top: 10px" v-model="daterange" lang="zh"></datetimerangepicker>
+    <!-- <section>
         <strong>Pickers</strong>
         <div class="cont">
             <p>Yearpicker</p>
@@ -50,7 +51,7 @@
                     <datepicker lang="zh"></datepicker>
                 </div>
             </div>
-
+    
             <br/>
             <p>Datetimepicker 格式中间的分隔符可以自定义</p>
             <div class="panel">
@@ -87,7 +88,7 @@
                     <monthpanel v-model="month2" lang="zh"></monthpanel>
                 </div>
             </div>
-
+    
             <br/>
             <p>Datepanel</p>
             <div class="panel">
@@ -137,7 +138,7 @@
                     <datepanel select-range="2017-10-09,2017-10-15"></datepanel>
                 </div>
             </div>
-
+    
             <br/>
             <p>Timepanel</p>
             <div class="panel">
@@ -155,11 +156,11 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 </div>
 </template>
 <script>
-import { Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker, Daterangepicker } from 'vpui'
+import { Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker, Daterangepicker, Datetimerangepicker } from 'vpui'
 
 const dbv = v => v < 10 ? ''.concat(0,v) : v;
 
@@ -167,7 +168,7 @@ let d = new Date(), year = d.getFullYear(), month = d.getMonth() + 1, date = d.g
 export default {
     name: 'datepicker-page',
     components: {
-        Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker, Daterangepicker
+        Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker, Daterangepicker, Datetimerangepicker
     },
     data() {
         return {
@@ -192,9 +193,11 @@ export default {
             time1: dbv(hours) + ':' + dbv(minutes),
             time2: dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
             time3: dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
-            datetime1: year + '-' + month + '-' + date + ' ' + dbv(hours) + ':' + dbv(minutes),
-            datetime2: year + '-' + month + '-' + date + ' ' + dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
-            datetime3: year + '-' + month + '-' + date + ' ' + dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
+            datetime1: year + '/' + month + '/' + date + ' ' + dbv(hours) + ':' + dbv(minutes),
+            datetime2: year + '/' + month + '/' + date + ' ' + dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
+            datetime3: year + '/' + month + '/' + date + ' ' + dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
+
+            daterange: ['2017/12/11', '2018/1/5 01:06:30']
         }
     },
     computed: {

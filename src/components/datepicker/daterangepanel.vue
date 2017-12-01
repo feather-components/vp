@@ -10,18 +10,20 @@
                     <div v-if="showSimple"
                         :class="{ 
                             'simple-date': date.currentMonth,
-                            'active': date.active || (isToday(date) && !hasChecked) && date.currentMonth,
+                            'active': date.active || (!value && isToday(date) && !hasChecked) && date.currentMonth,
                             'today': isToday(date),
-                            'range-cell': date.hover && !date.active
+                            'range-cell': date.hover && !date.active,
+                            'disabled': date.disabled
                         }"
-                        @click="selectDate(date, ii)">{{ date.currentMonth && date.date }}</div>
+                        @click="selectDate(date, ii)"><em>{{ date.currentMonth && date.date }}</em></div>
                     <div v-else
                         class="normal-date"
                         :class="{
                             'current-month': date.currentMonth,
-                            'active': date.active || (isToday(date) && !hasChecked),
+                            'active': date.active || (!value && isToday(date) && !hasChecked),
                             'today': isToday(date),
-                            'range-cell': date.hover && !date.active
+                            'range-cell': date.hover && !date.active,
+                            'disabled': date.disabled
                         }"
                         @click="selectDate(date, ii)"
                         @mouseenter="hoverDate(date)"><em>{{ date.date }}</em></div>
@@ -52,15 +54,16 @@ export default {
     name: 'daterangepanel',
     props: {
         value: {
-            type: Object
+            type: Array | Object,
+            default: () => [new Date(d), new Date(d)]
         },
         prevMonth: {
             type: String | Date,
-            default: year + '-' + (month + 1)
+            default: year + '/' + (month + 1)
         },
         nextMonth: {
             type: String | Date,
-            default: (parseInt((month + 1) / 12) + year) + '-' + ((month + 1) % 12 + 1)
+            default: (parseInt((month + 1) / 12) + year) + '/' + ((month + 1) % 12 + 1)
         },
         today: {
             type: String | Date,
@@ -74,13 +77,10 @@ export default {
             type: Boolean,
             default: false
         },
-        year: {
-            type: Number | String
-        },
-        month: {
-            type: Number | String
-        },
         selectRange: {
+            type: String | Array
+        },
+        validRange: {
             type: String | Array
         }
     },
@@ -93,7 +93,9 @@ export default {
             hasChecked: false,
             curDate: undefined,
             beginDate: undefined,
-            endDate: undefined
+            endDate: undefined,
+            prev: undefined,
+            next: undefined
         }
     },
     computed: {
@@ -112,6 +114,7 @@ export default {
             this.setActiveDate(date)
         },
         setActiveDate(obj) {
+            if(obj.disabled) return;
             // 设置第一次、第二次点击的日期
             if(this.endDate) {
                 this.cals.forEach(cal => {
@@ -131,62 +134,156 @@ export default {
                 if(begin > end) {
                     [this.beginDate, this.endDate] = [this.endDate, this.beginDate];
                 }
+
+                let min, max, outMin, outMax, val = this.value, b = this.beginDate, e = this.endDate;
+                if(!!val && val instanceof Array) {
+                    min = val[0], max = val[1];
+                    if(typeof min === 'string') {
+                        outMin = b.year + '/' + b.month + '/' + b.date;
+                    } else {
+                        outMin = new Date(b.year, b.month - 1, b.date);
+                    }
+                    if(typeof max === 'string') {
+                        outMax = e.year + '/' + e.month + '/' + e.date;
+                    } else {
+                        outMax = new Date(e.year, e.month - 1, e.date);
+                    }
+                }
+                this.$emit('input', [outMin, outMax]);
+                this.$emit('change', [outMin, outMax]);
             } else {
+                this.clearActives();
                 this.beginDate = obj;
             }
 
             obj.active = true; //直接激活当前日期
-
-            //设置两个日期间的过渡日期
-            if(this.beginDate && this.endDate) {
+            this.setDuring(this.beginDate, this.endDate);
+        },
+        setDuring(begin, end, def) {
+            //设置两个日期间的过渡区间
+            if(begin && end) {
+                let prev = +new Date(begin.year, begin.month - 1, begin.date, 0, 0, 0),
+                next = +new Date(end.year, end.month - 1, end.date, 0, 0, 0);
+                if(prev > next) {
+                    [begin, end] = [end, begin];
+                }
                 this.cals.forEach(cal => {
                     cal.forEach(dates => {
                         dates.forEach(date => {
-                            let cur = +new Date(date.year, date.month - 1, date.date), prev = +new Date(this.beginDate.year, this.beginDate.month - 1, this.beginDate.date), next = +new Date(this.endDate.year, this.endDate.month - 1, this.endDate.date)
-                            if(obj.currentMonth && (date.month === this.beginDate.month || date.month === this.endDate.month)) {
-                                date.hover = cur > prev && cur < next;
-                            } else {
-                                date.hover = false;
+                            let cur = +new Date(date.year, date.month - 1, date.date);
+                            date.hover = cur >= prev && cur <= next && date.currentMonth
+                            if(def && date.currentMonth) {
+                                date.active = cur === prev || cur === next;
                             }
                         })
                     })
                 });
             }
         },
+        clearActives() { //清除所有选中与区间
+            this.cals.forEach(cal => {
+                cal.forEach(dates => {
+                    dates.forEach(date => {
+                        date.active = false;
+                        date.hover = false;
+                    })
+                })
+            })
+        },
         hoverDate(obj) {
+            if(obj.disabled) return ;
             if(this.beginDate && !this.endDate) {
                 const cals = [...this.cals];
+                let begin = +new Date(this.beginDate.year, this.beginDate.month - 1, this.beginDate.date),
+                    hover = +new Date(obj.year, obj.month - 1, obj.date);
+                if(begin > hover) {
+                    [begin, hover] = [hover, begin];
+                }
                 cals.forEach(cal => {
                     cal.forEach(dates => {
                         dates.forEach(date => {
-                            let cur = +new Date(date.year, date.month - 1, date.date), begin = +new Date(this.beginDate.year, this.beginDate.month - 1, this.beginDate.date), hover = +new Date(obj.year, obj.month - 1, obj.date);
-                            if(begin > hover) {
-                                [begin, hover] = [hover, begin];
-                            }
-                            if(obj.currentMonth && (date.month === this.beginDate.month || date.month === obj.month)) {
-                                date.hover = cur >= begin && cur <= hover;
-                            } else {
-                                date.hover = false;
-                            }
+                            let cur = +new Date(date.year, date.month - 1, date.date);
+                            date.hover = date.currentMonth && (date.month === this.beginDate.month || date.month === obj.month) && cur >= begin && cur <= hover
                         })
                     })
                 });
                 this.cals = cals;
             }
-
         },
         isToday(dateObj) {
-            return dateObj.date === this.now.getDate() &&
+            return dateObj.currentMonth && dateObj.date === this.now.getDate() &&
                 this.now.getMonth() + 1 === dateObj.month &&
                 this.now.getFullYear() === dateObj.year;
         },
+        setCalendar(prev, next) {
+            const pd = new Date(prev || this.prevMonth), nd = new Date(next || this.nextMonth);
+            // +pd > +nd && ([pd, nd] = [nd, pd]); //如果开始月份大于结束月份
+            let pdY = pd.getFullYear(), pdM = pd.getMonth(), ndY = nd.getFullYear(), ndM = nd.getMonth();
+            this.cal1 = calendar(pdY, pdM);
+            this.cal2 = calendar(ndY, ndM);
+            this.cals = [this.cal1, this.cal2];
+        },
+        setValidRange() { //设置可选范围
+            if(!(this.validRange instanceof Array)) return;
+
+            const rg = this.validRange;
+            let min = rg[0], max = rg[1], b, e;
+            if(min instanceof Date) {
+                b = min;
+            } else {
+                b = new Date(rg[0] + ' 00:00:00')
+            }
+            if(max instanceof Date) {
+                e = max;
+            } else {
+                e = new Date(rg[1] + ' 00:00:00')
+            }
+
+            let vp = +b,
+                vn = +e;
+            this.cals.forEach((cal, index) => {
+                cal.forEach(dates => {
+                    dates.forEach(date => {
+                        let d = +new Date(date.year, date.month - 1, date.date);
+                        date.disabled = d < vp || d > vn;
+                    })
+                })
+            });
+        },
+        setSelectRange(range) {
+            const rg = range || this.value;
+            if(!rg || typeof rg === 'string') return;
+            let min = rg[0], max = rg[1], b, e;
+            if(min instanceof Date) {
+                b = min;
+            } else {
+                b = new Date(rg[0] + ' 00:00:00')
+            }
+            if(max instanceof Date) {
+                e = max;
+            } else {
+                e = new Date(rg[1] + ' 00:00:00')
+            }
+            let begin = { year: b.getFullYear(), month: b.getMonth() + 1, date: b.getDate() },
+                end = { year: e.getFullYear(), month: e.getMonth() + 1, date: e.getDate() };
+            this.setDuring(begin, end, true);
+        }
     },
     created() {
-        const pd = new Date(this.prevMonth), nd = new Date(this.nextMonth);
-        let pdY = pd.getFullYear(), pdM = pd.getMonth(), ndY = nd.getFullYear(), ndM = nd.getMonth() + 1;
-        this.cal1 = calendar(pdY, pdM);
-        this.cal2 = calendar(ndY, ndM);
-        this.cals = [this.cal1, this.cal2];
+        this.setCalendar();
+        this.setValidRange();
+        this.setSelectRange();
+    },
+    watch: {
+        prevMonth(c) {
+            this.setCalendar(c);
+        },
+        nextMonth(c) {
+            this.setCalendar(undefined, c);
+        },
+        value(c) {
+            this.setSelectRange(c);
+        }
     }
 }
 </script>
@@ -250,21 +347,30 @@ export default {
                         height: 100%;
                         padding: 1px 5px;
                     }
+                    &.active em {
+                        color: #333 !important;
+                    }
                 }
                 &:first-child, &:first-child.current-month, &:first-child.simple-date {
                     color: #FF6E40;
                 }
                 &.normal-date,
                 &.simple-date {
-                    cursor: pointer;
                     text-align: center;
+                    cursor: default;
+                }
+                &.current-month {
+                    &.normal-date,
+                    &.simple-date {
+                        cursor: pointer;
+                    }
                 }
                 &.current-month,
                 &.simple-date {
                     color: #333;
                 }
-                &.normal-date:hover,
-                &.simple-date:hover {
+                &.normal-date.current-month:hover,
+                &.simple-date.current-month:hover {
                     border-color: #4475E8;
                     color: #4475E8;
                 }
@@ -274,12 +380,32 @@ export default {
                     em {
                         color: #4475E8;
                     }
+                    &.disabled {
+                        border-color: #ccc;
+                    }
                 }
                 &.active {
-                    color: #fff !important;
+                    color: #fff;
                     background-color: #4475E8;
                     em {
                         color: #fff !important;
+                    }
+                }
+                &.disabled {
+                    background-color: transparent;
+                    cursor: default !important;
+                    &.current-month:hover {
+                        border-color: transparent;
+                        color: #ccc;
+                    }
+                    &.today:hover {
+                        border-color: #ccc;
+                    }
+                    &.active em {
+                        color: #ccc !important;
+                    }
+                    em {
+                        color: #ccc !important;
                     }
                 }
                 em {
