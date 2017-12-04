@@ -363,14 +363,24 @@ export default {
 .dropDown {
     &-enter-active,
     &-leave-active {
-        transition: all .1s;
-        transform-origin: center top;
+        transform-origin: 0 0;
+        transform: scaleY(1);
+        transition-property: all;
+        transition-duration: .2s;
+        transition-delay: 0s;
+    }
+    &-enter-active {
+        transition-timing-function: cubic-bezier(.23, 1, .32, 1);
+    }
+    &-leave-active {
+        transition-timing-function: cubic-bezier(.755, .05, .855, .06);
     }
     &-enter,
+    &-appear,
     &-leave-to{
         opacity: 0;
-        transform: scaleY(.8);
         transform-origin: center top;
+        transform: scaleY(.8);
     }
 }
 </style>
