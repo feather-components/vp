@@ -340,6 +340,9 @@ var BaseGrid = {
                     el.style.display = "none";
                     return;
                 }
+                else{
+                    el.style.display = el.style.display.replace('none','');
+                }
                 if (action.type == 'link') {
                     var arg = action.render(data);
                     if (arg) {
