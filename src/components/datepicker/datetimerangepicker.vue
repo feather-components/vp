@@ -5,9 +5,9 @@
         <span class="div">-</span>
         <input type="text" readonly class="input-text" placeholder="start time" :value="end">
         <span class="picker-icon">
-            <svg t="1509440982605" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4562" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22">
-                <path d="M752 198.2h-58v-50c0-15.4-12.6-28-28-28s-28 12.6-28 28v50H386v-50c0-15.4-12.6-28-28-28s-28 12.6-28 28v50h-58c-79.2 0-144 64.8-144 144v428c0 79.2 64.8 144 144 144h480c79.2 0 144-64.8 144-144v-428c0-79.2-64.8-144-144-144z m88 572c0 23.4-9.2 45.4-25.8 62.2-16.8 16.8-38.8 25.8-62.2 25.8H272c-23.4 0-45.4-9.2-62.2-25.8S184 793.6 184 770.2v-428c0-23.4 9.2-45.4 25.8-62.2 16.8-16.8 38.8-25.8 62.2-25.8h58v42c0 15.4 12.6 28 28 28s28-12.6 28-28v-42h252v42c0 15.4 12.6 28 28 28s28-12.6 28-28v-42h58c23.4 0 45.4 9.2 62.2 25.8 16.8 16.8 25.8 38.8 25.8 62.2v428z" fill="#999" p-id="4563"></path>
-                <path d="M358 436.2h-52c-14.2 0-26 11.6-26 26v52c0 14.4 11.8 26 26 26h52c14.4 0 26-11.6 26-26v-52c0-14.4-11.6-26-26-26zM358 616.2h-52c-14.2 0-26 11.6-26 26v52c0 14.4 11.8 26 26 26h52c14.4 0 26-11.6 26-26v-52c0-14.4-11.6-26-26-26zM538 436.2h-52c-14.2 0-26 11.6-26 26v52c0 14.4 11.8 26 26 26h52c14.4 0 26-11.6 26-26v-52c0-14.4-11.6-26-26-26zM538 616.2h-52c-14.2 0-26 11.6-26 26v52c0 14.4 11.8 26 26 26h52c14.4 0 26-11.6 26-26v-52c0-14.4-11.6-26-26-26zM718 436.2h-52c-14.2 0-26 11.6-26 26v52c0 14.4 11.8 26 26 26h52c14.4 0 26-11.6 26-26v-52c0-14.4-11.6-26-26-26zM718 616.2h-52c-14.2 0-26 11.6-26 26v52c0 14.4 11.8 26 26 26h52c14.4 0 26-11.6 26-26v-52c0-14.4-11.6-26-26-26z" fill="#999" p-id="4564"></path>
+            <svg t="1509440995295" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4681" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22">
+                <path d="M358.2 436h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM358.2 616h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM538.2 436h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM538.2 616h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM718.2 540c14.4 0 26-11.8 26-26v-52c0-14.4-11.6-26-26-26h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52zM816.2 738v-44c0-15.4-12.6-28-28-28s-28 12.6-28 28v72c0 15.4 12.6 28 28 28h72c15.4 0 28-12.6 28-28s-12.6-28-28-28h-44z" fill="#999" p-id="4682"></path>
+                <path d="M898 623.8V344c0-79.2-64.8-144-144-144h-58V150c0-15.4-12.6-28-28-28s-28 12.6-28 28v50H388V150c0-15.4-12.6-28-28-28s-28 12.6-28 28v50h-58c-79.2 0-144 64.8-144 144v428c0 79.2 64.8 144 144 144h413.8c29 20.2 64.4 32 102.4 32 99.4 0 180-80.6 180-180 0.2-59-28.4-111.4-72.2-144.2zM635.6 860H274c-23.4 0-45.4-9.2-62.2-25.8C195.2 817.4 186 795.4 186 772V344c0-23.4 9.2-45.4 25.8-62.2 16.8-16.8 38.8-25.8 62.2-25.8h58v42c0 15.4 12.6 28 28 28s28-12.6 28-28v-42h252v42c0 15.4 12.6 28 28 28s28-12.6 28-28v-42h58c23.4 0 45.4 9.2 62.2 25.8 16.8 16.8 25.8 38.8 25.8 62.2v251.6c-16.4-5-33.8-7.6-51.6-7.6-99.4 0-180 80.6-180 180 0 33.6 9.2 65 25.2 92z m154.8 32c-68.4 0-124-55.6-124-124s55.6-124 124-124 124 55.6 124 124-55.8 124-124 124z" fill="#999" p-id="4683"></path>
             </svg>
         </span>
     </div>
@@ -36,8 +36,7 @@
                     :nextMonth="endMonth"
                     :validRange="validRange"
                     :lang="lang"
-                    :hasTime="true"
-                    @change="change"></daterangepanel>
+                    :hasTime="true"></daterangepanel>
             </div>
             <div class="footer">
                 <span @click="showTime = !showTime">{{ lang === 'zh' ? '选择时间' : 'Select Time' }}</span><button @click="OK">{{ lang === 'zh' ? '确定' : 'OK' }}</button>
@@ -51,7 +50,7 @@
             </div>
             <div class="time-group">
                 <div v-for="(it, i) in 2" :key="i">
-                    <timpepanel v-model="time[i]" :hasSeconds="hasSeconds" @change="changeTime(i)"></timpepanel>
+                    <timpepanel v-model="time[i]" :hasSeconds="hasSeconds"></timpepanel>
                 </div>
             </div>
             <div class="footer">
@@ -115,9 +114,6 @@ export default {
             type: Boolean,
             default: false
         },
-        selectRange: {
-            type: String | Array
-        },
         validRange: {
             type: String | Array
         },
@@ -142,51 +138,34 @@ export default {
             range: new Array(2),
             year: new Array(2),
             month: new Array(2),
-            time: new Array(2),
-            endYear: undefined,
-            endMonth: undefined,
-            open: true,
-            show: false
+            time: this.value.map(it => it instanceof Date ? it : new Date(it)),
+            open: false,
+            show: false,
+            dtFormat: this.hasSeconds ? this.format : this.format.replace(':ss', '')
         }
     },
     computed: {
         begin() {
             if(typeof this.val[0] !== 'string') return '';
-            let bt = this.val[0].split(' '), b = bt[0].split('/'), t = bt[1] ? bt[1].split(':') : [];
-            let fmt = this.format
+            let date = this.val[0].split(' '), b = date[0].split('/'), time = this.time[0], h = time.getHours(), m = time.getMinutes(), s = time.getSeconds();
+            return this.dtFormat
                 .replace('YYYY', b[0])
                 .replace('MM', quantity(+b[1]) || '00')
-                .replace('DD', quantity(+b[2]) || '00');
-            if(!this.hasSeconds) fmt = fmt.replace(':ss', '');
-            if(t.length) {
-                fmt = fmt.replace('hh', quantity(+t[0]))
-                .replace('mm', quantity(+t[1]))
-                .replace('ss', quantity(+t[2]));
-            } else {
-                fmt = fmt.replace('hh', '00')
-                .replace('mm', '00')
-                .replace('ss', '00');
-            }
-            return fmt;
+                .replace('DD', quantity(+b[2]) || '00')
+                .replace('hh', quantity(h) || '00')
+                .replace('mm', quantity(m) || '00')
+                .replace('ss', quantity(s) || '00');
         },
         end() {
             if(typeof this.val[1] !== 'string') return '';
-            let et = this.val[1].split(' '), e = et[0].split('/'), t = et[1] ? et[1].split(':') : [];
-            let fmt = this.format
+            let et = this.val[1].split(' '), e = et[0].split('/'), time = this.time[1], h = time.getHours(), m = time.getMinutes(), s = time.getSeconds();
+            return this.dtFormat
                 .replace('YYYY', e[0])
                 .replace('MM', quantity(+e[1]) || '00')
-                .replace('DD', quantity(+e[2]) || '00');
-            if(!this.hasSeconds) fmt = fmt.replace(':ss', '');
-            if(t.length) {
-                fmt = fmt.replace('hh', quantity(+t[0]))
-                .replace('mm', quantity(+t[1]))
-                .replace('ss', quantity(+t[2]));
-            } else {
-                fmt = fmt.replace('hh', '00')
-                .replace('mm', '00')
-                .replace('ss', '00');
-            }
-            return fmt;
+                .replace('DD', quantity(+e[2]) || '00')
+                .replace('hh', quantity(h) || '00')
+                .replace('mm', quantity(m) || '00')
+                .replace('ss', quantity(s) || '00');
         },
         monthArr() {
             if('undefined' === typeof this.lang) return [];
@@ -211,8 +190,14 @@ export default {
         }
     },
     watch: {
-        val(c) {
-            this.$emit('input', c);
+        value(c) {
+            let val = [], time = [];
+            c instanceof Array && c.forEach((d, i) => {
+                val[i] = d instanceof Date ? d.toLocaleDateString() : d.split(' ')[0];
+                time[i] = d instanceof Date ? d : new Date(d);
+            })
+            this.time = time;
+            this.val = val;
         },
         month(c) {
             this.$nextTick(() => {
@@ -222,11 +207,6 @@ export default {
         }
     },
     methods: {
-        change() {
-            // this.open = false;
-            this.$emit('change', this.val);
-            // console.log(this.val)
-        },
         flush(index, operator) {
             let arr = [];
             if(this.showRange[index]) { //世纪
@@ -333,12 +313,6 @@ export default {
                 default: break;
             }
         },
-        changeTime(index) {
-            let t = this.time[index], arr = [...this.val], d = arr[index], dt;
-            dt = d.split(' ')[0] + ' ' + quantity(t.getHours()) + ':' + quantity(t.getMinutes()) + ':' + quantity(t.getSeconds());
-            arr.splice(index, 1, dt);
-            this.val = arr;
-        },
         line(index) {
             let flag = new Array(2);
             for(let i = 0; i < 2; i++) {
@@ -353,6 +327,12 @@ export default {
             }
         },
         OK() {
+            let time = this.time.map(t => t.toTimeString().split(' ')[0]);
+            let val = this.val.map((d, i) => {
+                return d.split(' ')[0] + ' ' + time[i]
+            });
+            this.$emit('input', val);
+            this.$emit('change', val);
             this.showTime = false;
             this.open = false;
         }
@@ -369,7 +349,6 @@ export default {
             });
             this.beginMonth = this.year[0] + '/' + this.month[0];
             this.endMonth = this.year[1] + '/' + this.month[1];
-            this.time = [new Date(this.val[0]), new Date(this.val[1])];
         }
     }
 }

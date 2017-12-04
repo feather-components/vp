@@ -77,9 +77,6 @@ export default {
             type: Boolean,
             default: false
         },
-        selectRange: {
-            type: String | Array
-        },
         validRange: {
             type: String | Array
         }
@@ -217,7 +214,6 @@ export default {
         },
         setCalendar(prev, next) {
             const pd = new Date(prev || this.prevMonth), nd = new Date(next || this.nextMonth);
-            // +pd > +nd && ([pd, nd] = [nd, pd]); //如果开始月份大于结束月份
             let pdY = pd.getFullYear(), pdM = pd.getMonth(), ndY = nd.getFullYear(), ndM = nd.getMonth();
             this.cal1 = calendar(pdY, pdM);
             this.cal2 = calendar(ndY, ndM);
@@ -225,20 +221,10 @@ export default {
         },
         setValidRange() { //设置可选范围
             if(!(this.validRange instanceof Array)) return;
-
             const rg = this.validRange;
             let min = rg[0], max = rg[1], b, e;
-            if(min instanceof Date) {
-                b = min;
-            } else {
-                b = new Date(rg[0] + ' 00:00:00')
-            }
-            if(max instanceof Date) {
-                e = max;
-            } else {
-                e = new Date(rg[1] + ' 00:00:00')
-            }
-
+            b = min instanceof Date ? min : new Date(rg[0].split(' ')[0] + ' 00:00:00');
+            e = max instanceof Date ? max : new Date(rg[1].split(' ')[0]  + ' 00:00:00');
             let vp = +b,
                 vn = +e;
             this.cals.forEach((cal, index) => {
@@ -251,21 +237,14 @@ export default {
             });
         },
         setSelectRange(range) {
-            const rg = range || this.value;
-            if(!rg || typeof rg === 'string') return;
-            let min = rg[0], max = rg[1], b, e;
-            if(min instanceof Date) {
-                b = min;
-            } else {
-                b = new Date(rg[0] + ' 00:00:00')
-            }
-            if(max instanceof Date) {
-                e = max;
-            } else {
-                e = new Date(rg[1] + ' 00:00:00')
-            }
-            let begin = { year: b.getFullYear(), month: b.getMonth() + 1, date: b.getDate() },
-                end = { year: e.getFullYear(), month: e.getMonth() + 1, date: e.getDate() };
+            let rg = range || this.value;
+            if(!rg || typeof rg === 'string' || !(rg instanceof Array)) return;
+            rg = rg.map(it => it instanceof Date ? it : it.split(' ')[0]);
+            let min = rg[0], max = rg[1], b, e, begin, end;
+            b = min instanceof Date ? min : new Date(rg[0] + ' 00:00:00');
+            e = max instanceof Date ? max : new Date(rg[1] + ' 00:00:00');
+            begin = { year: b.getFullYear(), month: b.getMonth() + 1, date: b.getDate() };
+            end = { year: e.getFullYear(), month: e.getMonth() + 1, date: e.getDate() };
             this.setDuring(begin, end, true);
         }
     },
@@ -277,9 +256,11 @@ export default {
     watch: {
         prevMonth(c) {
             this.setCalendar(c);
+            this.setValidRange();
         },
         nextMonth(c) {
             this.setCalendar(undefined, c);
+            this.setValidRange();
         },
         value(c) {
             this.setSelectRange(c);

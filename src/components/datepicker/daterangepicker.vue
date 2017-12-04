@@ -93,9 +93,6 @@ export default {
             type: Boolean,
             default: false
         },
-        selectRange: {
-            type: String | Array
-        },
         validRange: {
             type: String | Array
         },
@@ -115,8 +112,6 @@ export default {
             range: new Array(2),
             year: new Array(2),
             month: new Array(2),
-            endYear: undefined,
-            endMonth: undefined,
             open: false,
             show: false
         }

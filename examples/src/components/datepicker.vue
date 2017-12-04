@@ -1,8 +1,6 @@
 <template>
 <div>
-    <!-- <daterangepicker style="margin-top: 10px" v-model="daterange" lang="zh"></daterangepicker> -->
-    <datetimerangepicker :hasSeconds="true" style="margin-top: 10px" v-model="daterange" lang="zh"></datetimerangepicker>
-    <!-- <section>
+    <section>
         <strong>Pickers</strong>
         <div class="cont">
             <p>Yearpicker</p>
@@ -68,8 +66,20 @@
                     <datetimepicker format="YYYY-MM-DD hh:mm:ss" :has-seconds="true" lang="zh" v-model="datetime3"></datetimepicker>
                 </div>
             </div>
+
+            <br/>
+            <p>Daterangepicker</p>
+            <div class="panel">
+                <daterangepicker v-model="daterange" lang="zh"></daterangepicker>
+            </div>
+            <br/>
+            <p>Datetimerangepicker</p>
+            <div class="panel">
+                <datetimerangepicker v-model="datetimerange" lang="zh"></datetimerangepicker>
+            </div>
         </div>
     </section>
+    <br/>
     <section>
         <strong>Parts</strong>
         <div class="cont cont-panel">
@@ -156,7 +166,7 @@
                 </div>
             </div>
         </div>
-    </section> -->
+    </section>
 </div>
 </template>
 <script>
@@ -197,7 +207,8 @@ export default {
             datetime2: year + '/' + month + '/' + date + ' ' + dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
             datetime3: year + '/' + month + '/' + date + ' ' + dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
 
-            daterange: ['2017/12/11', '2018/1/5 01:06:30']
+            daterange: ['2017/12/5', '2018/1/9'],
+            datetimerange: ['2017/12/5', '2018/1/9 01:06:30']
         }
     },
     computed: {
