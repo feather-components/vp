@@ -1,9 +1,9 @@
 <template>
 <div class="monthpicker">
     <div class="input" @click="open = !open">
-        <input type="text" readonly class="input-text" placeholder="start time" :value="begin">
+        <input type="text" readonly class="input-text" :placeholder="placeholder[0]" :value="begin">
         <span class="div">-</span>
-        <input type="text" readonly class="input-text" placeholder="start time" :value="end">
+        <input type="text" readonly class="input-text" :placeholder="placeholder[1]" :value="end">
         <span class="picker-icon">
             <svg t="1509440982605" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4562" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22">
                 <path d="M752 198.2h-58v-50c0-15.4-12.6-28-28-28s-28 12.6-28 28v50H386v-50c0-15.4-12.6-28-28-28s-28 12.6-28 28v50h-58c-79.2 0-144 64.8-144 144v428c0 79.2 64.8 144 144 144h480c79.2 0 144-64.8 144-144v-428c0-79.2-64.8-144-144-144z m88 572c0 23.4-9.2 45.4-25.8 62.2-16.8 16.8-38.8 25.8-62.2 25.8H272c-23.4 0-45.4-9.2-62.2-25.8S184 793.6 184 770.2v-428c0-23.4 9.2-45.4 25.8-62.2 16.8-16.8 38.8-25.8 62.2-25.8h58v42c0 15.4 12.6 28 28 28s28-12.6 28-28v-42h252v42c0 15.4 12.6 28 28 28s28-12.6 28-28v-42h58c23.4 0 45.4 9.2 62.2 25.8 16.8 16.8 25.8 38.8 25.8 62.2v428z" fill="#999" p-id="4563"></path>
@@ -64,14 +64,18 @@ const MONTH = {
     zh: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一', '十二']
 };
 
+const PLACEHOLDER = {
+    en: ['Begin Date', 'End Date'],
+    zh: ['开始日期','结束日期']
+}
+
 export default {
     name: 'daterangepicker',
     mixins: [mixin],
     components: { Daterangepanel, Yearpanel, Monthpanel, Yearrangepanel },
     props: {
         value: {
-            type: Array | Object,
-            default: () => [new Date(d), new Date(d)]
+            type: Array | Object
         },
         prevMonth: {
             type: String | Date,
@@ -105,7 +109,7 @@ export default {
         return {
             beginMonth: this.prevMonth,
             endMonth: this.nextMonth,
-            val: this.value.map(it => it.split(' ')[0]),
+            val: new Array(2),
             showRange: [false, false],
             showYear: [false, false],
             showMonth: [false, false],
@@ -118,14 +122,22 @@ export default {
     },
     computed: {
         begin() {
-            if(typeof this.val[0] !== 'string') return '';
-            let b = this.val[0].split('/');
-            return this.format.replace('YYYY', b[0]).replace('MM', quantity(b[1])).replace('DD', quantity(b[2]));
+            let b;
+            if(this.val[0] instanceof Date) {
+                b = this.val[0].toLocaleDateString().split('/');
+            } else if(typeof this.val[0] === 'string') {
+                b = this.val[0].split('/');
+            }
+            return b ? this.format.replace('YYYY', b[0]).replace('MM', quantity(b[1])).replace('DD', quantity(b[2])) : '';
         },
         end() {
-            if(typeof this.val[1] !== 'string') return '';
-            let e = this.val[1].split('/');
-            return this.format.replace('YYYY', e[0]).replace('MM', quantity(e[1])).replace('DD', quantity(e[2]));
+            let e;
+            if(this.val[0] instanceof Date) {
+                e = this.val[0].toLocaleDateString().split('/');
+            } else if(typeof this.val[0] === 'string') {
+                e = this.val[0].split('/');
+            }
+            return e ? this.format.replace('YYYY', e[0]).replace('MM', quantity(e[1])).replace('DD', quantity(e[2])) : '';
         },
         monthArr() {
             if('undefined' === typeof this.lang) return [];
@@ -144,6 +156,9 @@ export default {
                 }
             }
             return tits;
+        },
+        placeholder() {
+            return ['en','zh'].indexOf(this.lang) > -1 ? PLACEHOLDER[this.lang] : PLACEHOLDER['en'];
         }
     },
     watch: {
@@ -284,17 +299,21 @@ export default {
     },
     created() {
         let begin, end;
-        if(this.val && this.val instanceof Array) {
+        this.val = this.value || new Array(2);
+        if(this.val instanceof Array && this.val.length === 2 && this.val[0] && this.val[1]) {
             begin = new Date(this.val[0]);
             end = new Date(this.val[1]);
             this.year = [begin.getFullYear(), end.getFullYear()];
             this.month = [begin.getMonth() + 1, end.getMonth() + 1];
-            this.year.forEach((yr, i) => {
-                this.range[i] = (yr - yr % 10) + '~' + (yr - yr % 10 + 9);
-            });
-            this.beginMonth = this.year[0] + '/' + this.month[0];
-            this.endMonth = this.year[1] + '/' + this.month[1];
+        } else {
+            this.month = [d.getMonth() + 1, (d.getMonth() + 1) % 12 + 1];
+            this.year = [d.getFullYear(), d.getFullYear() + parseInt((d.getMonth() + 1) / 12)];
         }
+        this.year.forEach((yr, i) => {
+            this.range[i] = (yr - yr % 10) + '~' + (yr - yr % 10 + 9);
+        });
+        this.beginMonth = this.year[0] + '/' + this.month[0];
+        this.endMonth = this.year[1] + '/' + this.month[1];
     }
 }
 </script>

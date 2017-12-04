@@ -55,7 +55,7 @@ export default {
     props: {
         value: {
             type: Array | Object,
-            default: () => [new Date(d), new Date(d)]
+            default: () => [d.toLocalDateString(), d.toLocaleString()]
         },
         prevMonth: {
             type: String | Date,
@@ -138,12 +138,12 @@ export default {
                     if(typeof min === 'string') {
                         outMin = b.year + '/' + b.month + '/' + b.date;
                     } else {
-                        outMin = new Date(b.year, b.month - 1, b.date);
+                        outMin = new Date(b.year, b.month - 1, b.date).toLocaleDateString();
                     }
                     if(typeof max === 'string') {
                         outMax = e.year + '/' + e.month + '/' + e.date;
                     } else {
-                        outMax = new Date(e.year, e.month - 1, e.date);
+                        outMax = new Date(e.year, e.month - 1, e.date).toLocaleDateString();
                     }
                 }
                 this.$emit('input', [outMin, outMax]);
@@ -238,8 +238,8 @@ export default {
         },
         setSelectRange(range) {
             let rg = range || this.value;
-            if(!rg || typeof rg === 'string' || !(rg instanceof Array)) return;
-            rg = rg.map(it => it instanceof Date ? it : it.split(' ')[0]);
+            if(!rg || typeof rg === 'string' || !(rg instanceof Array) && !rg[0] && !rg[1]) return;
+            rg = rg.map(it => typeof it === 'string' ? it.split(' ')[0] : it);
             let min = rg[0], max = rg[1], b, e, begin, end;
             b = min instanceof Date ? min : new Date(rg[0] + ' 00:00:00');
             e = max instanceof Date ? max : new Date(rg[1] + ' 00:00:00');

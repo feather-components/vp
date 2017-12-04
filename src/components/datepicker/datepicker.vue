@@ -4,7 +4,8 @@
         <input type="text" readonly
             class="input-text"
             v-model="ymd"
-            placeholder="Select month">
+            :name="name"
+            :placeholder="placeholder">
         <span class="picker-icon">
             <svg t="1509440982605" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4562" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22">
                 <path d="M752 198.2h-58v-50c0-15.4-12.6-28-28-28s-28 12.6-28 28v50H386v-50c0-15.4-12.6-28-28-28s-28 12.6-28 28v50h-58c-79.2 0-144 64.8-144 144v428c0 79.2 64.8 144 144 144h480c79.2 0 144-64.8 144-144v-428c0-79.2-64.8-144-144-144z m88 572c0 23.4-9.2 45.4-25.8 62.2-16.8 16.8-38.8 25.8-62.2 25.8H272c-23.4 0-45.4-9.2-62.2-25.8S184 793.6 184 770.2v-428c0-23.4 9.2-45.4 25.8-62.2 16.8-16.8 38.8-25.8 62.2-25.8h58v42c0 15.4 12.6 28 28 28s28-12.6 28-28v-42h252v42c0 15.4 12.6 28 28 28s28-12.6 28-28v-42h58c23.4 0 45.4 9.2 62.2 25.8 16.8 16.8 25.8 38.8 25.8 62.2v428z" fill="#999" p-id="4563"></path>
@@ -29,7 +30,7 @@
             <monthpanel :lang="lang" v-model="month" @change="showMonth = false"></monthpanel>
         </template>
         <template v-else>
-            <datepanel class="date-panel" :lang="lang" v-model="DATE" @change="changeDate"></datepanel>
+            <datepanel class="date-panel" :lang="lang" v-model="DATE" @change="changeDate()" ref="dp"></datepanel>
         </template>
     </div>
     </transition>
@@ -49,20 +50,18 @@ const MONTH = {
     zh: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一', '十二']
 };
 
+const PLACEHOLDER = {
+    en: 'Select Date',
+    zh: '选择日期'
+}
+
 let _d = new Date(), y = _d.getFullYear(), m = _d.getMonth() + 1, d = _d.getDate(), begin = y - y % 10, end = begin + 9;
 export default {
     name: 'datepicker',
     mixins: [mixin],
     props: {
         value: {
-            type: String | Object,
-            default() {
-                return {
-                    year: y,
-                    month: m,
-                    date: d
-                }
-            }
+            type: String | Object
         },
         lang: {
             type: String,
@@ -70,12 +69,14 @@ export default {
         },
         format: {
             type: String,
-            default: 'YYYY-MM-DD' // YYYY-MM-DD YYYY/MM/DD YYYY~MM~DD YYYY.MM.DD
-        }
+            default: 'YYYY/MM/DD' // YYYY-MM-DD YYYY/MM/DD YYYY~MM~DD YYYY.MM.DD
+        },
+        name: String
     },
     data() {
         return {
             open: false,
+            val: this.value,
             year: undefined,
             month: undefined,
             date: undefined,
@@ -88,27 +89,36 @@ export default {
     },
     computed: {
         ymd() {
-            return this.format
+            return this.val ? this.format
                 .replace('YYYY', this.year)
                 .replace('MM', quantity(this.month))
-                .replace('DD', quantity(this.date))
+                .replace('DD', quantity(this.date)) : ''
         },
         monthArr() {
             if('undefined' === typeof this.lang) return [];
             return ['en','zh'].indexOf(this.lang) > -1 ? MONTH[this.lang] : MONTH['en']
+        },
+        placeholder() {
+            return ['en','zh'].indexOf(this.lang) > -1 ? PLACEHOLDER[this.lang] : PLACEHOLDER['en']
         }
     },
     created() {
-        if(typeof this.value === 'string') {
-            let ymd = this.value.split('-');
-            this.year = +ymd[0];
-            this.month = +ymd[1];
-            this.date = +ymd[2];
+        if(this.val) {
+            if(typeof this.val === 'string') {
+                let ymd = this.val.split('/');
+                this.year = +ymd[0];
+                this.month = +ymd[1];
+                this.date = +ymd[2];
+            } else {
+                let { year, month, date } = this.val;
+                this.year = year;
+                this.month = month;
+                this.date = date;
+            }
         } else {
-            let { year, month, date } = this.value;
-            this.year = year;
-            this.month = month;
-            this.date = date;
+            this.year = y;
+            this.month = m;
+            this.date = d;
         }
         this.DATE = new Date(this.year, this.month - 1, this.date);
     },
@@ -132,12 +142,12 @@ export default {
         prev() {
             if(this.showYear) {
                 if(this.showRange) {
-                    let rg = this.range.split('~'), begin = +rg[0] - 100, end = +rg[1] - 100;
-                    this.range = begin + '~' + end;
                     this.year = this.year - 100;
                 } else {
                     this.year = this.year - 10;
                 }
+                let begin = this.year - this.year % 10, end = begin + 9;
+                this.range = begin + '~' + end;
             } else if(this.showMonth) {
                 this.year--;
             } else {
@@ -146,17 +156,19 @@ export default {
                     this.month = 12
                     this.year--;
                 }
+                this.$refs.dp.setCalendar(this.year, this.month);
+                this.open = true;
             }
         },
         next() {
             if(this.showYear) {
                 if(this.showRange) {
-                    let rg = this.range.split('~'), begin = +rg[0] + 100, end = +rg[1] + 100;
-                    this.range = begin + '~' + end;
                     this.year = this.year + 100;
                 } else {
                     this.year = this.year + 10;
                 }
+                let begin = this.year - this.year % 10, end = begin + 9;
+                this.range = begin + '~' + end;
             } else if(this.showMonth) {
                 this.year++;
             } else {
@@ -165,17 +177,22 @@ export default {
                     this.month = 1;
                     this.year++;
                 }
+                this.$refs.dp.setCalendar(this.year, this.month);
+                this.open = true;
             }
         },
-        changeDate() {
+        changeDate(d) {
+            this.val = this.DATE.toLocaleDateString();
+            this.$nextTick(() => {
+                if(this.value && typeof this.value !== 'string') {
+                    this.$emit('input', { year: this.year, month: this.month, date: this.date })
+                    this.$emit('change', { year: this.year, month: this.month, date: this.date })
+                } else {
+                    this.$emit('input', this.ymd)
+                    this.$emit('change', this.ymd)
+                }
+            });
             this.open = false;
-            if(this.value === 'string') {
-                this.$emit('input', this.ymd)
-                this.$emit('change', this.ymd)
-            } else {
-                this.$emit('input', { year: this.year, month: this.month, date: this.date })
-                this.$emit('change', { year: this.year, month: this.month, date: this.date })
-            }
         }
     },
     watch: {
