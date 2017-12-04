@@ -140,6 +140,7 @@
 
         destroyed(){
             if(this.showMask){
+                // this.mask = vpMask.hide();
                 this.mask.destroy();
             }
             Overlay.manager.deleteOverlay(this);
