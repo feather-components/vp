@@ -21,7 +21,7 @@
             <span><i class="picker-icon right" @click="next"></i></span>
         </div>
         <yearrangepanel v-model="range" @change="changeYearRange" v-if="showRange"></yearrangepanel>
-        <yearpanel v-model="year" :range="range" v-else></yearpanel>
+        <yearpanel v-model="year" :range="range" v-else @change="open = false"></yearpanel>
     </div>
     </transition>
 </div>
