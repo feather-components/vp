@@ -30,7 +30,7 @@
 </template>
 <script>
 
-import { calendar, select2Range } from './calendar.js'
+import { calendar } from './calendar.js'
 
 const langArr = {
     en: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
@@ -41,7 +41,7 @@ export default {
     name: 'datepanel',
     props: {
         value: {
-            type: Date,
+            type: Date | String,
             default: () => new Date
         },
         today: {
@@ -68,6 +68,7 @@ export default {
     },
     data() {
         return {
+            val: this.value ? new Date(this.value) : new Date(),
             selectPoints: {},
             calendarData: [],
             prevPos: [],
@@ -80,10 +81,10 @@ export default {
             return langArr[this.lang] || langArr['en']
         },
         curYear(){
-            return  this.year || this.value.getFullYear()
+            return  this.year || this.val.getFullYear()
         },
         curMonth(){
-            return this.month || (this.value.getMonth() + 1)
+            return this.month || (this.val.getMonth() + 1)
         },
         now() {
             let td = new Date(this.today), cdate = td instanceof Date ? td : new Date();
@@ -98,7 +99,7 @@ export default {
                 this.setRangeAnchor(dateObj);
             } else {
                 this.setActiveDate(dateObj);
-                let d = this.value, h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
+                let d = this.val, h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
                 let { year, month, date } = dateObj;
                 this.$emit('input', new Date(year, month - 1, date, h, m, s));
                 this.$emit('change', dateObj);
@@ -197,7 +198,7 @@ export default {
         }
     },
     created() {
-        this.curDate = this.value.getDate() || this.now.getDate();
+        this.curDate = this.val.getDate() || this.now.getDate();
         this.calendarData = calendar(this.curYear, this.curMonth - 1);
         !this.hasChecked && (this.hasChecked = true);
         this.setActiveDate({ year: this.curYear, month: this.curMonth, date: this.curDate });
@@ -216,6 +217,7 @@ export default {
             let year = c.getFullYear(), month = c.getMonth() + 1, date = c.getDate();
             this.curDate = date;
             this.setActiveDate({ year, month, date })
+            this.val = new Date(c);
         }
     }
 }

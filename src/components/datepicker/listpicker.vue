@@ -43,6 +43,7 @@ export default {
         check(item, index) {
             this.checkIndex = index;
             this.$emit('input', item);
+            this.$emit('change', item);
         }
     },
     mounted() {
@@ -68,6 +69,7 @@ export default {
     height: 228px;
     overflow: auto;
     display: inline-block;
+    font-size: 12px;
     &-item {
         height: 28px;
         line-height: 28px;

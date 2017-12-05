@@ -14,12 +14,12 @@
 </template>
 <script>
 import { createYearArray } from './calendar'
+let year = new Date().getFullYear();
 export default {
     name: 'yearpanel',
     props: {
         value: {
-            type: Number | String,
-            default: new Date().getFullYear()
+            type: Number | String
         },
         range: {
             type: String | Array
@@ -27,7 +27,7 @@ export default {
     },
     data() {
         return {
-            years: createYearArray(this.range || this.value),
+            years: createYearArray(this.range || this.value || year),
             curIndex: undefined,
             checkIndex: undefined
         }

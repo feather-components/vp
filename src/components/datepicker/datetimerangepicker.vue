@@ -1,9 +1,9 @@
 <template>
 <div class="monthpicker">
     <div class="input" @click="open = !open">
-        <input type="text" readonly class="input-text" placeholder="start time" :value="begin">
+        <input type="text" readonly class="input-text" :placeholder="placeholder[0]" :value="begin">
         <span class="div">-</span>
-        <input type="text" readonly class="input-text" placeholder="start time" :value="end">
+        <input type="text" readonly class="input-text" :placeholder="placeholder[1]" :value="end">
         <span class="picker-icon">
             <svg t="1509440995295" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4681" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22">
                 <path d="M358.2 436h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM358.2 616h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM538.2 436h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM538.2 616h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM718.2 540c14.4 0 26-11.8 26-26v-52c0-14.4-11.6-26-26-26h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52zM816.2 738v-44c0-15.4-12.6-28-28-28s-28 12.6-28 28v72c0 15.4 12.6 28 28 28h72c15.4 0 28-12.6 28-28s-12.6-28-28-28h-44z" fill="#999" p-id="4682"></path>
@@ -85,14 +85,18 @@ const MONTH = {
     zh: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一', '十二']
 };
 
+const PLACEHOLDER = {
+    en: ['Begin DateTime', 'End DateTime'],
+    zh: ['开始时间','结束时间']
+}
+
 export default {
     name: 'datetimerangepicker',
     mixins: [mixin],
     components: { Daterangepanel, Yearpanel, Monthpanel, Yearrangepanel, Timpepanel },
     props: {
         value: {
-            type: Array | Object,
-            default: () => [new Date(d), new Date(d)]
+            type: Array | Object
         },
         prevMonth: {
             type: String | Date,
@@ -130,7 +134,7 @@ export default {
         return {
             beginMonth: this.prevMonth,
             endMonth: this.nextMonth,
-            val: this.value,
+            val: new Array(2),
             showRange: [false, false],
             showYear: [false, false],
             showMonth: [false, false],
@@ -138,7 +142,7 @@ export default {
             range: new Array(2),
             year: new Array(2),
             month: new Array(2),
-            time: this.value.map(it => it instanceof Date ? it : new Date(it)),
+            time: new Array(2),
             open: false,
             show: false,
             dtFormat: this.hasSeconds ? this.format : this.format.replace(':ss', '')
@@ -182,11 +186,14 @@ export default {
                 } else {
                     tits[i] = (this.monthArr[month] + ' ') + year
                 }
-                if(this.showTime) {
+                if(this.showTime && this.val[i]) {
                     tits[i] = this.monthArr[month] + ' ' + this.val[i].split(' ')[0].split('/').pop() + ' ' + year
                 }
             }
             return tits;
+        },
+        placeholder() {
+            return ['en','zh'].indexOf(this.lang) > -1 ? PLACEHOLDER[this.lang] : PLACEHOLDER['en'];
         }
     },
     watch: {
@@ -196,14 +203,17 @@ export default {
                 val[i] = d instanceof Date ? d.toLocaleDateString() : d.split(' ')[0];
                 time[i] = d instanceof Date ? d : new Date(d);
             })
-            this.time = time;
             this.val = val;
+            this.val.length && (this.time = time)
         },
         month(c) {
             this.$nextTick(() => {
                 this.beginMonth = this.year[0] + '/' + this.month[0];
                 this.endMonth = this.year[1] + '/' + this.month[1];
             })
+        },
+        open() {
+            this.showTime = false;
         }
     },
     methods: {
@@ -338,18 +348,24 @@ export default {
         }
     },
     created() {
-        let begin, end, beginTime, endTime;
-        if(this.val && this.val instanceof Array) {
+        let begin, end;
+        this.val = this.value || new Array(2);
+        if(this.val instanceof Array && this.val.length === 2 && this.val[0] && this.val[1]) {
             begin = new Date(this.val[0]);
             end = new Date(this.val[1]);
             this.year = [begin.getFullYear(), end.getFullYear()];
             this.month = [begin.getMonth() + 1, end.getMonth() + 1];
-            this.year.forEach((yr, i) => {
-                this.range[i] = (yr - yr % 10) + '~' + (yr - yr % 10 + 9);
-            });
-            this.beginMonth = this.year[0] + '/' + this.month[0];
-            this.endMonth = this.year[1] + '/' + this.month[1];
+            this.time = [begin, end];
+        } else {
+            this.month = [d.getMonth() + 1, (d.getMonth() + 1) % 12 + 1];
+            this.year = [d.getFullYear(), d.getFullYear() + parseInt((d.getMonth() + 1) / 12)];
+            this.time = [new Date(d.toLocaleDateString() + ' 00:00:00'), new Date(d.toLocaleDateString() + ' 00:00:00')];
         }
+        this.year.forEach((yr, i) => {
+            this.range[i] = (yr - yr % 10) + '~' + (yr - yr % 10 + 9);
+        });
+        this.beginMonth = this.year[0] + '/' + this.month[0];
+        this.endMonth = this.year[1] + '/' + this.month[1];
     }
 }
 </script>
