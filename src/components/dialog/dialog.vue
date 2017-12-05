@@ -45,11 +45,11 @@
         },
         methods: {
             buttonClick(){
-                vpMask.hide();
+                // vpMask.hide();
                 this.visibility = false;
             },
             close(){
-                vpMask.hide();
+                // vpMask.hide();
                 this.visibility = false;
             }
         },
