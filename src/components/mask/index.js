@@ -1,9 +1,10 @@
 import Mask from './mask';
 import {Util} from '../../helper';
 
+let mask = {};
 
 Mask.show = function(options) {
-	let mask = Util.appendInstance(Mask);
+	mask = Util.appendInstance(Mask);
     mask.open();
     mask.$on('click', function() {
         if(options && typeof options.click == 'function'){
