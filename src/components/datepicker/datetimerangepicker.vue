@@ -1,9 +1,9 @@
 <template>
 <div class="monthpicker">
-    <div class="input" @click="open = !open">
-        <input type="text" readonly class="input-text" :placeholder="placeholder[0]" :value="begin">
+    <div class="range-picker-input-wrap" @click="open = !open">
+        <input type="text" readonly class="range-picker-input-text" :placeholder="placeholder[0]" :value="begin">
         <span class="div">-</span>
-        <input type="text" readonly class="input-text" :placeholder="placeholder[1]" :value="end">
+        <input type="text" readonly class="range-picker-input-text" :placeholder="placeholder[1]" :value="end">
         <span class="picker-icon">
             <svg t="1509440995295" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4681" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22">
                 <path d="M358.2 436h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM358.2 616h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM538.2 436h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM538.2 616h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM718.2 540c14.4 0 26-11.8 26-26v-52c0-14.4-11.6-26-26-26h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52zM816.2 738v-44c0-15.4-12.6-28-28-28s-28 12.6-28 28v72c0 15.4 12.6 28 28 28h72c15.4 0 28-12.6 28-28s-12.6-28-28-28h-44z" fill="#999" p-id="4682"></path>
@@ -380,6 +380,50 @@ export default {
     color: #ccc;
 }
 
+.range-picker-input-text{
+    width: 125px;
+    border: 0;
+    outline: none;
+}
+
+.range-picker-input-wrap {
+    position: relative;
+    border: 1px solid #999;
+    width: 295px;
+    cursor: pointer;
+    &-text {
+        line-height: 28px;
+        height: 28px;
+        width: 120px;
+        border: none;
+        cursor: pointer;
+        display: inline-block;
+        margin-right: 0;
+        &:focus, &:active, &:visited {
+            box-shadow: none;
+            outline: none;
+            border: none;
+        }
+    }
+    .div {
+        display: inline-block;
+        height: 28px;
+        line-height: 28px;
+        text-align: center;
+        padding: 0 5px;
+    }
+    .picker-icon {
+        vertical-align: bottom;
+        position: absolute;
+        right: 2px;
+        top: 2px;
+        display: block;
+        width: 22px;
+        height: 22px;
+    }
+}
+
+
 .drop-box {
     .body-group {
         position: relative;
@@ -483,43 +527,6 @@ export default {
                 }
             }
         }
-    }
-}
-
-.input {
-    position: relative;
-    border: 1px solid #999;
-    width: 285px;
-    cursor: pointer;
-    &-text {
-        line-height: 28px;
-        height: 28px;
-        width: 120px;
-        border: none;
-        cursor: pointer;
-        display: inline-block;
-        margin-right: 0;
-        &:focus, &:active, &:visited {
-            box-shadow: none;
-            outline: none;
-            border: none;
-        }
-    }
-    .div {
-        display: inline-block;
-        height: 28px;
-        line-height: 28px;
-        text-align: center;
-        padding: 0 5px;
-    }
-    .picker-icon {
-        vertical-align: bottom;
-        position: absolute;
-        right: 2px;
-        top: 2px;
-        display: block;
-        width: 22px;
-        height: 22px;
     }
 }
 
