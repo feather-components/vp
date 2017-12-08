@@ -132,10 +132,10 @@ export default {
         },
         end() {
             let e;
-            if(this.val[0] instanceof Date) {
-                e = this.val[0].toLocaleDateString().split('/');
-            } else if(typeof this.val[0] === 'string') {
-                e = this.val[0].split('/');
+            if(this.val[1] instanceof Date) {
+                e = this.val[1].toLocaleDateString().split('/');
+            } else if(typeof this.val[1] === 'string') {
+                e = this.val[1].split('/');
             }
             return e ? this.format.replace('YYYY', e[0]).replace('MM', quantity(e[1])).replace('DD', quantity(e[2])) : '';
         },
@@ -174,8 +174,10 @@ export default {
     },
     methods: {
         change() {
-            this.open = false;
             this.$emit('change', this.val);
+            setTimeout(() => {
+                this.open = false;
+            }, 0)
         },
         flush(index, operator) {
             let arr = [];
@@ -299,7 +301,7 @@ export default {
     },
     created() {
         let begin, end;
-        this.val = this.value || new Array(2);
+        this.val = (this.value instanceof Array && this.value.length) ? this.value : new Array(2);
         if(this.val instanceof Array && this.val.length === 2 && this.val[0] && this.val[1]) {
             begin = new Date(this.val[0]);
             end = new Date(this.val[1]);
