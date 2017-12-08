@@ -386,6 +386,10 @@ export default {
     outline: none;
 }
 
+.range-picker-input-text:focus{
+    border: 0;
+}
+
 .range-picker-input-wrap {
     position: relative;
     border: 1px solid #999;
