@@ -183,7 +183,9 @@ export default {
         },
         changeDate(d) {
             this.val = this.DATE.toLocaleDateString();
+            console.log(this.DATE,6666)
             this.$nextTick(() => {
+                console.log(this.val)
                 if(this.value && typeof this.value !== 'string') {
                     this.$emit('input', { year: this.year, month: this.month, date: this.date })
                     this.$emit('change', { year: this.year, month: this.month, date: this.date })
@@ -200,6 +202,12 @@ export default {
             this.date = c.getDate();
             this.month = c.getMonth() + 1;
             this.year = c.getFullYear();
+        },
+        year(c) {
+            this.DATE.setFullYear(c);
+        },
+        month(c) {
+            this.DATE.setMonth(c - 1);
         }
     },
     components: { Datepanel, Monthpanel, Yearpanel, Yearrangepanel }

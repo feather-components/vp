@@ -207,8 +207,6 @@ export default {
             }
         },
         changeDate(obj) {
-            this.year = obj.year;
-            this.month = obj.month;
             this.date = obj.date;
             this.val = this.year + '/' + this.month + '/' + this.date;
         },
