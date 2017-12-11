@@ -53,7 +53,11 @@
                 this.visibility = false;
             }
         },
-
+        watch: {
+            visibility() {
+                this.visibility ? vpMask.show() : vpMask.hide()
+            }
+        },
         mounted(){
             /*
             if(this.showMask){

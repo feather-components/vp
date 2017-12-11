@@ -15,7 +15,7 @@ Mask.show = function(options) {
 };
 
 Mask.hide = function() {
-    mask.destory();
+    mask.destroy();
 }
 
 
