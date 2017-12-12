@@ -23,7 +23,7 @@
         <li v-for="option in options"
             @mouseenter="!option.disabled && (hoverKey = option.value)"
             @click="select(option)"
-            :class="{ hover: hoverKey === option.value, active: activeKey === option.value, disabled: option.disabled }"
+            :class="{ hover: hoverKey == option.value, active: activeKey == option.value, disabled: option.disabled }"
             :key="option.value">
                 <template v-if="type === 'multiple'">
                     <label><checkbox class="checkbox" v-model="val" :value="option.value" :disabled="option.disabled"></checkbox>{{ option.text }}</label>
@@ -107,15 +107,8 @@ export default {
         },
         outside() {
             this.selectMode = false;
-        }
-    },
-    created() {
-        //针对下拉单选
-        let curOption = this.options.find(item => item.value == this.value);
-        this.select(curOption);
-    },
-    watch: {
-        value(c,o) {
+        },
+        setVal(c) {
             if(this.type === 'multiple' && Array.isArray(c)) {
                 if(c.length) {
                     this.mulOpts = this.options.filter(item => (c.indexOf(item.value) > -1 || c.indexOf(+item.value) > -1));
@@ -126,8 +119,21 @@ export default {
             } else {
                 let curOption = this.options.find(item => item.value == this.value);
                 this.text = curOption ? curOption.text : undefined;
-                this.val = c;
+                this.val = this.activeKey = this.hoverKey = c;
             }
+        }
+    },
+    created() {
+        //针对下拉单选
+        let curOption = this.options.find(item => item.value == this.value);
+        this.select(curOption);
+    },
+    watch: {
+        value(c,o) {
+            this.setVal(c);
+        },
+        options() {
+            this.setVal(this.val);
         }
     },
     directives: {

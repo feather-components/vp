@@ -31,8 +31,15 @@
         <span>当前选项值：{{ val6 }}， 选择项：{{ option6 }}</span>
     </div>
     <div>
+        <p>改变值</p>
         <vp-select width="350" :options="list7" v-model="val7" type="multiple"></vp-select>
         <button @click="changeVal">change</button>
+    </div>
+    <div></div>
+    <div>
+        <p>列表更新 options update</p>
+        <vp-select v-model="obj.val" :options="objList"></vp-select>
+        <span>当前选项值：{{ obj }}&nbsp;&nbsp;当前列表：{{ objList }}</span>
     </div>
 </div>
 </template>
@@ -72,7 +79,13 @@ export default {
 
             val7: [],
             option7: {},
-            list7: [...arr]
+            list7: [...arr],
+
+            obj: {
+                val: '3'
+            },
+            objVal: {},
+            objList: [],
         }
     },
     methods: {
@@ -80,6 +93,11 @@ export default {
             this.val7 = [2];
             // console.log(this.val7);
         }
+    },
+    created() {
+        setTimeout(() => {
+            this.objList = [...arr];
+        }, 1000);
     }
 }
 </script>
