@@ -1,6 +1,6 @@
 <template>
     <div class="tab-example">
-        <vp-tabs @changed="change1" class="vp-tab--surround">
+        <vp-tabs class="vp-tab--surround">
             <vp-tabpanel v-for="i in 10" :label="'tab' + i" :index="i">{{ i }}</vp-tabpanel>
         </vp-tabs>
         <br/>
@@ -8,7 +8,7 @@
             <vp-tabpanel v-for="i in 5" :label="'tab' + i" :index="i">{{ i }}</vp-tabpanel>
         </vp-tabs>
         <br/>
-        <vp-tabs :isManual = "true" ref="mandualTab">
+        <vp-tabs :isManual = "true" ref="mandualTab" @vp-tab:to="tabTo">
             <vp-tabpanel label="user" index="user">user</vp-tabpanel>
             <vp-tabpanel label="role" index="role">role</vp-tabpanel>
             <vp-tabpanel label="prvi" index="prvi">prvi</vp-tabpanel>
@@ -16,25 +16,28 @@
             <vp-tabpanel label="green" index="green">green</vp-tabpanel>
         </vp-tabs>
         <br/>
-        <btn @click="chooseTab($refs.mandualTab, 'user')">选择 tab</btn>
+        <input v-model="mandualTabIndex"></input><btn @click="chooseTab($refs.mandualTab, mandualTabIndex)">选择 tab</btn>
     </div>
 </template>
 <script>
-    import { Tabs, TabPanel,Button } from 'vpui'
+    import { Tabs, TabPanel,Button,Toast } from 'vpui'
     export default {
         name: 'tab-page',
+        data(){
+            return{
+                mandualTabIndex: 'prvi'
+            } 
+        },
         components: {
             'vp-tabs': Tabs,
             'vp-tabpanel': TabPanel,
             btn: Button
         },
         methods: {
-            change1(tab) {
-                console.log(tab);
+            tabTo(event){
+                Toast.warn('tabIndex is ' + event.index);
             },
-            change2(tab) {
-                console.log(tab);
-            },
+
             chooseTab(tab, index){
                 tab.to(index);
             }

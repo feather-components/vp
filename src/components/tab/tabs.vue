@@ -67,7 +67,7 @@
                     console.error('vpui: tab not found, the index missed');
                 }
 
-                this.$emit('tab:to', { index });
+                this.$emit('vp-tab:to', { index });
             }
         }
     }
@@ -129,7 +129,7 @@
         }
     }
 
-    .fade {
+    /*.fade {
         &-enter-active,
         &-leave-active {
             transition: all .3s;
@@ -138,5 +138,5 @@
         &-leave-to{
             opacity: 0;
         }
-    } 
+    } */
 </style>
