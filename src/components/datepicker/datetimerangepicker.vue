@@ -384,6 +384,7 @@ export default {
     width: 125px;
     border: 0;
     outline: none;
+    cursor: pointer;
 }
 
 .range-picker-input-text:focus{

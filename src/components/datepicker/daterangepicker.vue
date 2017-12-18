@@ -165,7 +165,7 @@ export default {
         value(c) {
             if(!(c instanceof Array)) return ;
             let st = new Date(c[0]), et = new Date(c[1]);
-            if(st instanceof Date && et instanceof Date) {
+            if(!!+st && !!+et && st instanceof Date && et instanceof Date) {
                 this.$nextTick(() => {
                     this.val = c;
                     let stY = st.getFullYear(), stM = st.getMonth() + 1, etY = et.getFullYear(), etM = et.getMonth() + 1, stR = (stY - stY % 10) + '~' + (stY - stY % 10 + 9), etR = (etY - etY % 10) + '~' + (etY - etY % 10 + 9)
