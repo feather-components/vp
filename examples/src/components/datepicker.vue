@@ -1,6 +1,10 @@
 <template>
 <div>
-    <section>
+    <div>
+        默认 format:YYYY/MM/DD
+        <daterangepicker v-model="dt" lang="zh"></daterangepicker>
+    </div>
+    <!-- <section>
         <strong>Pickers (日期格式可以自定义，如：YYYY/MM/DD hh:mm:ss)</strong>
         <div class="cont">
             <p>Yearpicker</p>
@@ -33,7 +37,7 @@
             <p>Datepicker</p>
             <div class="panel">
                 <div>
-                    默认 format:YYYY-MM-DD
+                    默认 format:YYYY/MM/DD
                     <datepicker></datepicker>
                 </div>
                 <div>
@@ -180,7 +184,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 </div>
 </template>
 <script>
@@ -196,6 +200,7 @@ export default {
     },
     data() {
         return {
+            dt: [],
             // date1: new Date,
             date1: undefined,
             date2: new Date,
@@ -253,6 +258,9 @@ export default {
             let dd = new Date(), h = dd.getHours(), m = dd.getMinutes(), s = dd.getSeconds(), ms = dd.getMilliseconds();
             this.time3 = dd.toLocaleDateString() + ' ' + dd.toTimeString().split(' ')[0]; //dbv(h) + ':' + dbv(m) + ':' + dbv(s);
         }, 1000);
+        setTimeout(() => {
+            this.dt = ['2017/9/15', '2017/12/6']
+        }, 1000)
     }
 }
 </script>
