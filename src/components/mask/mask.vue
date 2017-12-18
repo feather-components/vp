@@ -7,6 +7,14 @@
             return {
                 class: 'vp-mask'
             }
+        },
+        methods: {
+            show(){
+                this.open();
+            },
+            hide(){
+                this.close();
+            }
         }
     }
 </script>

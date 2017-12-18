@@ -26,7 +26,7 @@
             isManual: {
                 type: Boolean,
                 required: false,
-                default:false
+                default: false
             }
         },
         data() {
