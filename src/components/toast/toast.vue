@@ -19,6 +19,7 @@
         padding-right: 25px;
         color: #ccc;
         box-shadow: 0 2px 8px 0;
+        z-index: 100001;
     }
 
     .vp-toast-content{
