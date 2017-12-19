@@ -35,6 +35,8 @@
         },
         data(){
             return {
+                resultSource: {},
+                resultSource: {},
                 words: [],
                 choosedCitys: [],
                 cityName: '' || '全国'
@@ -42,11 +44,25 @@
         },
 
         methods: {
+            // 转换为可用json格式
+            tranSource() {
+                var tempArr = [], tempObj = {};
+                tempArr = Object.entries(this.source);
+                tempArr.forEach((item) => {
+                    item[1].forEach((i) => {
+                        tempObj[i.id] = {
+                                name: i.zh,
+                                word: item[0]
+                            }
+                    })
+                })
+                this.resultSource = tempObj;
+            },
             getCitysByWord(word){
                 var list = [];
                 word = word.toLowerCase();
-                for(let key in this.source){
-                    let city = this.source[key];
+                for(let key in this.resultSource){
+                    let city = this.resultSource[key];
                     if(city.word == word){
                         list.push({
                             id: key,
@@ -77,13 +93,13 @@
             },
 
             clickCity(city){
-                let citySourceItem = this.source[city.id];
+                let citySourceItem = this.resultSource[city.id];
                 this.cityName = city.name;
                 citySourceItem['choosed'] = citySourceItem['choosed'] ? false : true;
                 if(!this.isMultiple){
                     if(this.choosedCitys.length === 1){
                         if(city.id != this.choosedCitys[0].id){
-                            this.source[this.choosedCitys[0].id]['choosed'] = false;
+                            this.resultSource[this.choosedCitys[0].id]['choosed'] = false;
                         }
                     }
                     this.choosedCitys = [];
@@ -107,6 +123,7 @@
         },
 
         mounted(){
+            this.tranSource();
             this.words = this.getWords();
         }
 

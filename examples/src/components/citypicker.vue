@@ -13,9 +13,8 @@
     export default {
         data(){
             return {
-                sSource: {},
-                tempSource: source,
-                mSource: {}
+                sSource: source, // 真实场景中，sSource从接口获取
+                mSource: JSON.parse(JSON.stringify(source))
             }
         },
         components: {
@@ -25,20 +24,6 @@
             selected(obj) {
                 console.log(`当前点击城市为：${obj.name}，id为：${obj.id}`)
             }
-        },
-        mounted() {
-            var temp = null, obj = {};
-            temp = Object.entries(this.tempSource);
-            temp.forEach((item) => {
-                item[1].forEach((i) => {
-                    obj[i.id] = {
-                            name: i.zh,
-                            word: item[0]
-                        }
-                })
-            })
-            this.sSource = obj;
-            this.mSource = JSON.parse(JSON.stringify(obj))
         }
     }
 </script>
