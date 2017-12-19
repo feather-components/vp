@@ -212,11 +212,17 @@ export default {
         },
         value(c) {
             let dt = new Date(c)
-            if(dt instanceof Date) {
+            if(!!+dt && dt instanceof Date) {
                 this.year = dt.getFullYear();
                 this.month = dt.getMonth() + 1;
                 this.date = dt.getDate();
                 this.val = c;
+            } else {
+                this.val = c;
+                let d = new Date();
+                this.year = d.getFullYear();
+                this.month = d.getMonth() + 1;
+                this.date = d.getDate();
             }
         }
     },

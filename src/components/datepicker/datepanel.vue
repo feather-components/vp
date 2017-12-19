@@ -214,6 +214,7 @@ export default {
     },
     watch: {
         value(c) {
+            c = !!+c && c instanceof Date ? c : new Date(c);
             let year = c.getFullYear(), month = c.getMonth() + 1, date = c.getDate();
             this.curDate = date;
             this.setActiveDate({ year, month, date })

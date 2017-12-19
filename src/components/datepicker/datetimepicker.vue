@@ -226,7 +226,19 @@ export default {
     },
     watch: {
         value(c) {
-            this.setDateTime(c);
+            let dt = new Date(c);
+            if(!!+dt && dt instanceof Date) {
+                this.setDateTime(c);
+            } else {
+                this.val = c;
+                this.hour = 0;
+                this.minute = 0;
+                this.second = 0;
+                this.setDateTime(new Date);
+            }
+        },
+        open(c) {
+            !c && (this.showDatePanel = true);
         }
     },
     components: { Timepanel, Datepanel, Monthpanel, Yearpanel, Yearrangepanel }

@@ -202,9 +202,41 @@ export default {
             c instanceof Array && c.forEach((d, i) => {
                 val[i] = d instanceof Date ? d.toLocaleDateString() : d.split(' ')[0];
                 time[i] = d instanceof Date ? d : new Date(d);
-            })
+            });
             this.val = val;
-            this.val.length && (this.time = time)
+            if(c.length == 0) {
+                let sy = year, ey = year + parseInt((month + 2) / 12),
+                    sm = month + 1, em = (month + 2) % 12,
+                    sr = (sy - sy % 10) + '~' + (sy - sy % 10 + 9),
+                    er = (ey - ey % 10) + '~' + (ey - ey % 10 + 9);
+                this.year = [sy, ey];
+                this.month = [sm, em];
+                this.range = [sr, er];
+                this.hour = [0, 0];
+                this.minute = [0, 0];
+                this.second = [0, 0];
+                this.beginMonth = sy + '/' + sm;
+                this.endMonth = ey + '/' + em;
+                this.time = [new Date(sy, sm - 1, date, 0, 0, 0), new Date(ey, em - 1, date, 0, 0, 0)];
+            } else {
+                let s = new Date(val[0]), e = new Date(val[1]),
+                    sy = s.getFullYear(), ey = e.getFullYear(),
+                    sm = s.getMonth() + 1, em = e.getMonth() + 1,
+                    sr = (sy - sy % 10) + '~' + (sy - sy % 10 + 9),
+                    er = (ey - ey % 10) + '~' + (ey - ey % 10 + 9),
+                    sh = s.getHours(), eh = e.getHours(),
+                    smm = s.getMinutes(), emm = e.getMinutes(),
+                    ss = s.getSeconds(), es = e.getSeconds();
+                this.year = [sy, ey];
+                this.month = [sm, em];
+                this.range = [sr, er];
+                this.hour = [sh, eh];
+                this.minute = [smm, emm];
+                this.second = [ss, es];
+                this.beginMonth = sy + '/' + sm;
+                this.endMonth = ey + '/' + em;
+                this.time = time;
+            }
         },
         month(c) {
             this.$nextTick(() => {

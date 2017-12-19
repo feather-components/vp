@@ -196,7 +196,7 @@ export default {
     },
     data() {
         return {
-            dt: [],
+            dt: ['2017/12/12 12:20:30', '2018/3/2 3:40:23'],
             // date1: new Date,
             date1: undefined,
             date2: new Date,

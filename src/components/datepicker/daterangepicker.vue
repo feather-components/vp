@@ -175,6 +175,19 @@ export default {
                     this.month = [stM, etM];
                     this.range = [stR, etR];
                 })
+            } else {
+                this.$nextTick(() => {
+                    this.val = c;
+                    let sy = year, ey = sy + parseInt((month + 2) / 12),
+                        sm = month + 1, em = (month + 2) % 12,
+                        sr = (sy - sy % 10) + '~' + (sy - sy % 10 + 9),
+                        er = (ey - ey % 10) + '~' + (ey - ey % 10 + 9);
+                    this.beginMonth = sy + '/' + sm;
+                    this.endMonth = ey + '/' + em;
+                    this.year = [sy, ey];
+                    this.month = [sm, em];
+                    this.range = [sr, er];
+                })
             }
         },
         val(c) {
