@@ -68,7 +68,6 @@
         methods:{
             uploadFile(){
                 var self = this;
-                console.log(document.querySelector("#fileUpload").files);
                 var oFiles = document.querySelector("#fileUpload").files;
                 if(self.fileMaxNum>0&&oFiles.length>self.fileMaxNum){
                     alert(`单次可上传最大文件数为${self.fileMaxNum}`);
@@ -128,7 +127,6 @@
                                         }
                                         self.$emit('complete',file);
                                     }
-                                    console.log("上传成功！");
                                 }
                                 else{
                                     self.files[filesLength-1].error = true;
@@ -139,7 +137,6 @@
                         // xhr.onload = uploadComplete; //请求完成
                         // xhr.onerror =  uploadFailed; //请求失败
                         xhr.upload.onprogress = function(event){
-                            console.log(event);
                             if (event.lengthComputable) {
                                 self.files[filesLength-1].scale = event.loaded / event.total*100;
                     　　　　}
@@ -186,7 +183,6 @@
     function uploadProgress(event) {
 　　　　if (event.lengthComputable) {
 　　　　　　var percentComplete = event.loaded / event.total*100;
-            console.log(percentComplete);
 　　　　}
 　　}
 </script>
