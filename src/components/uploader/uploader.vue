@@ -119,7 +119,14 @@
                                     if(!uploading){
                                         self.files = [];
                                         self.$refs.innerMask.close();
-                                        self.$emit('complete',oFiles,data);
+                                        let file = {};
+                                        for(let k in data){
+                                            file = {
+                                                sKey:data[k].sKey,
+                                                sExt:data[k].sExt
+                                            };
+                                        }
+                                        self.$emit('complete',file);
                                     }
                                     console.log("上传成功！");
                                 }
