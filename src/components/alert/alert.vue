@@ -13,6 +13,7 @@
         padding: 24px;
         color: #333;
         box-shadow: 0 8px 8px 0;
+        z-index: 100000;
     }
 
     .vp-alert-title{
@@ -140,6 +141,7 @@
 
         destroyed(){
             if(this.showMask){
+                // this.mask = vpMask.hide();
                 this.mask.destroy();
             }
             Overlay.manager.deleteOverlay(this);

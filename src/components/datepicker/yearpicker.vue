@@ -4,7 +4,8 @@
         <input type="text" readonly
             class="input-text"
             v-model="year"
-            placeholder="Select year">
+            :name="name"
+            :placeholder="placeholder">
         <span class="picker-icon">
             <svg t="1509440982605" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4562" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22">
                 <path d="M752 198.2h-58v-50c0-15.4-12.6-28-28-28s-28 12.6-28 28v50H386v-50c0-15.4-12.6-28-28-28s-28 12.6-28 28v50h-58c-79.2 0-144 64.8-144 144v428c0 79.2 64.8 144 144 144h480c79.2 0 144-64.8 144-144v-428c0-79.2-64.8-144-144-144z m88 572c0 23.4-9.2 45.4-25.8 62.2-16.8 16.8-38.8 25.8-62.2 25.8H272c-23.4 0-45.4-9.2-62.2-25.8S184 793.6 184 770.2v-428c0-23.4 9.2-45.4 25.8-62.2 16.8-16.8 38.8-25.8 62.2-25.8h58v42c0 15.4 12.6 28 28 28s28-12.6 28-28v-42h252v42c0 15.4 12.6 28 28 28s28-12.6 28-28v-42h58c23.4 0 45.4 9.2 62.2 25.8 16.8 16.8 25.8 38.8 25.8 62.2v428z" fill="#999" p-id="4563"></path>
@@ -29,7 +30,12 @@
 import Yearpanel from './yearpanel.vue'
 import Yearrangepanel from './yearrangepanel.vue'
 
-import mixin from './mixin.es6'
+import mixin from './mixin'
+
+const PLACEHOLDER = {
+    en: 'Select Year',
+    zh: '选择年份'
+}
 
 let y = new Date().getFullYear(), begin = y - y % 10, end = begin + 9;
 export default {
@@ -38,14 +44,20 @@ export default {
     props: {
         value: {
             type: Number | String | Object
-        }
+        },
+        name: String
     },
     data() {
         return {
             open: false,
-            year: y,
+            year: this.value,
             range: begin + '~' + end,
             showRange: false
+        }
+    },
+    computed: {
+        placeholder() {
+            return ['en','zh'].indexOf(this.lang) > -1 ? PLACEHOLDER[this.lang] : PLACEHOLDER['en']
         }
     },
     methods: {
@@ -79,6 +91,14 @@ export default {
                 this.range = begin + '~' + end;
                 this.year = this.year + 10;
             }
+        }
+    },
+    watch: {
+        value(c) {
+            this.year = c;
+        },
+        year(c) {
+            this.$emit('input', c);
         }
     },
     components: { Yearpanel, Yearrangepanel }
@@ -198,14 +218,24 @@ export default {
 .dropDown {
     &-enter-active,
     &-leave-active {
-        transition: all .1s;
-        transform-origin: center top;
+        transform-origin: 0 0;
+        transform: scaleY(1);
+        transition-property: all;
+        transition-duration: .2s;
+        transition-delay: 0s;
+    }
+    &-enter-active {
+        transition-timing-function: cubic-bezier(.23, 1, .32, 1);
+    }
+    &-leave-active {
+        transition-timing-function: cubic-bezier(.755, .05, .855, .06);
     }
     &-enter,
+    &-appear,
     &-leave-to{
         opacity: 0;
-        transform: scaleY(.8);
         transform-origin: center top;
+        transform: scaleY(.8);
     }
 }
 </style>

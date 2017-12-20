@@ -4,7 +4,8 @@
         <input type="text" readonly
             class="input-text"
             v-model="ym"
-            placeholder="Select month">
+            :name="name"
+            :placeholder="placeholder">
         <span class="picker-icon">
             <svg t="1509440982605" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4562" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22">
                 <path d="M752 198.2h-58v-50c0-15.4-12.6-28-28-28s-28 12.6-28 28v50H386v-50c0-15.4-12.6-28-28-28s-28 12.6-28 28v50h-58c-79.2 0-144 64.8-144 144v428c0 79.2 64.8 144 144 144h480c79.2 0 144-64.8 144-144v-428c0-79.2-64.8-144-144-144z m88 572c0 23.4-9.2 45.4-25.8 62.2-16.8 16.8-38.8 25.8-62.2 25.8H272c-23.4 0-45.4-9.2-62.2-25.8S184 793.6 184 770.2v-428c0-23.4 9.2-45.4 25.8-62.2 16.8-16.8 38.8-25.8 62.2-25.8h58v42c0 15.4 12.6 28 28 28s28-12.6 28-28v-42h252v42c0 15.4 12.6 28 28 28s28-12.6 28-28v-42h58c23.4 0 45.4 9.2 62.2 25.8 16.8 16.8 25.8 38.8 25.8 62.2v428z" fill="#999" p-id="4563"></path>
@@ -37,13 +38,17 @@ import Yearpanel from './yearpanel.vue'
 import Yearrangepanel from './yearrangepanel.vue'
 
 import { quantity } from './calendar'
-import mixin from './mixin.es6'
+import mixin from './mixin'
 
 const MONTH = {
     en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     zh: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一', '十二']
 };
 
+const PLACEHOLDER = {
+    en: 'Select Month',
+    zh: '选择月份'
+}
 
 let d = new Date(), y = d.getFullYear(), m = d.getMonth() + 1, begin = y - y % 10, end = begin + 9;
 export default {
@@ -51,13 +56,7 @@ export default {
     mixins: [mixin],
     props: {
         value: {
-            type: String | Object,
-            default() {
-                return {
-                    year: y,
-                    month: m
-                }
-            }
+            type: String | Object
         },
         lang: {
             type: String,
@@ -65,8 +64,9 @@ export default {
         },
         format: {
             type: String,
-            default: 'YYYY-MM' // YYYY-MM YYYY/MM YYYY~MM  YYYY.MM
-        }
+            default: 'YYYY/MM' // YYYY-MM YYYY/MM YYYY~MM  YYYY.MM
+        },
+        name: String
     },
     data() {
         return {
@@ -75,32 +75,34 @@ export default {
             month: undefined,
             range: begin + '~' + end,
             showRange: false,
-            showYear: false
+            showYear: false,
+            val: this.value
         }
     },
     computed: {
         ym() {
-            return this.format.replace('YYYY', this.year).replace('MM',quantity(this.month))
+            return this.val ? this.format.replace('YYYY', this.year).replace('MM',quantity(this.month)) : '';
         },
         monthArr() {
             if('undefined' === typeof this.lang) return [];
             return ['en','zh'].indexOf(this.lang) > -1 ? MONTH[this.lang] : MONTH['en']
+        },
+        placeholder() {
+            return ['en','zh'].indexOf(this.lang) > -1 ? PLACEHOLDER[this.lang] : PLACEHOLDER['en']
         }
     },
     created() {
-        if(typeof this.value === 'string') {
-            let ym = this.value.split('-');
+        if(typeof this.val === 'string') {
+            let ym = this.val.split('/');
             this.year = +ym[0];
             this.month = +ym[1];
-        } else {
-            let { year, month } = this.value;
+        } else if(this.val instanceof Object) {
+            let { year, month } = this.val;
             this.year = year;
             this.month = month;
-        }
-        document.body.onclick = e => {
-            if(this.$el.compareDocumentPosition(e.target) < 20) {
-                this.open = false;
-            }
+        } else {
+            this.year = y;
+            this.month = m;
         }
     },
     methods: {
@@ -146,14 +148,16 @@ export default {
                 this.year = this.year + 1;
             }
         },
-        changeMonth() {
+        changeMonth(month) {
             this.open = false;
-            if(typeof this.value === 'string') {
-                this.$emit('input', this.ym)
-                this.$emit('change', this.ym)
-            } else {
+            if(this.val instanceof Object) {
+                this.val = { year: this.year, month };
                 this.$emit('input', { year: this.year, month: this.month })
                 this.$emit('change', { year: this.year, month: this.month })
+            } else {
+                this.val = this.year + '/' + month;
+                this.$emit('input', this.ym)
+                this.$emit('change', this.ym)
             }
         }
     },
@@ -274,14 +278,24 @@ export default {
 .dropDown {
     &-enter-active,
     &-leave-active {
-        transition: all .1s;
-        transform-origin: center top;
+        transform-origin: 0 0;
+        transform: scaleY(1);
+        transition-property: all;
+        transition-duration: .2s;
+        transition-delay: 0s;
+    }
+    &-enter-active {
+        transition-timing-function: cubic-bezier(.23, 1, .32, 1);
+    }
+    &-leave-active {
+        transition-timing-function: cubic-bezier(.755, .05, .855, .06);
     }
     &-enter,
+    &-appear,
     &-leave-to{
         opacity: 0;
-        transform: scaleY(.8);
         transform-origin: center top;
+        transform: scaleY(.8);
     }
 }
 </style>

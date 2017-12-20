@@ -1,9 +1,10 @@
 import Mask from './mask';
 import {Util} from '../../helper';
 
-let mask = Util.appendInstance(Mask);
+let mask = {};
 
 Mask.show = function(options) {
+    mask = Util.appendInstance(Mask);
     mask.open();
     mask.$on('click', function() {
         if(options && typeof options.click == 'function'){
@@ -14,7 +15,7 @@ Mask.show = function(options) {
 };
 
 Mask.hide = function() {
-    mask.close();
+    mask.destroy();
 }
 
 

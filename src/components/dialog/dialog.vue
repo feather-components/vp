@@ -1,5 +1,5 @@
 <template>
-    <overlay class="vp-dialog" position="center" v-show="visibility">
+    <div class="vp-overlay vp-dialog" position="center" v-show="visibility">
         <i class="vp-dialog-close-icon" @click="close"></i>
         <div class="vp-dialog-title">
             <div class="vp-dialog-title-text">
@@ -12,11 +12,11 @@
             </div>
             <section class="vp-dialog-footer">
                 <slot name="btns">
-                    <btn type="main" class="vp-dialog-btn" @click="buttonClick">确认</btn>
+                    <btn type="main" class="vp-dialog-btn" @click="close">确认</btn>
                 </slot>
             </section>
         </div>
-    </overlay>
+    </div>
 </template>
 
 <script>
@@ -28,8 +28,6 @@
         name: 'dialog',
         mixins: [Overlay],
         components: {
-            vpMask,
-            Overlay,
             btn: Button
         },
         props: {
@@ -43,28 +41,28 @@
 
             }
         },
-        methods: {
-            buttonClick(){
-                vpMask.hide();
-                this.visibility = false;
-            },
-            close(){
-                vpMask.hide();
-                this.visibility = false;
+        methods: {},
+        watch: {
+            visibility(val){
+                if(val){
+                    if(this.mask){
+                        this.mask.show();
+                        return;
+                    }
+                    this.mask = vpMask.show();
+                }else{
+                    if(this.mask){
+                        this.mask.hide();
+                    }
+                }
             }
         },
-
         mounted(){
-            /*
-            if(this.showMask){
-                this.mask = vpMask.show();
-            }
             //Overlay.manager.addOverlay(this, Overlay.manager.types.alert);
-            */
         },
 
         destroyed(){
-            if(this.showMask){
+            if(this.mask){
                 this.mask.destroy();
             }
             //Overlay.manager.deleteOverlay(this);

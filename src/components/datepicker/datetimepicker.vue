@@ -4,7 +4,7 @@
         <input type="text" readonly
             class="input-text"
             v-model="ymdhms"
-            placeholder="Select month">
+            :placeholder="placeholder">
         <span class="picker-icon">
             <svg t="1509440995295" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4681" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22">
                 <path d="M358.2 436h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM358.2 616h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM538.2 436h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM538.2 616h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52c14.4 0 26-11.8 26-26v-52c0-14.4-11.8-26-26-26zM718.2 540c14.4 0 26-11.8 26-26v-52c0-14.4-11.6-26-26-26h-52c-14.4 0-26 11.6-26 26v52c0 14.2 11.6 26 26 26h52zM816.2 738v-44c0-15.4-12.6-28-28-28s-28 12.6-28 28v72c0 15.4 12.6 28 28 28h72c15.4 0 28-12.6 28-28s-12.6-28-28-28h-44z" fill="#999" p-id="4682"></path>
@@ -57,12 +57,17 @@ import Yearpanel from './yearpanel.vue'
 import Yearrangepanel from './yearrangepanel.vue'
 
 import { quantity } from './calendar'
-import mixin from './mixin.es6'
+import mixin from './mixin'
 
 const MONTH = {
     en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     zh: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一', '十二']
 };
+
+const PLACEHOLDER = {
+    en: 'Select Date Time',
+    zh: '选择日期时间'
+}
 
 let _d = new Date(),
     y = _d.getFullYear(),
@@ -78,10 +83,7 @@ export default {
     mixins: [mixin],
     props: {
         value: {
-            type: String | Date,
-            default() {
-                return new Date
-            }
+            type: String | Date
         },
         hasSeconds: {
             type: Boolean,
@@ -110,22 +112,26 @@ export default {
             showYear: false,
             showMonth: false,
             DATE: undefined,
+            val: this.value,
             showDatePanel: true,
             dtFormat: this.hasSeconds ? this.format : this.format.replace(':ss', '')
         }
     },
     computed: {
         ymdhms() {
-            return this.dtFormat.replace('YYYY', this.year)
+            return this.val ? this.dtFormat.replace('YYYY', this.year)
                 .replace('MM', quantity(this.month))
                 .replace('DD', quantity(this.date))
                 .replace('hh', quantity(this.hour))
                 .replace('mm', quantity(this.minute))
-                .replace('ss', quantity(this.second));
+                .replace('ss', quantity(this.second)) : '';
         },
         monthArr() {
             if('undefined' === typeof this.lang) return [];
             return ['en','zh'].indexOf(this.lang) > -1 ? MONTH[this.lang] : MONTH['en']
+        },
+        placeholder() {
+            return ['en','zh'].indexOf(this.lang) > -1 ? PLACEHOLDER[this.lang] : PLACEHOLDER['en'];
         }
     },
     created() {
@@ -133,15 +139,16 @@ export default {
     },
     methods: {
         setDateTime(c) {
-            const d = new Date(c || this.value);
+            const d = new Date(c || this.val || _d);
             if(!(d instanceof Date)) return;
             this.year = d.getFullYear();
             this.month = d.getMonth() + 1;
             this.date = d.getDate();
-            this.hour = d.getHours();
-            this.minute = d.getMinutes();
-            this.hasSeconds && (this.second = d.getSeconds());
-            this.DATE = d;
+            this.hour = this.val ? d.getHours() : 0;
+            this.minute = this.val ? d.getMinutes() : 0;
+            this.hasSeconds && (this.second = this.val ? d.getSeconds() : 0);
+            let second = this.hasSeconds ? (':' + this.second) : '';
+            this.DATE = d.toLocaleDateString() + ' ' + this.hour + ':' + this.minute + second;
         },
         changeYearRange(obj) {
             this.year = obj.begin + (this.year % 10)
@@ -176,8 +183,8 @@ export default {
                     this.month = 12
                     this.year--;
                 }
+                this.$refs.dp.setCalendar(this.year, this.month);
             }
-            this.$refs.dp.setCalendar(this.year, this.month);
         },
         next() {
             if(this.showYear) {
@@ -196,29 +203,42 @@ export default {
                     this.month = 1;
                     this.year++;
                 }
+                this.$refs.dp.setCalendar(this.year, this.month);
             }
-            this.$refs.dp.setCalendar(this.year, this.month);
         },
         changeDate(obj) {
-            this.year = obj.year;
-            this.month = obj.month;
             this.date = obj.date;
+            this.val = this.year + '/' + this.month + '/' + this.date;
         },
-        changeTime(obj) {
-            this.hour = obj.getHours();
-            this.minute = obj.getMinutes();
-            this.second = obj.getSeconds();
+        changeTime(str) {
+            let d = new Date(str);
+            this.hour = d.getHours();
+            this.minute = d.getMinutes();
+            this.second = d.getSeconds();
+            this.DATE = str;
         },
         OK() {
             this.showDatePanel = true;
             this.open = false;
-            this.$emit('change', this.DATE);
-            this.$emit('input', this.DATE);
+            this.$emit('change', this.ymdhms);
+            this.$emit('input', this.ymdhms);
         }
     },
     watch: {
         value(c) {
-            this.setDateTime(c);
+            let dt = new Date(c);
+            if(!!+dt && dt instanceof Date) {
+                this.setDateTime(c);
+            } else {
+                this.val = c;
+                this.hour = 0;
+                this.minute = 0;
+                this.second = 0;
+                this.setDateTime(new Date);
+            }
+        },
+        open(c) {
+            !c && (this.showDatePanel = true);
         }
     },
     components: { Timepanel, Datepanel, Monthpanel, Yearpanel, Yearrangepanel }
@@ -363,14 +383,24 @@ export default {
 .dropDown {
     &-enter-active,
     &-leave-active {
-        transition: all .1s;
-        transform-origin: center top;
+        transform-origin: 0 0;
+        transform: scaleY(1);
+        transition-property: all;
+        transition-duration: .2s;
+        transition-delay: 0s;
+    }
+    &-enter-active {
+        transition-timing-function: cubic-bezier(.23, 1, .32, 1);
+    }
+    &-leave-active {
+        transition-timing-function: cubic-bezier(.755, .05, .855, .06);
     }
     &-enter,
+    &-appear,
     &-leave-to{
         opacity: 0;
-        transform: scaleY(.8);
         transform-origin: center top;
+        transform: scaleY(.8);
     }
 }
 </style>

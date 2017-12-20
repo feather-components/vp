@@ -23,7 +23,7 @@
         <li v-for="option in options"
             @mouseenter="!option.disabled && (hoverKey = option.value)"
             @click="select(option)"
-            :class="{ hover: hoverKey === option.value, active: activeKey === option.value, disabled: option.disabled }"
+            :class="{ hover: hoverKey == option.value, active: activeKey == option.value, disabled: option.disabled }"
             :key="option.value">
                 <template v-if="type === 'multiple'">
                     <label><checkbox class="checkbox" v-model="val" :value="option.value" :disabled="option.disabled"></checkbox>{{ option.text }}</label>
@@ -107,27 +107,33 @@ export default {
         },
         outside() {
             this.selectMode = false;
-        }
-    },
-    created() {
-        //针对下拉单选
-        let curOption = this.options.find(item => item.value === this.value);
-        this.select(curOption);
-    },
-    watch: {
-        value(c,o) {
+        },
+        setVal(c) {
             if(this.type === 'multiple' && Array.isArray(c)) {
                 if(c.length) {
-                    this.mulOpts = this.options.filter(item => c.indexOf(item.value) > -1);
+                    this.mulOpts = this.options.filter(item => (c.indexOf(item.value) > -1 || c.indexOf(+item.value) > -1));
                 } else {
                     this.mulOpts = []
                 }
                 this.val = c;
             } else {
-                let curOption = this.options.find(item => item.value === this.value);
+                let curOption = this.options.find(item => item.value == this.value);
                 this.text = curOption ? curOption.text : undefined;
-                this.val = c;
+                this.val = this.activeKey = this.hoverKey = c;
             }
+        }
+    },
+    created() {
+        //针对下拉单选
+        let curOption = this.options.find(item => item.value == this.value);
+        this.select(curOption);
+    },
+    watch: {
+        value(c,o) {
+            this.setVal(c);
+        },
+        options() {
+            this.setVal(this.val);
         }
     },
     directives: {
@@ -260,14 +266,24 @@ export default {
 .dropDown {
     &-enter-active,
     &-leave-active {
-        transition: all .1s;
-        transform-origin: center top;
+        transform-origin: 0 0;
+        transform: scaleY(1);
+        transition-property: all;
+        transition-duration: .2s;
+        transition-delay: 0s;
+    }
+    &-enter-active {
+        transition-timing-function: cubic-bezier(.23, 1, .32, 1);
+    }
+    &-leave-active {
+        transition-timing-function: cubic-bezier(.755, .05, .855, .06);
     }
     &-enter,
+    &-appear,
     &-leave-to{
         opacity: 0;
-        transform: scaleY(.8);
         transform-origin: center top;
+        transform: scaleY(.8);
     }
 }
 </style>

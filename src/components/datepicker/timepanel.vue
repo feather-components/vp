@@ -7,15 +7,16 @@
 </template>
 <script>
 import Listpicker from './listpicker.vue'
+
+import { quantity } from './calendar'
+
 const createList = n => new Array(n).fill(true).map((it,i) => i);
-const dbv = v => v < 10 ? ''.concat(0,v) : v;
 
 export default {
     name: 'timepanel',
     props: {
         value:{
-            type: String | Date,
-            default: () => new Date
+            type: String | Date
         },
         hasSeconds: {
             type: Boolean,
@@ -32,34 +33,33 @@ export default {
             seconds: createList(60),
             hour: undefined,
             minute: undefined,
-            second: undefined
+            second: undefined,
+            date: undefined
         }
     },
     methods: {
         change() {
-            let second = this.hasSeconds ? ':' + dbv(this.second) : '', time;
-            if(typeof this.value === 'string') {
-                time = dbv(this.hour) + ':' + dbv(this.minute) + second;
+            let second = this.hasSeconds ? ':' + quantity(this.second || 0) : '', time;
+            if(this.value instanceof Date) {
+                time = new Date(this.date + ' ' + quantity(this.hour) + ':' + quantity(this.minute) + ':' + quantity(this.second));
             } else {
-                time = new Date(this.value.toLocaleDateString() + ' ' + this.hour + ':' + this.minute + ':' + this.second);
+                time = this.date + ' ' + quantity(this.hour || 0) + ':' + quantity(this.minute || 0) + second;
             }
             this.$emit('input', time);
             this.$emit('change', time);
         },
-        setTime() {
-            let v = this.value, hms;
-            if(!v) return ;
-            if(typeof v === 'string') {
-                hms = v.split(':');
-                if(hms.length) {
-                    this.hour = +hms[0]
-                    this.minute = +hms[1]
-                    hms.length > 2 && (this.second = +hms[2])
-                }
-            } else if(v instanceof Date) {
-                this.hour = v.getHours()
-                this.minute = v.getMinutes()
-                this.second = v.getSeconds()
+        setTime(c) {
+            if(this.value) {
+                let d = this.value ? new Date(this.value) : new Date();
+                this.hour = d.getHours();
+                this.minute = d.getMinutes();
+                this.second = d.getSeconds();
+                this.date = d.toLocaleDateString();
+            } else {
+                this.hour = 0;
+                this.minute = 0;
+                this.second = 0;
+                this.date = new Date().toLocaleDateString();
             }
         }
     },
@@ -67,17 +67,17 @@ export default {
         this.setTime();
     },
     watch: {
-        hour() {
+        hour(c) {
             this.change()
         },
-        minute() {
+        minute(c) {
             this.change()
         },
-        second() {
+        second(c) {
             this.change()
         },
         value(c) {
-            // this.setTime();
+            this.setTime(c);
         }
     }
 }

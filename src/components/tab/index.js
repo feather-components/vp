@@ -1,7 +1,7 @@
 import Tabs from './tabs.vue';
-import Tab from './tab.vue';
+import TabPanel from './tabpanel.vue';
 
 export {
     Tabs,
-    Tab
+    TabPanel
 }

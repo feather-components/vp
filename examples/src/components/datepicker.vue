@@ -1,23 +1,23 @@
 <template>
 <div>
     <section>
-        <strong>Pickers</strong>
+        <strong>Pickers (日期格式可以自定义，如：YYYY/MM/DD hh:mm:ss)</strong>
         <div class="cont">
             <p>Yearpicker</p>
             <div class="panel">
-                <yearpicker></yearpicker>
+                <yearpicker v-model="yp"></yearpicker>
             </div>
             
             <br/>
-            <p>Monthpicker 格式中间的分隔符可以自定义</p>
+            <p>Monthpicker</p>
             <div class="panel">
                 <div>
-                    format: YYYY-MM
-                    <monthpicker></monthpicker>
+                    format: YYYY/MM
+                    <monthpicker v-model="mp"></monthpicker>
                 </div>
                 <div>
-                    format:YYYY/MM
-                    <monthpicker format="YYYY/MM"></monthpicker>
+                    format:YYYY-MM
+                    <monthpicker format="YYYY-MM"></monthpicker>
                 </div>
                 <div>
                     format:YYYY.MM
@@ -30,10 +30,10 @@
             </div>
             
             <br/>
-            <p>Datepicker 格式中间的分隔符可以自定义</p>
+            <p>Datepicker</p>
             <div class="panel">
                 <div>
-                    默认 format:YYYY-MM-DD
+                    默认 format:YYYY/MM/DD
                     <datepicker></datepicker>
                 </div>
                 <div>
@@ -49,9 +49,9 @@
                     <datepicker lang="zh"></datepicker>
                 </div>
             </div>
-
+    
             <br/>
-            <p>Datetimepicker 格式中间的分隔符可以自定义</p>
+            <p>Datetimepicker</p>
             <div class="panel">
                 <div>
                     默认 format:YYYY-MM-DD hh:mm
@@ -66,8 +66,34 @@
                     <datetimepicker format="YYYY-MM-DD hh:mm:ss" :has-seconds="true" lang="zh" v-model="datetime3"></datetimepicker>
                 </div>
             </div>
+    
+            <br/>
+            <p>Daterangepicker</p>
+            <div class="panel">
+                <div>
+                    默认 forma: YYYY/MM/DD
+                    <daterangepicker v-model="daterange1" lang="zh"></daterangepicker>
+                </div>
+                <div>
+                    中文
+                    <daterangepicker v-model="daterange2" lang="zh"></daterangepicker>
+                </div>
+            </div>
+            <br/>
+            <p>Datetimerangepicker</p>
+            <div class="panel">
+                <div>
+                    默认 无秒
+                    <datetimerangepicker v-model="datetimerange1"></datetimerangepicker>
+                </div>
+                <div>
+                    中文 含秒
+                    <datetimerangepicker :has-seconds="true" v-model="datetimerange2" lang="zh"></datetimerangepicker>
+                </div>
+            </div>
         </div>
     </section>
+    <br/>
     <section>
         <strong>Parts</strong>
         <div class="cont cont-panel">
@@ -86,7 +112,7 @@
                     <monthpanel v-model="month2" lang="zh"></monthpanel>
                 </div>
             </div>
-
+    
             <br/>
             <p>Datepanel</p>
             <div class="panel">
@@ -101,7 +127,7 @@
                         </select>
                     </div>
                     <datepanel v-model="date1" ref="d1"></datepanel>
-                    <div>当前日期：{{ date1.toLocaleDateString() }}</div>
+                    <div>当前日期：{{ date1 && date1.toLocaleDateString() }}</div>
                 </div>
                 <div>
                     <p>中文头部</p>
@@ -114,7 +140,7 @@
                         </select>
                     </div>
                     <datepanel lang="zh" v-model="date2" ref="d2"></datepanel>
-                    <div>当前日期：{{ date2.toLocaleDateString() }}</div>
+                    <div>当前日期：{{ date2 && date2.toLocaleDateString() }}</div>
                 </div>
                 <div>
                     <p>简式显示（中文）</p>
@@ -127,7 +153,7 @@
                         </select>
                     </div>
                     <datepanel :show-simple="true" v-model="date3" ref="d3" lang="zh"></datepanel>
-                    <div>当前日期：{{ date3.toLocaleDateString() }}</div>
+                    <div>当前日期：{{ date3 && date3.toLocaleDateString() }}</div>
                 </div>
                 <div>
                     <p>选择范围</p>
@@ -136,20 +162,20 @@
                     <datepanel select-range="2017-10-09,2017-10-15"></datepanel>
                 </div>
             </div>
-
+    
             <br/>
             <p>Timepanel</p>
             <div class="panel">
                 <div>
-                    <p>时分&nbsp;&nbsp;{{ time1 }}</p>
+                    <p>时分&nbsp;&nbsp;{{ time1 && time1.split(' ')[1] }}</p>
                     <timepanel v-model="time1"></timepanel>
                 </div>
                 <div>
-                    <p>时分秒&nbsp;&nbsp;{{ time2 }}</p>
+                    <p>时分秒&nbsp;&nbsp;{{ time2 && time2.split(' ')[1] }}</p>
                     <timepanel v-model="time2" :hasSeconds="true"></timepanel>
                 </div>
                 <div>
-                    <p>时分秒&nbsp;&nbsp;当前时间：{{ time3 }}</p>
+                    <p>时分秒&nbsp;&nbsp;当前时间：{{ time3 && time3.split(' ')[1] }}</p>
                     <timepanel v-model="time3" :hasSeconds="true"></timepanel>
                 </div>
             </div>
@@ -158,7 +184,7 @@
 </div>
 </template>
 <script>
-import { Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker } from 'vpui'
+import { Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker, Daterangepicker, Datetimerangepicker } from 'vpui'
 
 const dbv = v => v < 10 ? ''.concat(0,v) : v;
 
@@ -166,11 +192,13 @@ let d = new Date(), year = d.getFullYear(), month = d.getMonth() + 1, date = d.g
 export default {
     name: 'datepicker-page',
     components: {
-        Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker
+        Yearpanel, Monthpanel, Datepanel, Timepanel, Yearpicker, Monthpicker, Datepicker, Datetimepicker, Daterangepicker, Datetimerangepicker
     },
     data() {
         return {
-            date1: new Date,
+            dt: ['2017/12/12 12:20:30', '2018/3/2 3:40:23'],
+            // date1: new Date,
+            date1: undefined,
             date2: new Date,
             date3: new Date,
             dp1: {
@@ -186,14 +214,26 @@ export default {
                 month
             },
             year: 2017,
+
             month1: 10,
             month2: 10,
-            time1: dbv(hours) + ':' + dbv(minutes),
-            time2: dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
-            time3: dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
-            datetime1: year + '-' + month + '-' + date + ' ' + dbv(hours) + ':' + dbv(minutes),
-            datetime2: year + '-' + month + '-' + date + ' ' + dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
-            datetime3: year + '-' + month + '-' + date + ' ' + dbv(hours) + ':' + dbv(minutes) + ':' + dbv(seconds),
+
+            time1: undefined,
+            time2: undefined,
+            time3: undefined,
+
+            yp: 2016,
+            mp: '2016/07',
+
+            datetime1: undefined,
+            datetime2: undefined,
+            datetime3: undefined,
+
+            daterange1: ['2017/12/5', '2018/1/9'],
+            daterange2: [],
+            // datetimerange1: ['2017/12/5', '2018/1/9 23:1:2'],
+            datetimerange1: [],
+            datetimerange2: ['2017/12/5 8:59:12', '2018/1/9 01:06:30']
         }
     },
     computed: {
@@ -212,7 +252,7 @@ export default {
     mounted() {
         setInterval(() => {
             let dd = new Date(), h = dd.getHours(), m = dd.getMinutes(), s = dd.getSeconds(), ms = dd.getMilliseconds();
-            this.time3 = dbv(h) + ':' + dbv(m) + ':' + dbv(s);
+            this.time3 = dd.toLocaleDateString() + ' ' + dd.toTimeString().split(' ')[0]; //dbv(h) + ':' + dbv(m) + ':' + dbv(s);
         }, 1000);
     }
 }
