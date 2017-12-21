@@ -110,6 +110,14 @@
                                     catch(e){
 
                                     };
+                                    let file = {};
+                                    for(let k in data){
+                                        file = {
+                                            sKey:data[k].sKey,
+                                            sExt:data[k].sExt
+                                        };
+                                    }
+                                    self.$emit('complete',file);
                                     self.files[filesLength-1].status = 1;
                                     let uploading = false;
                                     for(let i in self.files){
@@ -121,14 +129,7 @@
                                     if(!uploading){
                                         self.files = [];
                                         self.$refs.innerMask.close();
-                                        let file = {};
-                                        for(let k in data){
-                                            file = {
-                                                sKey:data[k].sKey,
-                                                sExt:data[k].sExt
-                                            };
-                                        }
-                                        self.$emit('complete',file);
+                                        console.log("上传完成");
                                     }
                                 }
                                 else{
