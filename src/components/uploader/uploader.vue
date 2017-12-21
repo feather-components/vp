@@ -1,7 +1,7 @@
 <template>
 <span>
     <a href="javascript:;" class="file">{{text}}
-        <input type="file" id="fileUpload" :multiple="multiple" :accept="fileType" @change="uploadFile">
+        <input type="file" :id="id" :multiple="multiple" :accept="fileType" @change="uploadFile">
     </a>
     <br>
     <vp-mask ref="innerMask"></vp-mask>
@@ -33,6 +33,9 @@
             text: {
                 type: String,
                 default:"上传文件"
+            },
+            id:{
+                type: String
             },
             multiple:{
                 type: String
@@ -68,7 +71,7 @@
         methods:{
             uploadFile(){
                 var self = this;
-                var oFiles = document.querySelector("#fileUpload").files;
+                var oFiles = document.querySelector("#"+self.id).files;
                 if(self.fileMaxNum>0&&oFiles.length>self.fileMaxNum){
                     alert(`单次可上传最大文件数为${self.fileMaxNum}`);
                     return;
