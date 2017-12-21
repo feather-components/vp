@@ -44,12 +44,14 @@
         methods: {},
         watch: {
             visibility(val){
+                let body = document.getElementsByTagName('body')[0];
                 if(val){
                     if(this.mask){
                         this.mask.show();
                         return;
                     }
                     this.mask = vpMask.show();
+                    body.appendChild(this.$el);
                 }else{
                     if(this.mask){
                         this.mask.hide();
