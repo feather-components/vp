@@ -1,7 +1,7 @@
 <template>
 <span>
     <a href="javascript:;" class="file">{{text}}
-        <input type="file" id="fileUpload" :multiple="multiple" :accept="fileType" @change="uploadFile">
+        <input type="file" :id="id" :multiple="multiple" :accept="fileType" @change="uploadFile">
     </a>
     <br>
     <vp-mask ref="innerMask"></vp-mask>
@@ -33,6 +33,9 @@
             text: {
                 type: String,
                 default:"上传文件"
+            },
+            id:{
+                type: String
             },
             multiple:{
                 type: String
@@ -68,8 +71,7 @@
         methods:{
             uploadFile(){
                 var self = this;
-                console.log(document.querySelector("#fileUpload").files);
-                var oFiles = document.querySelector("#fileUpload").files;
+                var oFiles = document.querySelector("#"+self.id).files;
                 if(self.fileMaxNum>0&&oFiles.length>self.fileMaxNum){
                     alert(`单次可上传最大文件数为${self.fileMaxNum}`);
                     return;
@@ -119,9 +121,15 @@
                                     if(!uploading){
                                         self.files = [];
                                         self.$refs.innerMask.close();
-                                        self.$emit('complete',oFiles,data);
+                                        let file = {};
+                                        for(let k in data){
+                                            file = {
+                                                sKey:data[k].sKey,
+                                                sExt:data[k].sExt
+                                            };
+                                        }
+                                        self.$emit('complete',file);
                                     }
-                                    console.log("上传成功！");
                                 }
                                 else{
                                     self.files[filesLength-1].error = true;
@@ -132,7 +140,6 @@
                         // xhr.onload = uploadComplete; //请求完成
                         // xhr.onerror =  uploadFailed; //请求失败
                         xhr.upload.onprogress = function(event){
-                            console.log(event);
                             if (event.lengthComputable) {
                                 self.files[filesLength-1].scale = event.loaded / event.total*100;
                     　　　　}
@@ -179,7 +186,6 @@
     function uploadProgress(event) {
 　　　　if (event.lengthComputable) {
 　　　　　　var percentComplete = event.loaded / event.total*100;
-            console.log(percentComplete);
 　　　　}
 　　}
 </script>
