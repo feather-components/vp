@@ -117,7 +117,7 @@ export default {
                 }
                 this.val = c;
             } else {
-                let curOption = this.options.find(item => this.value !== null && this.value !== undefined && this.value !== '' && item.value == this.value);
+                let curOption = this.options.find(item => (this.value !== null && this.value !== undefined && this.value !== '' && item.value == this.value)||(this.value === ""&&item.value === this.value));
                 this.text = curOption ? curOption.text : undefined;
                 this.val = this.activeKey = this.hoverKey = c;
             }
@@ -125,7 +125,7 @@ export default {
     },
     created() {
         //针对下拉单选
-        let curOption = this.options.find(item => this.value !== null && this.value !== undefined && this.value !== '' && item.value == this.value);
+        let curOption = this.options.find(item => (this.value !== null && this.value !== undefined && this.value !== '' && item.value == this.value)||(this.value === ""&&item.value === this.value));
         this.select(curOption);
     },
     watch: {
