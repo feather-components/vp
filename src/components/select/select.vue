@@ -117,7 +117,7 @@ export default {
                 }
                 this.val = c;
             } else {
-                let curOption = this.options.find(item => item.value == this.value);
+                let curOption = this.options.find(item => item.value === this.value);
                 this.text = curOption ? curOption.text : undefined;
                 this.val = this.activeKey = this.hoverKey = c;
             }
