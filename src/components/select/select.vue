@@ -146,7 +146,7 @@ export default {
         }
     },
     directives: {
-        clickoutside: Clickoutsides
+        clickoutside: Clickoutside
     },
     components: {
         Checkbox
