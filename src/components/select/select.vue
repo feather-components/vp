@@ -46,7 +46,7 @@ export default {
         id: String,
         placeholder: {
             type: String,
-            default: '全国'
+            default: '全部'
         },
         options: {
             type: Array | Object,
