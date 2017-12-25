@@ -20,6 +20,7 @@
     </div>
     <transition name="dropDown">
     <ul class="select-list" v-show="selectMode" @mouseleave="hoverKey = undefined">
+        <li @click="select({text:'全部',value:defaultValue})" v-if="showAll">全部</li>
         <li v-for="option in options"
             @mouseenter="!option.disabled && (hoverKey = option.value)"
             @click="select(option)"
@@ -57,7 +58,15 @@ export default {
         },
         value: null,
         disabled: false,
-        width: Number | String
+        width: Number | String,
+        defaultValue:{
+            type:Number | String,
+            default:""
+        },
+        showAll:{
+            type: Boolean,
+            default: true
+        }
     },
     data() {
         return {
@@ -132,12 +141,12 @@ export default {
         value(c,o) {
             this.setVal(c);
         },
-        options() {
+        options() { 
             this.setVal(this.val);
         }
     },
     directives: {
-        clickoutside: Clickoutside
+        clickoutside: Clickoutsides
     },
     components: {
         Checkbox
