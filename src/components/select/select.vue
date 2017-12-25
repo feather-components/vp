@@ -46,7 +46,7 @@ export default {
         id: String,
         placeholder: {
             type: String,
-            default: '请选择...'
+            default: '全国'
         },
         options: {
             type: Array | Object,
