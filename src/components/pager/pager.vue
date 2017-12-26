@@ -277,7 +277,7 @@ var Pager = {
             return this.pager.current == this.calPage;
         },
         showPager() {
-            return !!this.calPage;
+            return !!this.totalCount;
         },
         propsUpdate() {
             return this.total + '&' + this.current + '&' + this.volumn;
