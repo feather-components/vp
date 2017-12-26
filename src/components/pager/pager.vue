@@ -1,6 +1,7 @@
 <template>
     <div class="lg-pager" :class="klass" v-if="showPager">        
-        <ul>                    
+        <ul>
+            <li v-if="totalData !== 0">共{{ totalData }}条</li>                    
             <li class="lg-pager-item lg-pager-previous" :class="{'disable': isHead}">
                 <a href="javascript:" @click="to(pager.current-1)"></a>
             </li>
@@ -184,6 +185,10 @@
 var Pager = {
     name: 'pager',
     props: {
+        'totalData': {
+            type: Number,
+            default: 0
+        },
         'total': {
             type: Number,
             require: true

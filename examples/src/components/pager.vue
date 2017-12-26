@@ -1,9 +1,9 @@
 <template>
     <div>
         <span>分页外面</span>
-        <vp-pager :total="total" :current="current" @to="callback">
+        <vp-pager :total-data="totalData" :total="total" :current="current" @to="callback">
         </vp-pager>
-        <vp-pager :total="total" :current="current" @to="callback" :position="'left'" :volumn="volumn">
+        <vp-pager :total-data="totalData" :total="total" :current="current" @to="callback" :position="'left'" :volumn="volumn">
         </vp-pager>
         <table class='lg-table'>
             <thead>  
@@ -68,6 +68,7 @@ export default {
     },
     data() {
         return {
+            totalData: 666,
             current: 5,
             total: 150,
             volumn: 20,
@@ -76,7 +77,6 @@ export default {
     },
     methods: {
         callback(page) {
-            console.log(123);
             this.msg = 'current page is :' + page;
         }
     }
