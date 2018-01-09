@@ -284,7 +284,7 @@ export default {
     &-days {
         display: flex;
         color: #666;
-        > div {
+        div {
             flex: 1;
             text-align: center;
             margin: 4px;

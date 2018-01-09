@@ -201,7 +201,7 @@ export default {
             margin: auto;
             transition: all .3s;
         }
-        > div {
+        div {
             margin: 0 20px 0 6px;
             overflow: hidden;
             text-overflow: ellipsis;
