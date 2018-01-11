@@ -1,6 +1,5 @@
 vpui
 ================
-vpui
 
 ### [例子演示] 
 
@@ -9,7 +8,7 @@ vpui
 ###  feather2
 
 ```sh
-feather2 install feather-components/vpui
+feather2 install feather-components/vp@dev
 ```
 
 编译vue的单文件组件
@@ -37,8 +36,6 @@ feather.match('components/vm/**.js', {
 
 具体可见[webpack.config.js](./examples/webpack.config.js)
 
-#### 由于vm为了让适配更多的手机尺寸，故使用了rem进行尺寸的计算，所以在使用前，需要引入vm/rem.js文件
-
 ```html
  
 ```
@@ -46,6 +43,7 @@ feather.match('components/vm/**.js', {
 ```js
 //index.js
 import {Pager} from 'vpui';
+
 ```
 
 ## 注册全局，所有的组件以 vp- 开头， 指令除外
@@ -56,15 +54,3 @@ import Vue from 'vue';
 
 Vue.use(Vpui);
 ```
-
-```html
-<vm-scroll></vm-scroll>
-```
-
-## 组件列表
-
-* [Pager](./doc/pager.md) 
-
-## 指令
-
-##方法
