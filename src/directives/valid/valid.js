@@ -18,7 +18,7 @@ function check(el, vm, target, rules, fieldName, tag, autocheck) {
     var val = '';
     if (typeof target == 'string') {
         var vm = vm;
-        val = eval('vm.' + target);
+        val = eval('vm.' + target)||'';
     } else {
         if (target.length && target.localName != 'select') {
             for (var i in target) {
@@ -111,7 +111,7 @@ function insertAfter(newElement, targetElement) {
         parent.appendChild(newElement, targetElement);
     } else {
         parent.insertBefore(newElement, targetElement.nextSibling);
-    };
+    }
 }
 
 function detachField(vm, group, el) {

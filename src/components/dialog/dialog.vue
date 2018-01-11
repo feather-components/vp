@@ -75,7 +75,7 @@
 <style>
     .vp-dialog.vp-overlay{
         max-height: 100%;
-        overflow-y: scroll;
+        overflow-y: auto;
         position: absolute;
         top: 50%;
         left: 50%;
