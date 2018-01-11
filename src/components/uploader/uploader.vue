@@ -4,7 +4,7 @@
         <input type="file" :id="id" :multiple="multiple" :accept="fileType" @change="uploadFile">
     </a>
     <br>
-    <vp-mask ref="innerMask"></vp-mask>
+    <!-- <vp-mask ref="innerMask"></vp-mask> -->
     <div class="progresslist" :class="progressType" v-if="showProgress&&showProgress2&&files.length>0">
         <p class="progresstitle"><a href="javascript:" @click="closeProgress">&#10005</a>上传进度</p>
         <div class="filelist">
@@ -66,6 +66,12 @@
             progressType:{
                 type: String,
                 default:""
+            },
+            progressMethods:{
+                type: Function,
+                default: function(){
+                    
+                }
             }
         },
         methods:{
@@ -77,7 +83,7 @@
                     return;
                 }
                 if(oFiles.length>0){
-                    self.$refs.innerMask.open();
+                    /*self.$refs.innerMask.open();*/
                     self.showProgress2 = true;
                 }
                 //length = length+oFiles.length;
@@ -109,8 +115,8 @@
                                     }
                                     catch(e){
 
-                                    };
-                                    let file = {};
+                                    }
+                                let file = {};
                                     for(let k in data){
                                         file = {
                                             sKey:data[k].sKey,
@@ -128,7 +134,7 @@
                                     }
                                     if(!uploading){
                                         self.files = [];
-                                        self.$refs.innerMask.close();
+                                        /*self.$refs.innerMask.close();*/
                                         console.log("上传完成");
                                     }
                                 }
@@ -140,9 +146,10 @@
                         }
                         // xhr.onload = uploadComplete; //请求完成
                         // xhr.onerror =  uploadFailed; //请求失败
-                        xhr.upload.onprogress = function(event){
+                        xhr.upload.onprogress = function(event){console.log(event);
                             if (event.lengthComputable) {
                                 self.files[filesLength-1].scale = event.loaded / event.total*100;
+                                self.progressMethods(event,self.files[filesLength-1]);
                     　　　　}
                         };//【上传进度调用方法实现】
                         //xhr.upload.addEventListener("progress", uploadProgress, false); 
@@ -170,13 +177,13 @@
                 }
                 if(!uploading){
                     self.files = [];
-                    self.$refs.innerMask.close();
+                    /*self.$refs.innerMask.close();*/
                 }
             },
             closeProgress(){
                 let self = this;
                 self.showProgress2 = false;
-                self.$refs.innerMask.close();
+                /*self.$refs.innerMask.close();*/
             }
         },
         components: {
