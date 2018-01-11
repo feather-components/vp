@@ -277,17 +277,17 @@ var Pager = {
             return this.pager.current == this.calPage;
         },
         showPager() {
-            return !!this.totalCount;
+            return !!this.totalCount || !!this.calPage;
         },
         propsUpdate() {
             return this.total + '&' + this.current + '&' + this.volumn;
         },
         calPage() { // 计算后的页数
-            let resultPage = this.totalCount / this.pageSize;
-            if(String(resultPage).indexOf('.') > -1) {
-                return Math.floor(resultPage) + 1
+            if(this.totalCount) {
+                let resultPage = this.totalCount / this.pageSize;
+                return Math.ceil(resultPage);
             } else {
-                return resultPage;
+                return this.total;
             }
         }
     },
