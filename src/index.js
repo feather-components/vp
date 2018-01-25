@@ -23,6 +23,7 @@ import AutoPosition from './directives/autoposition';
 import Clickoutside from './directives/clickoutside';
 import { Drag, DragDrop } from './directives/drag';
 import Tooltip from './directives/tooltip';
+import Reporter from './directives/reporter';
 import Toast from './components/toast';
 import Uploader from './components/uploader';
 import ProgressBar from './components/progressbar';
@@ -42,7 +43,8 @@ var Directives = [
     Clickoutside,
     Drag,
     DragDrop,
-    Tooltip
+    Tooltip,
+    Reporter
 ];
 
 function install(Vue){
@@ -61,6 +63,7 @@ export {
     DragDrop,
     Drag,
     Tooltip,
+    Reporter,
     Clickoutside,
     Valid,
     Pager,

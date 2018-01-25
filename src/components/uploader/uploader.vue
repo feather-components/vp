@@ -63,11 +63,7 @@
                 type: Boolean,
                 default:false
             },
-            progressType:{
-                type: String,
-                default:""
-            },
-            progressMethods:{
+            progressMethod:{
                 type: Function,
                 default: function(){
                     
@@ -149,7 +145,7 @@
                         xhr.upload.onprogress = function(event){console.log(event);
                             if (event.lengthComputable) {
                                 self.files[filesLength-1].scale = event.loaded / event.total*100;
-                                self.progressMethods(event,self.files[filesLength-1]);
+                                self.progressMethod(event,self.files[filesLength-1]);
                     　　　　}
                         };//【上传进度调用方法实现】
                         //xhr.upload.addEventListener("progress", uploadProgress, false); 

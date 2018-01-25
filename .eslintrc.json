@@ -17,6 +17,7 @@
 
   "globals": {
     "BMap": true,
-    "$": true
+    "$": true,
+    "globalLog": true
   }
 }
