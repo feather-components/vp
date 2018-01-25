@@ -1,4 +1,5 @@
 <template>
+    <transition name="vp-dialog-fade">
     <div class="vp-overlay vp-dialog" position="center" v-show="visibility">
         <i class="vp-dialog-close-icon" @click="close"></i>
         <div class="vp-dialog-title">
@@ -17,6 +18,7 @@
             </section>
         </div>
     </div>
+    </transition>
 </template>
 
 <script>
@@ -73,6 +75,14 @@
 </script>
 
 <style>
+    .vp-dialog-fade-enter-active, .vp-dialog-fade-leave-active {
+        transition: all .3s;
+    }
+    .vp-dialog-fade-enter, .vp-dialog-fade-leave-to {
+        margin-top:-100px;
+        opacity: 0;
+    }
+
     .vp-dialog.vp-overlay{
         max-height: 100%;
         overflow-y: auto;
@@ -81,7 +91,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         box-sizing: border-box;
-        margin: auto;
+        /*margin: auto;*/
         background: #fff;
         border-radius: 4px;
         min-width: 420px;
