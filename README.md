@@ -15,16 +15,24 @@ npm install feather2-parser-vue fis-parser-es6-babel --save
 conf/conf.js
 
 ```js
-feather.config.set('project.fileType.js', 'vue');
-
-feather.match('components/vm/**.vue', {
+//vue结尾的文件则编译
+feather.match('**.vue', {
     parser: ['vue', 'es6-babel']
 });
 
-feather.match('components/vm/**.js', {
+feather.match('**.es6', {
+    parser: ['es6-babel']
+});
+
+feather.match('components/vpui/**.js', {
     parser: 'es6-babel'
 });
 
+feather.match('*.{less,css}', {
+    preprocessor : fis.plugin("autoprefixer",{ 
+        "browsers": [ "last 3 version", "Chrome >= 20" ] 
+    })
+});
 ```
 
 ### webpack
