@@ -258,6 +258,9 @@ var BaseGrid = {
             }).length;
             var length = this.checkResults[key].length + disableLength;
             var index = this.isAllCheck.indexOf(key);
+            if(disableLength==this.aData.length){// no checkable item 
+                return;
+            }
             if (length != this.aData.length) {
                 index > -1 && this.isAllCheck.splice(index, 1);
             } else {
