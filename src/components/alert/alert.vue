@@ -19,6 +19,10 @@
     .vp-alert-title{
         margin-bottom: 12px;
     }
+    
+    .vp-alert-title-invisible {
+        visibility: hidden;
+    }
 
     .vp-alert-title-text{
         font-size: 16px;
@@ -62,7 +66,7 @@
         display: inline-block;
         margin-right: 16px;
     }
-
+    
     .vp-alert-btn:last-child{
         margin-right: 0px;
     }
@@ -99,6 +103,11 @@
                 default: null
             },
 
+            title: {
+                type: String || Boolean,
+                default: '系统提示！'
+            },
+
             buttons: {
                 type: Object,
                 default(){
@@ -120,7 +129,7 @@
 
         data(){
             return {
-                title: '系统提示！'
+
             };
         },
 
@@ -151,7 +160,7 @@
 
 <template>
     <overlay :visible="true" class="vp-alert" position="center">
-        <div class="vp-alert-title">
+        <div class="vp-alert-title" :class="{'vp-alert-title-invisible': !title}">
             <div class=""></div>
             <div class="vp-alert-title-text">{{ title || "系统提示！" }}</div>
         </div>

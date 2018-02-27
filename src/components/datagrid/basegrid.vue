@@ -2,14 +2,14 @@
     <table class="lg-table">
         <thead :class="{'multi' : aColumn.length > 1}">
             <tr v-for="(columns, index) in aColumn">
-                <th v-if="expand && aData.length > 0 && index == 0" style="width:50px" :rowspan="aColumn.length">
+                <th v-if="expand && rowList.length > 0 && index == 0" style="width:50px" :rowspan="aColumn.length">
                     <span class="lg-checkbox-plain">
                         <input type="checkbox" :id="uid('exp')" @click="onExpandAll()" value="exp" v-model="isAllExpand"/>
                             <label :for="uid('exp')"><span class="lg-i lg-color-sys" :class="expklass('all')"></span></label>
                     </span>
                 </th>
                 <th v-for="(col,i) in columns" :style="col.style" :colspan="col.colspan || 1" :rowspan="col.rowspan || 1">
-                    <slot :name="colname(col)">
+                    <slot :name="colName(col)">
                         <span v-if="isType('checkbox',col,true)" class="lg-checkbox">
                             <input type="checkbox" :id="uid(col)" @click="onCheckAll(col.key)" :value="col.key" v-model="isAllCheck"/>
                             <label v-html="col.label" :for="uid(col)"></label>
@@ -20,8 +20,8 @@
                 </th>
             </tr>
         </thead>
-        <tbody v-if="aData.length > 0">
-            <template v-for="(item, i) in aData">
+        <tbody v-if="rowList.length > 0">
+            <template v-for="(item, i) in rows">
                 <tr v-line="{lineElements,i}">
                     <td v-if="expand">
                         <span class="lg-checkbox-plain">
@@ -30,7 +30,7 @@
                         </span>
                     </td>
                     <td v-for="col in aLeafColumn" class="nowrap">
-                        <slot :name="cellname(col, i)" :title="item[col.key]">
+                        <slot :name="cellContent(col, i)" :title="item[col.key]">
                             <span v-if="isType('checkbox',col,item[col.key])" class="lg-checkbox">
                                 <input type="checkbox" :value="item[col.key].value" :id="uid(col,i)" @click="onCheck(col.key, i)" v-model="checkResults[col.key]"/>
                                 <label :for="uid(col,i)"></label>
@@ -50,7 +50,7 @@
                 </tr>
                 <tr v-if="expand && isExpand(i)">
                     <td :colspan="colspan+1">
-                        <slot :name="trname(i)">
+                        <slot :name="trContent(i)">
                             <div v-html="item.$expand()"></div>
                         </slot>
                     </td>
@@ -59,7 +59,7 @@
         </tbody>
         <tbody v-else>
             <tr>
-                <td :colspan="colspan">暂无数据</td>
+                <td :colspan="columnCount || colspan">暂无数据</td>
             </tr>
         </tbody>
     </table>
@@ -68,13 +68,14 @@
 var BaseGrid = {
     name: 'basegrid',
     props: {
-        'column': {
+        'columns': {
             type: Array,
             require: true
         },
-        'data': {
-            type: Array,
-            require: true
+        'rows': {
+            type: [Array],
+            require: true,
+            default: false
         },
         'colspan': {
             type: Number,
@@ -104,28 +105,34 @@ var BaseGrid = {
             type: Boolean,
             require: false,
             default: false
+        },
+        'fixType': {
+            type: String,
+            require: false,
+            default: ''
         }
     },
-    data: function() {
-        var checkResults = {},
-            isAllCheck = [],
-            isAllExpand = false,
-            row = this.data.length;
-        var _this = this;
-        this.column.forEach(function(col, i) {
+    created: function(){
+        var checkResults = this.checkResults;
+        var isAllCheck = this.isAllCheck;
+        this.lineElements = new Array(this.rows.length);
+        this.columnCount = this.columns.length;
+        
+        var self = this;
+        this.columns.forEach(function(col) {
             var type = col.type;
             var key = col.key;
             if (type == 'checkbox') {
                 checkResults[key] = [];
                 var count = 0;
-                _this.data.forEach(function(line, i) {
+                self.rows.forEach(function(line) {
                     line[key] && line[key].checked && checkResults[key].push(line[key].value);
                     (line[key].checked || line[key].disable) && (count++);
                 })
-                _this.data.length && _this.data.length == count && isAllCheck.push(key);
+                self.rows.length && self.rows.length == count && isAllCheck.push(key);
             } else if (type == 'radio') {
                 checkResults[key] = '';
-                _this.data.forEach(function(line, i) {
+                self.rows.forEach(function(line) {
                     line[key] && line[key].checked && (checkResults[key] = line[key].value)
                 })
             }
@@ -133,28 +140,35 @@ var BaseGrid = {
         if (this.expand) {
             checkResults.exp = [];
         }
+    },
+    data: function() {
         return {
-            checkResults: checkResults,
-            isAllCheck: isAllCheck,
-            isAllExpand: isAllExpand,
-            lineElements: new Array(row),
-            perfix: new Date().getTime() + ''
+            checkResults: {},
+            isAllCheck: [],
+            isAllExpand: false,
+            lineElements: [],
+            perfix: new Date().getTime() + '', 
+            columnCount: 0 
         }
     },
     computed: {
-        aData() {
-            return this.data;
+        rowList() {
+            var results = this.checkResults;
+            for(var _ in results){
+                results[_] = [];
+            }
+            return this.rows;
         },
         aLeafColumn() {
-            return this.getLeaves(this.column).leaves;
+            return this.getLeaves(this.columns).leaves;
         },
         aColumn() {
-            var level = this.getLeaves(this.column).level;
+            var level = this.getLeaves(this.columns).level;
             var trLine = new Array();
             for (var i = 0; i < level; i++) {
                 trLine[i] = new Array();
             }
-            this.getColumnLine(this.column, 0, trLine);
+            this.getColumnLine(this.columns, 0, trLine);
             return trLine;
         }
     },
@@ -169,13 +183,13 @@ var BaseGrid = {
         },
         onCheckAll(key) {
             var _this = this;
-            var disableLength = this.aData.filter(function(item, i) {
+            var disableLength = this.rowList.filter(function(item, i) {
                 return item[key].disable;
             }).length;
             var length = this.checkResults[key].length + disableLength;
             this.checkResults[key] = [];
-            if (length != this.aData.length) {
-                this.aData.forEach(function(line) {
+            if (length != this.rowList.length) {
+                this.rowList.forEach(function(line) {
                     !line[key].disable && _this.checkResults[key].push(line[key].value);
                 })
             } else {}
@@ -189,6 +203,12 @@ var BaseGrid = {
             this.$emit('switch', key, index, checked);
         },
         onSort(head, asc, index) {
+            this.aColumn.forEach(item => {
+                item.forEach(i => {
+                    if (i === head) return;
+                    i.asc = '';
+                })
+            });
             var next = asc === true ? false : (asc === false ? '' : true);
             head.asc = next;
             head.klass = next === true ? 'up' : (next === false ? 'down' : '');
@@ -198,8 +218,8 @@ var BaseGrid = {
             var _this = this;
             var length = this.checkResults.exp.length;
             this.checkResults.exp = [];
-            if (length != this.aData.length) {
-                this.aData.forEach(function(line, i) {
+            if (length != this.rowList.length) {
+                this.rowList.forEach(function(line, i) {
                     _this.checkResults.exp.push('exp' + i);
                 })
             } else {}
@@ -231,13 +251,13 @@ var BaseGrid = {
         uid(col, index) {
             return this.perfix + (col.key ? col.key : col) + '_' + index;
         },
-        colname(col) {
+        colName(col) {
             return 'col:' + col.key;
         },
-        cellname(col, index) {
+        cellContent(col, index) {
             return 'cell:' + col.key + '_' + index;
         },
-        trname(index) {
+        trContent(index) {
             return 'trexpand:' + index;
         },
         expklass(index) {
@@ -253,15 +273,15 @@ var BaseGrid = {
             return col.type && col.type == typeName && cell && !cell.disable;
         },
         computeCheckAll(key) {
-            var disableLength = this.aData.filter(function(item, i) {
+            var disableLength = this.rowList.filter(function(item, i) {
                 return item[key].disable;
             }).length;
             var length = this.checkResults[key].length + disableLength;
             var index = this.isAllCheck.indexOf(key);
-            if(disableLength==this.aData.length){// no checkable item 
+            if(disableLength==this.rowList.length){// no checkable item 
                 return;
             }
-            if (length != this.aData.length) {
+            if (length != this.rowList.length) {
                 index > -1 && this.isAllCheck.splice(index, 1);
             } else {
                 this.isAllCheck.push(key);
@@ -269,7 +289,7 @@ var BaseGrid = {
         },
         computeExpandAll() {
             var length = this.checkResults.exp.length;
-            if (length != this.aData.length) {
+            if (length != this.rowList.length) {
                 this.isAllExpand = false;
             } else {
                 this.isAllExpand = true;

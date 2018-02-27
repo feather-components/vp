@@ -27,6 +27,7 @@ import Reporter from './directives/reporter';
 import Toast from './components/toast';
 import Uploader from './components/uploader';
 import ProgressBar from './components/progressbar';
+import 'vp.css';
 //--------------------------------------------------------
 import Vue from 'vue';
 

@@ -1,29 +1,29 @@
 <template>
-<transition name="fade">
-<div class="checkbox">
-    <input
-        class="input-checkbox"
-        type="checkbox"
-        :id="id"
-        :name="name"
-        :value="value"
-        :class="className"
-        :required="required"
-        :disabled="disabled"
-        @change="onChange"
-        :checked="state" />
-    <span class="icon-checkbox">
-        <template v-if="part">
-            <i class="part-middle"></i>
-        </template>
-        <template v-else>
-            <svg t="1505701737916" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2898" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12">
-                <path d="M804.562219 227.217978 415.999552 615.749946 219.436758 419.218874 128.936581 509.71905 415.999552 796.782022 895.062396 317.718155Z" p-id="2899" :fill="disabled && checked ? '#D9D9D9' : (disabled ? '#F3F3F3' : '#fff')"></path>
-            </svg>
-        </template>
-    </span>
-</div>
-</transition> 
+    <transition name="fade">
+        <div class="checkbox">
+            <input
+                class="input-checkbox"
+                type="checkbox"
+                :id="id"
+                :name="name"
+                :value="value"
+                :class="className"
+                :required="required"
+                :disabled="disabled"
+                @change="onChange"
+                :checked="state" />
+            <span class="icon-checkbox">
+                <template v-if="part">
+                    <i class="part-middle"></i>
+                </template>
+                <template v-else>
+                    <svg t="1505701737916" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2898" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12">
+                        <path d="M804.562219 227.217978 415.999552 615.749946 219.436758 419.218874 128.936581 509.71905 415.999552 796.782022 895.062396 317.718155Z" p-id="2899" :fill="disabled && checked ? '#D9D9D9' : (disabled ? '#F3F3F3' : '#fff')"></path>
+                    </svg>
+                </template>
+            </span>
+        </div>
+    </transition> 
 </template>
 <script>
 export default {

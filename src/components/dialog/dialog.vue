@@ -1,21 +1,23 @@
 <template>
     <transition name="vp-dialog-fade">
     <div class="vp-overlay vp-dialog" position="center" v-show="visibility">
-        <i class="vp-dialog-close-icon" @click="close"></i>
-        <div class="vp-dialog-title">
-            <div class="vp-dialog-title-text">
-                <slot name="title">系统提示！</slot>
+        <div class="vp-dialog-wrap">
+            <i class="vp-dialog-close-icon" @click="close"></i>
+            <div class="vp-dialog-title">
+                <div class="vp-dialog-title-text">
+                    <slot name="title">系统提示！</slot>
+                </div>
             </div>
-        </div>
-        <div class="vp-dialog-content-wrap">
-            <div class="vp-dialog-content">
-                <slot name="content"></slot>
+            <div class="vp-dialog-content-wrap">
+                <div class="vp-dialog-content">
+                    <slot name="content"></slot>
+                </div>
+                <section class="vp-dialog-footer">
+                    <slot name="btns">
+                        <btn type="main" class="vp-dialog-btn" @click="close">确认</btn>
+                    </slot>
+                </section>
             </div>
-            <section class="vp-dialog-footer">
-                <slot name="btns">
-                    <btn type="main" class="vp-dialog-btn" @click="close">确认</btn>
-                </slot>
-            </section>
         </div>
     </div>
     </transition>
@@ -75,6 +77,14 @@
 </script>
 
 <style>
+.vp-dialog-wrap{
+        box-shadow: 0 8px 8px 0;
+        position: relative;
+        left: -50%;
+        border-radius: 4px;
+        padding: 24px;
+        background: #fff;
+}
     .vp-dialog-fade-enter-active, .vp-dialog-fade-leave-active {
         transition: all .3s;
     }
@@ -84,22 +94,12 @@
     }
 
     .vp-dialog.vp-overlay{
-        max-height: 100%;
-        overflow-y: auto;
         position: absolute;
-        top: 50%;
+        top: 10%;
         left: 50%;
-        transform: translate(-50%, -50%);
-        box-sizing: border-box;
-        /*margin: auto;*/
-        background: #fff;
-        border-radius: 4px;
-        min-width: 420px;
-        min-height: 180px;
-        padding: 24px;
         color: #333;
-        box-shadow: 0 8px 8px 0;
         z-index: 10001;
+        min-width: 400px;
     }
     .vp-dialog-close-icon{
         position: absolute;
