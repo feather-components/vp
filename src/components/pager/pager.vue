@@ -61,6 +61,7 @@ var Pager = {
             type: Number,
             default: 10
         },
+        //总页数
         'total': {
             type: Number
         },
@@ -109,14 +110,14 @@ var Pager = {
         },
 
         calculate(current) {
-            var current = Math.floor(current / 1);
-            var start = 2,
-                end = this.totalPageCount - 1;
+            var cPage = Math.floor(current / 1);
+            var start = 2;
+            var end = this.totalPageCount - 1;
             if (this.totalPageCount > this.vol) {
-                if (current - this.pre > 1) {
-                    start = current - this.pre;
-                    if (current + this.next - this.totalPageCount < 0) {
-                        end = current + this.next
+                if (cPage - this.pre > 1) {
+                    start = cPage - this.pre;
+                    if (cPage + this.next - this.totalPageCount < 0) {
+                        end = cPage + this.next
                     } else {
                         start = end - (this.vol - 3);
                     }
@@ -128,7 +129,7 @@ var Pager = {
             }
             this.pager.start = start;
             this.pager.end = end;
-            this.pager.current = current;
+            this.pager.current = cPage;
         },
         update() {
             this.vol = this.volumn;
