@@ -3,7 +3,7 @@
         <div v-if="totalCount !== 0" class="lg-pager-total">共{{ totalCount }}条</div>  
         <ul class="lg-pager-items">
             <li class="lg-pager-item lg-pager-previous" :class="{'disable': isHead}">
-                <a href="javascript:" @click="to(pager.current-1)"></a>
+                <a href="javascript:" @click="to(pager.current - 1)"></a>
             </li>
             <li class="lg-pager-item" :class="{'lg-pager-current': isHead}">
                 <a href="javascript:" @click="to(1)">1</a>
@@ -11,17 +11,17 @@
             <li class="lg-pager-item lg-pager-dot" v-if="pager.start != 2">
                 ...
             </li>
-            <li class="lg-pager-item" v-for="n in (pager.end-pager.start + 1)" :class="{'lg-pager-current': pager.current == (pager.start + n - 1)}">
-                <a href="javascript:" @click="to(pager.start + n - 1)">{{pager.start + n - 1}}</a>
+            <li class="lg-pager-item" v-for="n in (pager.end - pager.start + 1)" :class="{'lg-pager-current': pager.current == (pager.start + n - 1)}">
+                <a href="javascript:" @click="to(pager.start + n - 1)">{{ pager.start + n - 1 }}</a>
             </li>
-            <li class="lg-pager-item lg-pager-dot" v-if="pager.end < calPage - 1">
+            <li class="lg-pager-item lg-pager-dot" v-if="pager.end < totalPageCount - 1">
                 ...
             </li>
-            <li class="lg-pager-item" :class="{'lg-pager-current': isTail}" v-if="calPage > 1">
-                <a href="javascript:" @click="to(calPage)">{{calPage}}</a>
+            <li class="lg-pager-item" :class="{ 'lg-pager-current': isTail }" v-if="totalPageCount > 1">
+                <a href="javascript:" @click="to( totalPageCount )">{{ totalPageCount }}</a>
             </li>
-            <li class="lg-pager-item lg-pager-next" :class="{'disable': isTail}">
-                <a href="javascript:" @click="to(pager.current + 1)"></a>
+            <li class="lg-pager-item lg-pager-next" :class="{ 'disable': isTail }">
+                <a href="javascript:" @click="to( pager.current + 1 )"></a>
             </li>
             <li class="lg-pager-shortcut">
                 去第<input type="text" v-model="shortcut" class="lg-pager-input-to" @keydown="scHandler(shortcut)">页<!-- <a href="javascript:" class="lg-pager-shortcut-confirm" @click="to(shortcut)">确定</a> -->
@@ -29,7 +29,7 @@
             <li slot="before" v-if="$slots.before">
                 <slot name="before"></slot> 
             </li>
-            <!-- <li class="lg-pager-total">共{{calPage}}页</li> -->
+            <!-- <li class="lg-pager-total">共{{totalPageCount}}页</li> -->
             <li slot="after" v-if="$slots.after">
                 <slot name="after"></slot> 
             </li>             
@@ -102,7 +102,7 @@ var Pager = {
 
 
 
-            if (cur <= this.calPage && cur >= 1 && cur != this.pager.current) {
+            if (cur <= this.totalPageCount && cur >= 1 && cur != this.pager.current) {
                 this.calculate(cur);
                 this.$emit('to', cur);
             }
@@ -111,11 +111,11 @@ var Pager = {
         calculate(current) {
             var current = Math.floor(current / 1);
             var start = 2,
-                end = this.calPage - 1;
-            if (this.calPage > this.vol) {
+                end = this.totalPageCount - 1;
+            if (this.totalPageCount > this.vol) {
                 if (current - this.pre > 1) {
                     start = current - this.pre;
-                    if (current + this.next - this.calPage < 0) {
+                    if (current + this.next - this.totalPageCount < 0) {
                         end = current + this.next
                     } else {
                         start = end - (this.vol - 3);
@@ -145,15 +145,15 @@ var Pager = {
             return this.pager.current == 1;
         },
         isTail() {
-            return this.pager.current == this.calPage;
+            return this.pager.current == this.totalPageCount;
         },
         showPager() {
-            return !!this.totalCount || !!this.calPage;
+            return !!this.totalCount || !!this.totalPageCount;
         },
         propsUpdate() {
-            return this.total + '&' + this.current + '&' + this.volumn;
+            return this.totalPageCount + '&' + this.current + '&' + this.volumn;
         },
-        calPage() { // 计算后的页数
+        totalPageCount() { // 计算后的页数
             if(this.totalCount) {
                 let resultPage = this.totalCount / this.pageSize;
                 return Math.ceil(resultPage);

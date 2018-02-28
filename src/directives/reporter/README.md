@@ -15,7 +15,7 @@
 #### 多事件用[] 包裹单事件
     v-reporter="[
         {key: 'HF_W_CLICK_HFKOL_DETAIL_HF', event: 'keyup', data: {'userId': '1132321'}},
-        {key: 'HF_W_CLICK_HFKOL_DETAIL_HF', event: 'keydown', data: {'userId': '1132321'}}
+        {key: 'HF_W_CLICK_HFKOL_DETAIL_HF', event: 'keydown', data: {'userId': '1132321'}, afterSend: {timeout: 0, handle: function(){ alert('report')}, args:{name: 'abc'}}}
     ]"
 
 ###  binding.value 说明：
