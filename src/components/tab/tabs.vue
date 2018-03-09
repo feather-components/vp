@@ -68,6 +68,7 @@
                 }
 
                 this.$emit('vp-tab:to', { index });
+                this.$emit('to', { index });
             }
         }
     }
