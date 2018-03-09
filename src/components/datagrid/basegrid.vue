@@ -192,7 +192,7 @@ var BaseGrid = {
                 this.rowList.forEach(function(line) {
                     !line[key].disable && _this.checkResults[key].push(line[key].value);
                 })
-            } else {}
+            }
             this.$emit('checkall', key, this.checkResults[key].join(','));
             this.computeCheckAll(key);
         },
@@ -202,7 +202,7 @@ var BaseGrid = {
         onSwitch(key, index, checked) {
             this.$emit('switch', key, index, checked);
         },
-        onSort(head, asc, index) {
+        onSort(head, asc) {
             this.aColumn.forEach(item => {
                 item.forEach(i => {
                     if (i === head) return;
@@ -222,13 +222,15 @@ var BaseGrid = {
                 this.rowList.forEach(function(line, i) {
                     _this.checkResults.exp.push('exp' + i);
                 })
-            } else {}
+            }
             this.$emit('expandall');
             this.computeExpandAll();
         },
         onExpand(index) {
-            this.$emit('expand', index, this.checkResults.exp.join(','));
-            this.computeExpandAll();
+            var self = this;
+            self.$emit('expand', index, self.checkResults.exp.join(','));
+            self.computeExpandAll();
+            console.log(self.checkResults.exp, 'nextTick');
         },
         getRowHeight() {
             var result = [];
@@ -335,7 +337,6 @@ var BaseGrid = {
         },
         action: { //enable dynamic action
             inserted(el, { value }, vnode) {
-                var _this = this;
                 var action = value.act,
                     data = value.item;
                 if (action.disable && action.disable(data)) {
