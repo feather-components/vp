@@ -49,7 +49,7 @@
                     </td>
                 </tr>
                 <tr v-if="expand && isExpand(i)">
-                    <td :colspan="colspan+1">
+                    <td :colspan="columnCount+1">
                         <slot :name="trContent(i)">
                             <div v-html="item.$expand()"></div>
                         </slot>
@@ -59,7 +59,7 @@
         </tbody>
         <tbody v-else>
             <tr>
-                <td :colspan="columnCount || colspan">暂无数据</td>
+                <td :colspan="columnCount">暂无数据</td>
             </tr>
         </tbody>
     </table>
@@ -237,7 +237,6 @@ var BaseGrid = {
             var self = this;
             self.$emit('expand', index, self.checkResults.exp.join(','));
             self.computeExpandAll();
-            console.log(self.checkResults.exp, 'nextTick');
         },
         getRowHeight() {
             var result = [];
