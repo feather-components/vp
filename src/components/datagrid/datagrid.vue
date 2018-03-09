@@ -1,7 +1,7 @@
 <template>
     <div style="position:relative">
         <div v-for="table in tables" class="lg-table-scroll" :class="table.klass">
-            <basegrid :columns="getHead(columns, table.fixType, fix)" :rows="data" :colspan="colspan" :expand="expand" :style="table.style" :fixType="table.fixType" @action="onAction" @check="onCheck" @checkall="onCheckAll" @radio="onRadio" @switch="onSwitch" @sort="onSort">
+            <basegrid :columns="getHead(columns, table.fixType, fix)" :rows="data" :colspan="colspan" :expand="expand" :style="table.style" :fixType="table.fixType" @action="onAction" @check="onCheck" @checkall="onCheckAll" @radio="onRadio" @switch="onSwitch" @sort="onSort" :ref="table.fixType">
                 <template v-for="col in columns">
                     <div :slot="colName(col)" v-if="$slots[colName(col)]">
                         <slot :name="colName(col)"></slot>

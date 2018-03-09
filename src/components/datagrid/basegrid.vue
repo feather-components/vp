@@ -350,13 +350,12 @@ var BaseGrid = {
                     }
                 } else if (action.type == 'callback') {
                     el.setAttribute('href', 'javascript:void(0);');
-                    el.addEventListener('click', function() {
+                    el.onclick = function(){
                         vnode.context.$emit('action', action.eventName, data);
-                    })
+                    };
                 }
             },
             update(el, { value }, vnode) {
-                var _this = this;
                 var action = value.act,
                     data = value.item;
                 if (action.disable && action.disable(data)) {
@@ -374,9 +373,9 @@ var BaseGrid = {
                     }
                 } else if (action.type == 'callback') {
                     el.setAttribute('href', 'javascript:void(0);');
-                    el.addEventListener('click', function() {
+                    el.onclick = function() {
                         vnode.context.$emit('action', action.eventName, data);
-                    })
+                    };
                 }
             }
         }
