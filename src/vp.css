@@ -10,6 +10,10 @@
   background-color: #fff;
 }
 
+.lg-table  .lg-checkbox-expand .lg-checkbox-expand-label:before{
+    display: none;
+}
+
 .lg-table, .lg-table tr th, .lg-table tr td{
   border: 1px #e1e1e1 solid;
 }
@@ -80,6 +84,7 @@
   background-color: #fbfbfb;
 }
 .lg-table td {
+  text-align: left;
   border: none;
   font-size: 12px;
 }

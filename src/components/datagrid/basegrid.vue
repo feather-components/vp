@@ -3,9 +3,9 @@
         <thead :class="{'multi' : aColumn.length > 1}">
             <tr v-for="(columns, index) in aColumn">
                 <th v-if="expand && rowList.length > 0 && index == 0" style="width:50px" :rowspan="aColumn.length">
-                    <span class="lg-checkbox-plain">
+                    <span class="lg-checkbox-plain lg-checkbox-expand" v-if="showExpandAll">
                         <input type="checkbox" :id="uid('exp')" @click="onExpandAll()" value="exp" v-model="isAllExpand"/>
-                            <label :for="uid('exp')"><span class="lg-i lg-color-sys" :class="expklass('all')"></span></label>
+                        <label :for="uid('exp')" class="lg-checkbox-expand-label"><span class="lg-i lg-color-sys" :class="expklass('all')"></span></label>
                     </span>
                 </th>
                 <th v-for="(col,i) in columns" :style="col.style" :colspan="col.colspan || 1" :rowspan="col.rowspan || 1">
@@ -24,9 +24,9 @@
             <template v-for="(item, i) in rows">
                 <tr v-line="{lineElements,i}">
                     <td v-if="expand">
-                        <span class="lg-checkbox-plain">
+                        <span class="lg-checkbox-plain lg-checkbox-expand">
                             <input type="checkbox" :value="'exp'+i" :id="uid('exp',i)" @click="onExpand(i)" v-model="checkResults.exp"/>
-                            <label :for="uid('exp',i)"><span class="lg-i lg-ihollowadd lg-color-sys" :class="expklass(i)"></span></label>
+                            <label :for="uid('exp',i)" class="lg-checkbox-expand-label"><span class="lg-i lg-ihollowadd lg-color-sys" :class="expklass(i)"></span></label>
                         </span>
                     </td>
                     <td v-for="col in aLeafColumn" class="nowrap">
@@ -106,6 +106,11 @@ var BaseGrid = {
             require: false,
             default: false
         },
+        'showExpandAll': {
+            type: Boolean,
+            require: false,
+            default: false
+        },
         'fixType': {
             type: String,
             require: false,
@@ -143,7 +148,9 @@ var BaseGrid = {
     },
     data: function() {
         return {
-            checkResults: {},
+            checkResults: {
+                exp: []
+            },
             isAllCheck: [],
             isAllExpand: false,
             lineElements: [],
