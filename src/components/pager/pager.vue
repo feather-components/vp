@@ -14,11 +14,11 @@
             <li class="lg-pager-item" v-for="n in (pager.end - pager.start + 1)" :class="{'lg-pager-current': pager.current == (pager.start + n - 1)}">
                 <a href="javascript:" @click="to(pager.start + n - 1)">{{ pager.start + n - 1 }}</a>
             </li>
-            <li class="lg-pager-item lg-pager-dot" v-if="pager.end < totalPageCount - 1">
+            <li class="lg-pager-item lg-pager-dot" v-if="pager.end < pageCount - 1">
                 ...
             </li>
-            <li class="lg-pager-item" :class="{ 'lg-pager-current': isTail }" v-if="totalPageCount > 1">
-                <a href="javascript:" @click="to( totalPageCount )">{{ totalPageCount }}</a>
+            <li class="lg-pager-item" :class="{ 'lg-pager-current': isTail }" v-if="pageCount > 1">
+                <a href="javascript:" @click="to( pageCount )">{{ pageCount }}</a>
             </li>
             <li class="lg-pager-item lg-pager-next" :class="{ 'disable': isTail }">
                 <a href="javascript:" @click="to( pager.current + 1 )"></a>
@@ -29,7 +29,7 @@
             <li slot="before" v-if="$slots.before">
                 <slot name="before"></slot> 
             </li>
-            <!-- <li class="lg-pager-total">共{{totalPageCount}}页</li> -->
+            <!-- <li class="lg-pager-total">共{{pageCount}}页</li> -->
             <li slot="after" v-if="$slots.after">
                 <slot name="after"></slot> 
             </li>             
@@ -61,7 +61,7 @@ var Pager = {
             type: Number,
             default: 10
         },
-        //总页数
+        //总页数 不建议使用
         'total': {
             type: Number
         },
@@ -103,7 +103,7 @@ var Pager = {
 
 
 
-            if (cur <= this.totalPageCount && cur >= 1 && cur != this.pager.current) {
+            if (cur <= this.pageCount && cur >= 1 && cur != this.pager.current) {
                 this.calculate(cur);
                 this.$emit('to', cur);
             }
@@ -112,11 +112,11 @@ var Pager = {
         calculate(current) {
             var cPage = Math.floor(current / 1);
             var start = 2;
-            var end = this.totalPageCount - 1;
-            if (this.totalPageCount > this.vol) {
+            var end = this.pageCount - 1;
+            if (this.pageCount > this.vol) {
                 if (cPage - this.pre > 1) {
                     start = cPage - this.pre;
-                    if (cPage + this.next - this.totalPageCount < 0) {
+                    if (cPage + this.next - this.pageCount < 0) {
                         end = cPage + this.next
                     } else {
                         start = end - (this.vol - 3);
@@ -146,15 +146,16 @@ var Pager = {
             return this.pager.current == 1;
         },
         isTail() {
-            return this.pager.current == this.totalPageCount;
+            return this.pager.current == this.pageCount;
         },
         showPager() {
-            return !!this.totalCount || !!this.totalPageCount;
+            return !!this.totalCount || !!this.pageCount;
         },
         propsUpdate() {
-            return this.totalPageCount + '&' + this.current + '&' + this.volumn;
+            return this.pageCount + '&' + this.current + '&' + this.volumn;
         },
-        totalPageCount() { // 计算后的页数
+        //total: 页数、totalCount: 记录数
+        pageCount() { // 计算后的页数
             if(this.totalCount) {
                 let resultPage = this.totalCount / this.pageSize;
                 return Math.ceil(resultPage);

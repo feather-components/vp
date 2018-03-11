@@ -86,10 +86,6 @@ var BaseGrid = {
             require: true,
             default: false
         },
-        'colspan': {
-            type: Number,
-            require: true
-        },
         'headerFormat': {
             type: Function,
             require: false,

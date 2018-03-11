@@ -3,7 +3,7 @@
         <div v-for="table in tables" class="lg-table-scroll" :class="table.klass">
             <basegrid 
                 :columns="getHead(columns, table.fixType, fix)" 
-                :rows="rowList" :colspan="colspan" :expand="expand" 
+                :rows="rowList" :expand="expand" 
                 :style="table.style" :fixType="table.fixType" 
                 @action="onAction" @check="onCheck" @checkall="onCheckAll" @radio="onRadio" @switch="onSwitch" @sort="onSort" @expand="handleExpand"
                 :ref="table.fixType">
@@ -39,14 +39,11 @@ var Datagrid = {
             require: false,
             default: false
         },
+        //grid 数据列表
         'rows': {
             type: [Array, Boolean],
             require: false,
             default: false
-        },
-        'colspan': {
-            type: Number,
-            require: true
         },
         'headerFormat': {
             type: Function,
@@ -98,18 +95,17 @@ var Datagrid = {
             fixType: 'left'
         })
         return {
-            tables: tables,
-            rowList: []
+            tables: tables
         };
     },
     computed: {
         columns() {
             return this.getColumns(this.head);
-        }
-    },
-    created() {
+        },
         //兼容 rows, data
-        this.rowList = this.rows || this.data;
+        rowList() {
+            return this.rows || this.data;
+        }
     },
     mounted() {
         //synchronous row height of main if (left,right) exist
@@ -196,7 +192,7 @@ var Datagrid = {
         },
         handleExpand(index, data, isExpand){
             if(Object.prototype.toString.call(data) == '[object Array]'){
-                this.$emit('expand', index , data)
+                this.$emit('expand', index, data)
             }else {
                 this.$emit('expand', index, data, isExpand)
             }
