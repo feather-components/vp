@@ -26,7 +26,7 @@
         <vp-grid :head="table_base.col" :data="table.data"  :expand="{single:true}">
             <vp-grid slot="trexpand:0" :head="table_base.col" :data="table.data" ></vp-grid>
         </vp-grid>
-        <span>data -> rows</span>
+        <span>data --> rows</span>
         <vp-grid :head="table_base.col" :rows="table.data"  :expand="{single:true}">
             <vp-grid slot="trexpand:0" :head="table_base.col" :rows="table.data" ></vp-grid>
         </vp-grid>
