@@ -17,8 +17,18 @@
         <vp-grid :head="table.head" :data="table.data" :colspan="table.colspan" @check="check" @checkall="checkall" @switch="switcher" :fix="table.fix">
         </vp-grid>
         <span class="lg-title">Expand： 扩展行</span>
+        <br/>
+        <span>可多行: </span>
         <vp-grid :head="table_base.col" :data="table.data"  :expand="true">
             <vp-grid slot="trexpand:0" :head="table_base.col" :data="table.data" ></vp-grid>
+        </vp-grid>
+        <span>单行：</span>
+        <vp-grid :head="table_base.col" :data="table.data"  :expand="{single:true}">
+            <vp-grid slot="trexpand:0" :head="table_base.col" :data="table.data" ></vp-grid>
+        </vp-grid>
+        <span>data -> rows</span>
+        <vp-grid :head="table_base.col" :rows="table.data"  :expand="{single:true}">
+            <vp-grid slot="trexpand:0" :head="table_base.col" :rows="table.data" ></vp-grid>
         </vp-grid>
         <!-- <vp-grid :head="table.head" :data="table.data" :colspan="table.colspan" @grid:checkbox="click" @grid:checkall="checkall" @grid:switch="switcher" @grid:sort="sort">
             <template slot="header" scope="props">

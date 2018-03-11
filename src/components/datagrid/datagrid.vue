@@ -3,7 +3,7 @@
         <div v-for="table in tables" class="lg-table-scroll" :class="table.klass">
             <basegrid 
                 :columns="getHead(columns, table.fixType, fix)" 
-                :rows="data" :colspan="colspan" :expand="expand" 
+                :rows="rowList" :colspan="colspan" :expand="expand" 
                 :style="table.style" :fixType="table.fixType" 
                 @action="onAction" @check="onCheck" @checkall="onCheckAll" @radio="onRadio" @switch="onSwitch" @sort="onSort" @expand="handleExpand"
                 :ref="table.fixType">
@@ -11,11 +11,11 @@
                     <div :slot="colName(col)" v-if="$slots[colName(col)]">
                         <slot :name="colName(col)"></slot>
                     </div>
-                    <div :slot="cellContent(col, rowIndex)" v-for="(item, rowIndex) in data" v-if="$slots[cellContent(col, rowIndex)]">
+                    <div :slot="cellContent(col, rowIndex)" v-for="(item, rowIndex) in rowList" v-if="$slots[cellContent(col, rowIndex)]">
                         <slot :name="cellContent(col, rowIndex)"></slot>
                     </div>
                 </template>
-                <template v-for="(item, i) in data">
+                <template v-for="(item, i) in rowList">
                     <div :slot="trContent(i)" v-if="$slots[trContent(i)]">
                         <slot :name="trContent(i)"></slot>
                     </div>
@@ -33,9 +33,16 @@ var Datagrid = {
             type: Object,
             require: true
         },
+        //不建议使用
         'data': {
-            type: Array,
-            require: true
+            type: [Array, Boolean],
+            require: false,
+            default: false
+        },
+        'rows': {
+            type: [Array, Boolean],
+            require: false,
+            default: false
         },
         'colspan': {
             type: Number,
@@ -91,13 +98,18 @@ var Datagrid = {
             fixType: 'left'
         })
         return {
-            tables: tables
+            tables: tables,
+            rowList: []
         };
     },
     computed: {
         columns() {
             return this.getColumns(this.head);
         }
+    },
+    created() {
+        //兼容 rows, data
+        this.rowList = this.rows || this.data;
     },
     mounted() {
         //synchronous row height of main if (left,right) exist
