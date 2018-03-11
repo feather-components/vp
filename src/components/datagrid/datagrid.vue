@@ -1,7 +1,12 @@
 <template>
     <div style="position:relative">
         <div v-for="table in tables" class="lg-table-scroll" :class="table.klass">
-            <basegrid :columns="getHead(columns, table.fixType, fix)" :rows="data" :colspan="colspan" :expand="expand" :style="table.style" :fixType="table.fixType" @action="onAction" @check="onCheck" @checkall="onCheckAll" @radio="onRadio" @switch="onSwitch" @sort="onSort" :ref="table.fixType">
+            <basegrid 
+                :columns="getHead(columns, table.fixType, fix)" 
+                :rows="data" :colspan="colspan" :expand="expand" 
+                :style="table.style" :fixType="table.fixType" 
+                @action="onAction" @check="onCheck" @checkall="onCheckAll" @radio="onRadio" @switch="onSwitch" @sort="onSort" @expand="handleExpand"
+                :ref="table.fixType">
                 <template v-for="col in columns">
                     <div :slot="colName(col)" v-if="$slots[colName(col)]">
                         <slot :name="colName(col)"></slot>
@@ -64,7 +69,7 @@ var Datagrid = {
             }
         },
         'expand': {
-            type: Boolean,
+            type: [Boolean, Object],
             require: false,
             default: false
         }
@@ -176,6 +181,13 @@ var Datagrid = {
         },
         trContent(index) {
             return 'trexpand:' + index;
+        },
+        handleExpand(index, data, isExpand){
+            if(Object.prototype.toString.call(data) == '[object Array]'){
+                this.$emit('expand', index , data)
+            }else {
+                this.$emit('expand', index, data, isExpand)
+            }
         }
     },
     components: {

@@ -25,7 +25,16 @@
                 <tr v-line="{lineElements,i}">
                     <td v-if="expand">
                         <span class="lg-checkbox-plain lg-checkbox-expand">
-                            <input type="checkbox" :value="'exp'+i" :id="uid('exp',i)" @click="onExpand(i)" v-model="checkResults.exp"/>
+
+                           <input 
+                                v-if="expand && expand.single"
+                                type="checkbox" :value="'exp'+i" 
+                                :id="uid('exp',i)" @click="onSingleExpand(i, item)" />
+                            <input 
+                                v-else
+                                type="checkbox" :value="'exp'+i" 
+                                :id="uid('exp',i)" @click="onExpand(i)" v-model="checkResults.exp"/>
+
                             <label :for="uid('exp',i)" class="lg-checkbox-expand-label"><span class="lg-i lg-ihollowadd lg-color-sys" :class="expklass(i)"></span></label>
                         </span>
                     </td>
@@ -102,7 +111,7 @@ var BaseGrid = {
             }
         },
         'expand': {
-            type: Boolean,
+            type: [Boolean,Object],
             require: false,
             default: false
         },
@@ -149,7 +158,8 @@ var BaseGrid = {
     data: function() {
         return {
             checkResults: {
-                exp: []
+                exp: [],
+                singleExp: ''
             },
             isAllCheck: [],
             isAllExpand: false,
@@ -222,6 +232,9 @@ var BaseGrid = {
             this.$emit('sort', head.key, next);
         },
         onExpandAll() {
+            if(this.singleExpand){
+                return;
+            }
             var _this = this;
             var length = this.checkResults.exp.length;
             this.checkResults.exp = [];
@@ -233,9 +246,28 @@ var BaseGrid = {
             this.$emit('expandall');
             this.computeExpandAll();
         },
+        onSingleExpand(index, item) {
+            var isExpand = event.srcElement.checked;
+            
+            if(event.srcElement.checked){
+                this.checkResults.singleExp = `exp${index}`;
+            }else{
+                this.checkResults.singleExp = '';
+            }
+            this.$emit('expand', index, item, isExpand);
+        },
         onExpand(index) {
             var self = this;
-            self.$emit('expand', index, self.checkResults.exp.join(','));
+            var selectedRows = [];
+            this.rowList.forEach(function(item, index){
+                self.checkResults.exp.forEach(function(indexStr){
+                    if(`exp${index}` === indexStr){
+                        selectedRows.push(item);
+                    }
+                });
+            });
+
+            self.$emit('expand', index, selectedRows);
             self.computeExpandAll();
         },
         getRowHeight() {
@@ -275,7 +307,12 @@ var BaseGrid = {
             return this.isExpand(index) ? 'lg-ihollowminus' : 'lg-ihollowadd';
         },
         isExpand(index) {
-            return this.checkResults.exp.indexOf('exp' + index) >= 0;
+            if(this.expand.single){
+                //获取到最近点击的value
+                return `exp${index}` === this.checkResults.singleExp
+            }else{
+                return this.checkResults.exp.indexOf(`exp${index}`) >= 0;
+            }
         },
         isType(typeName, col, cell) {
             return col.type && col.type == typeName && cell && !cell.disable;
