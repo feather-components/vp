@@ -10,11 +10,17 @@
             </div>
             <div class="vp-dialog-content-wrap">
                 <div class="vp-dialog-content">
-                    <slot name="content"></slot>
+                    <!-- 兼容处理 -->
+                    <slot>
+                        <slot name="content"></slot>
+                    </slot>
                 </div>
                 <section class="vp-dialog-footer">
-                    <slot name="btns">
-                        <btn type="main" class="vp-dialog-btn" @click="close">确认</btn>
+                    <!-- 兼容处理 -->
+                    <slot name="footer">
+                        <slot name="btns">
+                            <btn type="main" class="vp-dialog-btn" @click="close">确认</btn>
+                        </slot>
                     </slot>
                 </section>
             </div>
