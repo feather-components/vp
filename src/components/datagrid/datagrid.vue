@@ -124,7 +124,9 @@ var Datagrid = {
                 var temp;
                 if (typeof headDefinition[key] == 'object') {
                     var style = '';
-                    headDefinition[key].width ? style = 'width:' + headDefinition[key].width : '';
+                    headDefinition[key].width ? style = ('width:' + headDefinition[key].width + ';' ) : '';
+                    headDefinition[key].style ? style += (headDefinition[key].style) : '';
+                    
                     temp = Object.assign(headDefinition[key], { key: key, style: style });
                 } else {
                     temp = {
