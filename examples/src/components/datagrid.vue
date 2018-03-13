@@ -456,8 +456,8 @@ export default {
         })
     },
     methods: {
-        check(key, index, result, rowList) {
-            console.log('checkbox', key, index, result, rowList);
+        check(key, index, result, rowList, currentRow) {
+            console.log('checkbox', key, index, result, rowList, currentRow);
         },
         checkall(key, result, rowList) {
             console.log('checkall', key, result, rowList);

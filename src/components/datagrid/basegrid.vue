@@ -193,13 +193,14 @@ var BaseGrid = {
         onCheck(key, index) {
             var self = this;
             setTimeout(function(){
-                var tempList = [];
+                var checkedRecords = [];
                 self.rowList.forEach(function(item){
                     if(self.checkResults[key].indexOf(item[key].value) >= 0){
-                        tempList.push(JSON.parse(JSON.stringify(item)));
+                        checkedRecords.push(JSON.parse(JSON.stringify(item)));
                     }
                 });
-                self.$emit('check', key, index, self.checkResults[key].join(','), tempList);
+                var currentRecord = JSON.parse(JSON.stringify(self.rowList[index]));
+                self.$emit('check', key, index, self.checkResults[key].join(','), checkedRecords, currentRecord);
                 self.computeCheckAll(key);
             },0);
         },
