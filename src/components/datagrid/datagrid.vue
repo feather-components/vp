@@ -165,11 +165,11 @@ var Datagrid = {
             this.$refs.left && this.$refs.left[0].setRowHeight(mainHeight);
             this.$refs.right && this.$refs.right[0].setRowHeight(mainHeight);
         },
-        onCheck(key, index, result) {
-            this.$emit('check', key, index, result);
+        onCheck(key, index, result, checkedRows) {
+            this.$emit('check', key, index, result, checkedRows);
         },
-        onCheckAll(key, result) {
-            this.$emit('checkall', key, result);
+        onCheckAll(key, result, checkedRows) {
+            this.$emit('checkall', key, result, checkedRows);
         },
         onRadio(key, index, result) {
             this.$emit('radio', key, index, result);

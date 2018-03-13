@@ -283,8 +283,7 @@ export default {
                 },
                 data: [{
                     select: {
-                        value: 1,
-                        disable: true
+                        value: 1
                     },
                     radio: {
                         value: 'r1'
@@ -457,11 +456,11 @@ export default {
         })
     },
     methods: {
-        check(key, index, result) {
-            console.log('checkbox', key, index, result);
+        check(key, index, result, rowList) {
+            console.log('checkbox', key, index, result, rowList);
         },
-        checkall(key, result) {
-            console.log('checkall', key, result);
+        checkall(key, result, rowList) {
+            console.log('checkall', key, result, rowList);
         },
         radio(key, index, result) {
             console.log('radio', key, index, result);

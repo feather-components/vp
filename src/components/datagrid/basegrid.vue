@@ -191,12 +191,21 @@ var BaseGrid = {
             this.$emit('cell:click', data);
         },
         onCheck(key, index) {
-            this.$emit('check', key, index, this.checkResults[key].join(','));
-            this.computeCheckAll(key);
+            var self = this;
+            setTimeout(function(){
+                var tempList = [];
+                self.rowList.forEach(function(item){
+                    if(self.checkResults[key].indexOf(item[key].value) >= 0){
+                        tempList.push(JSON.parse(JSON.stringify(item)));
+                    }
+                });
+                self.$emit('check', key, index, self.checkResults[key].join(','), tempList);
+                self.computeCheckAll(key);
+            },0);
         },
         onCheckAll(key) {
             var _this = this;
-            var disableLength = this.rowList.filter(function(item, i) {
+            var disableLength = this.rowList.filter(function(item) {
                 return item[key].disable;
             }).length;
             var length = this.checkResults[key].length + disableLength;
@@ -206,7 +215,7 @@ var BaseGrid = {
                     !line[key].disable && _this.checkResults[key].push(line[key].value);
                 })
             }
-            this.$emit('checkall', key, this.checkResults[key].join(','));
+            this.$emit('checkall', key, this.checkResults[key].join(','), JSON.parse(JSON.stringify(this.rowList)));
             this.computeCheckAll(key);
         },
         onRadio(key, index) {
