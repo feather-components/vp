@@ -1,12 +1,15 @@
 <template>
     <transition name="vp-dialog-fade">
-    <div class="vp-overlay vp-dialog" position="center" v-show="visibility">
+    <div :class="'vp-overlay vp-dialog '+ draggableModelClass + noMaskModelClass" v-show="visibility" ref="instance">
         <div class="vp-dialog-wrap">
-            <i class="vp-dialog-close-icon" @click="close"></i>
-            <div class="vp-dialog-title">
+            <div class="vp-dialog-title" ref="instanceTitleBar">
                 <div class="vp-dialog-title-text">
                     <slot name="title">系统提示！</slot>
                 </div>
+                <div v-if="draggable" class="vp-dialog__draggable">
+                    可拖动
+                </div>
+                <i class="vp-dialog-close-icon" @click="close"></i>
             </div>
             <div class="vp-dialog-content-wrap">
                 <div class="vp-dialog-content">
@@ -15,7 +18,7 @@
                         <slot name="content"></slot>
                     </slot>
                 </div>
-                <section class="vp-dialog-footer">
+                <section class="vp-dialog-footer clearfix">
                     <!-- 兼容处理 -->
                     <slot name="footer">
                         <slot name="btns">
@@ -41,41 +44,117 @@
             btn: Button
         },
         props: {
-            showMask: {
+            mask: {
                 type: Boolean,
                 default: true
+            },
+            draggable: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
             return {
-
+                draggableModelClass: ''
             }
         },
-        methods: {},
+        created(){
+            if(this.mask){
+                this.noMaskModelClass = ''
+            }else{
+                this.noMaskModelClass = ' vp-dialog--no-mask'
+            }
+        },
+        methods: {
+            mousedown(){
+                
+            },
+
+            getDialogPosition(){
+                var el = this.$refs.instance;
+                return {
+                    top: el.offsetTop,
+                    left: el.offsetLeft
+                }
+            },
+
+            mouseup(){
+                document.onmousemove = null;
+            },
+            registDragEvent(){
+                var self = this;
+                var bar = self.$refs.instanceTitleBar;
+                var moveHandler = null;
+
+                bar.addEventListener('mousedown', function(){
+                    var style = self.$refs.instance.style;
+                    var offset = self.getDialogPosition();
+                    var halfMove = parseInt(self.$refs.instance.offsetWidth/2);
+                    if(self.draggableModelClass == ''){
+                        style.left = `${offset.left - halfMove}px`;                    
+                    }
+                    self.draggableModelClass = ' vp-dialog--draggle';
+                    style.top = `${offset.top}px`;
+                    
+                    //console.log('mousedown');
+                    var mouseX = 0;
+                    var mouseY = 0;
+                    var moveDistanceX = 0;
+                    var moveDistanceY = 0;
+
+                    moveHandler = function(e){
+                        if(mouseX !== 0 || mouseY !== 0){
+                            moveDistanceX = mouseX - e.clientX;
+                            moveDistanceY = mouseY - e.clientY;
+                            var offset = self.getDialogPosition();
+                            style.top = `${offset.top - moveDistanceY}px`;
+                            style.left = `${offset.left - moveDistanceX}px`;
+                        }
+                        mouseX = e.clientX;
+                        mouseY = e.clientY;
+                    };
+
+                    document.addEventListener('mousemove', moveHandler);
+                });
+
+                bar.addEventListener('mouseup', function(){
+                    document.removeEventListener('mousemove', moveHandler);
+                });
+            }
+        },
         watch: {
             visibility(val){
                 let body = document.getElementsByTagName('body')[0];
                 if(val){
                     if(this.mask){
-                        this.mask.show();
-                        return;
+                        if(this.maskInstance){
+                            this.maskInstance.show();
+                            return;
+                        }
+                        this.maskInstance = vpMask.show();
                     }
-                    this.mask = vpMask.show();
                     body.appendChild(this.$el);
                 }else{
                     if(this.mask){
-                        this.mask.hide();
+                        if(this.maskInstance){
+                            this.maskInstance.hide();
+                        }
                     }
+                    
                 }
             }
         },
+
         mounted(){
             //Overlay.manager.addOverlay(this, Overlay.manager.types.alert);
+            if(this.draggable){
+                this.registDragEvent();
+            }
         },
 
         destroyed(){
-            if(this.mask){
-                this.mask.destroy();
+            if(this.mask && this.maskInstance){
+                this.maskInstance.destroy();
             }
             //Overlay.manager.deleteOverlay(this);
         }
@@ -83,22 +162,7 @@
 </script>
 
 <style>
-.vp-dialog-wrap{
-        box-shadow: 0 8px 8px 0;
-        position: relative;
-        left: -50%;
-        border-radius: 4px;
-        padding: 24px;
-        background: #fff;
-}
-    .vp-dialog-fade-enter-active, .vp-dialog-fade-leave-active {
-        transition: all .3s;
-    }
-    .vp-dialog-fade-enter, .vp-dialog-fade-leave-to {
-        margin-top:-100px;
-        opacity: 0;
-    }
-
+    
     .vp-dialog.vp-overlay{
         position: absolute;
         top: 10%;
@@ -107,6 +171,27 @@
         z-index: 10001;
         min-width: 400px;
     }
+
+    .vp-dialog-wrap{
+        box-shadow: 0 8px 8px 0;
+        position: relative;
+        left: -50%;
+        border-radius: 4px;
+        background: #fff;
+    }
+
+    .vp-dialog--draggle .vp-dialog-wrap{
+        left: 0;
+    }
+
+    .vp-dialog--no-mask .vp-dialog-title, .vp-dialog--draggle .vp-dialog-title{
+        background-color: #eee;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
     .vp-dialog-close-icon{
         position: absolute;
         top: 10px;
@@ -115,6 +200,16 @@
         width: 25px;
         height: 25px;
         cursor: pointer;
+    }
+
+    .vp-dialog__draggable{
+        position: absolute;
+        border-radius: 4px;
+        font-size: 8px;
+        top: 14px;
+        right: 50px;
+        border: 1px #bbb dashed;
+        padding: 0 3px;
     }
 
     .vp-dialog-close-icon::before,
@@ -140,6 +235,7 @@
     }
 
     .vp-dialog-title{
+        padding: 24px 24px 0 24px;
         margin-bottom: 12px;
     }
 
@@ -160,7 +256,7 @@
 
     .vp-dialog-content-wrap{
         position: relative;
-        padding-bottom: 42px;
+        padding: 0 24px 24px 24px;
     }
 
     .vp-dialog-extras{
@@ -173,9 +269,6 @@
     }
 
     .vp-dialog-footer{
-        position: absolute;
-        bottom: 0px;
-        right: 0px;
         width: 100%;
         text-align: right;
         box-sizing: border-box;
@@ -198,5 +291,15 @@
 
     .vp-dialog .vp-dialog-cbtn{
         width: 45%;
+    }
+
+
+    .vp-dialog-fade-enter-active, .vp-dialog-fade-leave-active {
+        transition: all .3s;
+    }
+    
+    .vp-dialog-fade-enter, .vp-dialog-fade-leave-to {
+        margin-top:-100px;
+        opacity: 0;
     }
 </style>
