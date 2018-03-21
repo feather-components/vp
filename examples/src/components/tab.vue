@@ -8,7 +8,7 @@
             <vp-tabpanel v-for="i in 5" :label="'tab' + i" :index="i">{{ i }}</vp-tabpanel>
         </vp-tabs>
         <br/>
-        <vp-tabs :isManual = "true" ref="mandualTab" @vp-tab:to="tabTo">
+        <vp-tabs :isManual="true" ref="mandualTab" @vp-tab:to="tabTo">
             <vp-tabpanel label="user" index="user">user</vp-tabpanel>
             <vp-tabpanel label="role" index="role">role</vp-tabpanel>
             <vp-tabpanel label="prvi" index="prvi">prvi</vp-tabpanel>
@@ -17,6 +17,15 @@
         </vp-tabs>
         <br/>
         <input v-model="mandualTabIndex"></input><btn @click="chooseTab($refs.mandualTab, mandualTabIndex)">选择 tab</btn>
+        <br/>
+        <br/>
+        <br/>
+        <vp-tabs :hideModel = "true">
+            <vp-tabpanel label="dfdsafda">1111</vp-tabpanel>
+            <vp-tabpanel label="xxddd">2222</vp-tabpanel>
+            <vp-tabpanel label="fdsa">3333</vp-tabpanel>
+            <vp-tabpanel label="dafdsafd">4444</vp-tabpanel>
+        </vp-tabs>
     </div>
 </template>
 <script>

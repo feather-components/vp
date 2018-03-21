@@ -1,5 +1,5 @@
 <template>
-    <section class="vp-tab-panel" v-if="isActive" :index="index" :label="label">
+    <section class="vp-tab-panel" v-if="isActive" v-show="isShow" :index="index" :label="label">
         <slot></slot>
     </section>
 </template>
@@ -13,12 +13,19 @@
             },
             index: { 
                 type: Number | String,
-                required: true
+                required: false
             }
         },
         data(){
             return {
-                isActive: false
+                isActive: false,
+                isShow: true, 
+                autoIndex: 0
+            }
+        },
+        methods: {
+            getIndex(){
+                return typeof this.index === 'undefined' ? this.autoIndex : this.index;
             }
         }
     }

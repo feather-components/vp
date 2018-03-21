@@ -2,10 +2,16 @@
     <transition name="fade">
         <div :class="className">
             <ul class="vp-tab__nav">
-                <li 
+                <li v-if="hideModel"
                     v-for="tabPanel in tabPanels"
                     v-html="tabPanel.label"
-                    @click="to(tabPanel.index)"
+                    @click="to(tabPanel.getIndex())"
+                    :class="'vp-tabnav__item' + (tabPanel.isShow ? '--active' : '')">
+                </li>
+                <li v-if="!hideModel" 
+                    v-for="tabPanel in tabPanels"
+                    v-html="tabPanel.label"
+                    @click="to(tabPanel.getIndex())"
                     :class="'vp-tabnav__item' + (tabPanel.isActive ? '--active' : '')">
                 </li>
             </ul>
@@ -21,9 +27,15 @@
         props: {
             index: {
                 type: Number | String,
-                default: 'index-not-set'
+                required: false
             },
             isManual: {
+                type: Boolean,
+                required: false,
+                default: false
+            },
+            //开启隐藏模式，tab切换时tabItem只是隐藏
+            hideModel :{
                 type: Boolean,
                 required: false,
                 default: false
@@ -38,14 +50,28 @@
         created() {
             this.tabPanels = this.$children;
         },
+
         mounted() {
+            var self = this;
+            this.tabPanels.forEach(function(item, index){
+                
+                if(typeof item.index === 'undefined'){
+                    item.autoIndex = 'auto_' + index;
+                };
+
+                if(self.hideModel){
+                    item.isActive = true;
+                    item.isShow = false;
+                }
+            });  
+
             if(!this.$el.className){
                 this.className = 'vp-tab--default';
             }
 
             if(!this.isManual){
-                if(this.index === 'index-not-set'){
-                    this.to(this.tabPanels[0].index);
+                if( typeof this.index === 'undefined'){
+                    this.to(this.tabPanels[0].getIndex());
                 }else{
                     this.to(this.index);
                 }
@@ -53,17 +79,27 @@
         },
         methods: {
             to(index) {
-                let findTab = false;
+                let tabFinded = false;
+                var self = this;
                 this.tabPanels.forEach((tabPanel, i) => {
-                    if(tabPanel.index === index){
-                        tabPanel.isActive = true;
-                        findTab = true;
+                    if(tabPanel.getIndex() === index){
+                        tabFinded = true;
+                        if(self.hideModel){
+                            tabPanel.isShow = true;
+                        }else{
+                            tabPanel.isActive = true;
+                        }
+                        tabPanel.getIndex();
                     } else {
-                        tabPanel.isActive = false;
+                        if(self.hideModel){
+                            tabPanel.isShow = false;
+                        }else{
+                            tabPanel.isActive = false;
+                        }
                     }
                 });
 
-                if(!findTab){
+                if(!tabFinded){
                     console.error('vpui: tab not found, the index missed');
                 }
 
