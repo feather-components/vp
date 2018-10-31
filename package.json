@@ -1,5 +1,5 @@
 {
-  "name": "vue-vpui",
+  "name": "vp",
   "version": "0.0.22",
   "description": "基于vue2的ui组件库",
   "main": "src/index.js",

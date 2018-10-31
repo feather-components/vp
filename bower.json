@@ -1,5 +1,5 @@
 {
-  "name": "vpui",
+  "name": "vp",
   "version": "0.0.1",
   "description": "基于vue2的管理后台组件库",
   "main": "src/index.js",
